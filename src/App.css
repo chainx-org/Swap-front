@@ -25,7 +25,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
     line-height: 1;
-    background: #f4f4f5;
+    background: #f9f9f9;
 }
 ol, ul {
     list-style: none;
@@ -150,4 +150,8 @@ border-color: #f6c94a;
     margin-top: 10px;
     font-size: 15px;
     font-weight: bold;
+}
+.ant-tooltip-inner {
+    padding: 4px 9px;
+    border-radius: 4px;
 }
