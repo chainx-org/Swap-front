@@ -226,9 +226,7 @@ export const App: React.FC = () => {
       {/*    <Loading />*/}
       {/*  </MaskStyle>*/}
       {/*) : null}*/}
-      {!downExtensions && (
-        <NoExtensions />
-      )}
+      {downExtensions && <NoExtensions />}
       <bridgeStatusContext.Provider value={bridgeStatus}>
       </bridgeStatusContext.Provider>
       <LayoutWrapper id={"LayoutWrapper"}>

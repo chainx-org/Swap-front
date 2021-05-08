@@ -4,6 +4,9 @@ import Header from "../Header";
 import logo from "./icons/logo.svg"
 import PolkadotJS from './icons/polkadotjs.svg'
 import BgBtn from './icons/polkadotBgBtn.svg'
+import { HeaderStyle } from "../Header/style";
+import ChainStatus from "../Header/ChainStatus";
+import ChangeLanguage from "../Header/ChangeLanguage";
 const NoExtensionsStyle = styled.div`
     background-image: linear-gradient(180deg, #E2E1E6 0%, #F4F3F8 85%);
     position: fixed;
@@ -37,7 +40,7 @@ const DescribeText = styled.div`
         letter-spacing: 5px;
         text-align: center;
         font-weight: 400;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
     .tip{
         position: relative;
@@ -49,10 +52,13 @@ const DescribeText = styled.div`
     }
 `
 function NoExtensions(): React.ReactElement {
-    
+
     return(
         <NoExtensionsStyle>
-            <Header />
+            <HeaderStyle>
+                <ChainStatus/>
+                <ChangeLanguage/>
+            </HeaderStyle>
             <DescribeText>
                 <h1>去信任、去中心化的实现比特币跨链到 ChainX</h1>
                 <p className="info">请使用 PolkadotJS 插件登陆</p>

@@ -13,26 +13,9 @@ export const SideBarTab =styled.header`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  
+  border-radius: 20px;
 `
-export const SideBarLogo = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: 24px;
-  .project-name{
-    margin-left: 8px;
-    display: flex;
-    justify-content: center;
-    .x-name{
-      font-size: 30px;
-      font-weight: bold;
-    }
-    .bridge-name{
-      font-size: 30px;
-      margin-left: 8px;
-    }
-  }
-`
+
 export const Line = styled.hr`
   width: 20px;
   border: 1px solid #E5E5E5;
