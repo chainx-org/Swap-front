@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const LanguageStyle = styled.div`
+  cursor: pointer;
   padding-left: 20px;
   padding-right: 20px;
   width: 84px;
