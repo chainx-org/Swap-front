@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const SelectAccountStyle = styled.div`
+export const WalletStyle = styled.div`
   padding-left: 20px;
   padding-right: 20px;
   margin-right: 24px;
@@ -11,16 +11,9 @@ export const SelectAccountStyle = styled.div`
   border-radius: 16px;
   width: 100%;
   justify-content: center;
-  .avatar{
-    margin-right: 8px;
-  }
-  .icon{
-    margin-left: 4px;
-  }
-  .current-account{
-    font-size: 14px;
-    color: #000000;
-    font-weight: bold;
-    white-space: nowrap;
+  font-weight: bold;
+  font-size: 14px;
+  img{
+    margin-right: 8.56px;
   }
 `
