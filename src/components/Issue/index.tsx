@@ -1,188 +1,46 @@
-import { useContext, useEffect, useState } from "react";
-import {
-  ConfirmationIssueModalFooter,
-  ConfirmationIssueModalStyle,
-  CurrentAccountStyle,
-  IssueBtcInputStyle,
-  IssueFooterStyle,
-  IssueStyle,
-  LockingCollateralStyle,
-  VaultAccountStyle,
-  PCXbalanceStyle,
-} from "./style";
-import btcLogo from "./icons/btc.svg";
-import { InputNumber, Divider, Button, Modal, notification } from "antd";
+import React, { useContext, useEffect, useState } from "react";
+import { IssueBtcInputStyle, IssueStyle, AccountSwitch } from "./style";
+import arrowYellow from './icons/arrow_yellow.svg'
+import arrowGray from './icons/arrow_gray.svg'
+import { InputNumber, Divider, Button } from "antd";
 import { useTranslation } from "react-i18next";
-import useAccountModel from "../../hooks/useAccountModel";
-import { useApi } from "../../hooks/useApi";
-import { BtcAddress, RpcVaultInfo } from "../../interfaces";
-import { FeeContext } from "../../hooks/useFeeContext";
-import { decodeAddress, encodeAddress } from "@polkadot/keyring";
-import ChangeChainXAddress from "../../util";
-import { web3FromAddress } from "@polkadot/extension-dapp";
-import { useAccountInfo } from "../../hooks/useAccountInfo";
-import FormatBalance from "../../hooks/useFormatBalance";
-import { AccountId } from "@polkadot/types/interfaces";
+import ExplainTag from '../ExplainTag'
+import CoinSelect from "../CoinSelect";
 
 function Issue() {
-  const value = useContext(FeeContext);
-  const pcxPrice = value.pcxPrice;
-  const { currentAccount } = useAccountModel();
   const { t } = useTranslation();
-  const [confirmationIssue, setConfirmationIssue] = useState(false);
-  const [rpcVaultInfo, setRpcVaultInfo] = useState<RpcVaultInfo | null>(null);
-  const [IssueAmount, setIssueAmount] = useState(0);
-  const [vaultAddress, setVaultAddress] = useState("");
-  const [vaultBtcAddress, setVaultBtcAddress] = useState("");
-  const [vaultButtonLoading, SetVaultButtonLoading] = useState(false);
-  const [vaultInfo, setVaultInfo] = useState();
-  const [vault, SetVault] = useState([]);
-  const [vaultCollateral,setVaultCollateral] = useState()
-  const { api, isApiReady } = useApi();
-  const accountInfo = useAccountInfo(currentAccount?.address!!);
-  async function ConfirmationIssueTrade() {
-    const injector = await web3FromAddress(currentAccount!!.address);
-    api.tx.xGatewayBitcoinV2
-      .requestIssue(vaultAddress,IssueAmount * 100000000)
-      .signAndSend(
-        currentAccount!!.address,
-        { signer: injector.signer },
-        ({ status, dispatchError, events }) => {
-          if (status.isInBlock) {
-            notification["success"]({
-              message: `Completed at block hash ${status.asInBlock.toString()}`,
-              duration: 0,
-            });
-          } else if (dispatchError) {
-            if (dispatchError.isModule) {
-              const decoded = api.registry.findMetaError(
-                dispatchError.asModule
-              );
-              const { documentation, name, section } = decoded;
-              notification["error"]({
-                message: `${section}.${name}: ${documentation.join(" ")}`,
-                duration: 0,
-              });
-            }
-          } else {
-            notification["success"]({
-              message: `Current status: ${status.type}`,
-              duration: 0,
-            });
-            if (status.type === "Finalized") {
-              setConfirmationIssue(false);
-            }
-          }
-        }
-      )
-      .catch((error) => {
-        notification["error"]({
-          message: `:( transaction failed', ${error}`,
-          duration: 0,
-        });
-      });
-  }
-
-  const handleMatchVault = async () => {
-    if (IssueAmount <= 0) {
-      notification.warn({ message: "发行的值必须大于0" });
-      return;
-    }
-    const vaults = await api.query.xGatewayBitcoinV2.vaults.entries();
-    const results = await Promise.all(
-    vaults.map(async ([key, value]) => {
-      const vault = value.unwrap();
-      const collateral = await (await api.query.system.account(vault.id)).data.reserved;
-      const maxToken = collateral.muln(pcxPrice).divn(3);
-      return [vault.id, maxToken.sub(vault.issuedTokens).sub(vault.toBeIssuedTokens), vault.wallet]
-    }))
-    setVaultAddress(
-      results ? ChangeChainXAddress(JSON.parse(JSON.stringify(results))[0][0]) : ""
-    );
-    setVaultBtcAddress(results ? JSON.parse(JSON.stringify(results))[0][2] : "");
-    setConfirmationIssue(true);
-    SetVaultButtonLoading(false);
-  }
+  const address = <>5HpAy3ahw2S7LvXWphebx3K1Nh9qw8hjEGbUXhG6wWRg1WBb</>
+  const hypothecateNum = <>0.00 PCX</>
+  const chargeNum = <>0.00 BTC</>
   return (
     <IssueStyle>
-      <CurrentAccountStyle>
-        <div>{t("Current Account")}</div>
-        <div className={"current-account"}>{currentAccount?.address}</div>
-      </CurrentAccountStyle>
-      <IssueBtcInputStyle>
-        <img src={btcLogo} alt="" />
-        <InputNumber
-          value={IssueAmount}
-          onChange={(e) => {
-            if (e) {
-              setIssueAmount(e);
-            } else {
-              setIssueAmount(0);
-            }
-          }}
-        />
-        <div className={"btc-title"}>BTC</div>
-      </IssueBtcInputStyle>
-      <PCXbalanceStyle>
-        PCX {t("balance")} {FormatBalance(accountInfo?.data.free)}
-      </PCXbalanceStyle>
-      <LockingCollateralStyle>
-        <div className={"locking-title"}>{t("Locking collateral")}</div>
-        <div className={"locking-num"}>
-          {IssueAmount / pcxPrice / 10 || 0} PCX
-        </div>
-        <div className={"locking-tip"}>{t("Unlock after completion")}</div>
-      </LockingCollateralStyle>
-      <Divider />
-      <IssueFooterStyle>
-        <div className={"issue-footer-title"}>{t("You will receive")}</div>
-        <div className={"issue-footer-num"}>{IssueAmount} XBTC</div>
-        <Button loading={vaultButtonLoading} onClick={handleMatchVault}>
-          {t("next")}
-        </Button>
-      </IssueFooterStyle>
-
-      <ConfirmationIssueModalStyle>
-        <Modal
-          title={t("Confirmation of issuance")}
-          getContainer={false}
-          visible={confirmationIssue}
-          onCancel={() => setConfirmationIssue(false)}
-          footer={[
-            <Button key="back" onClick={ConfirmationIssueTrade}>
-              {t("next")}
-            </Button>,
-          ]}
-        >
-          <CurrentAccountStyle>
-            <div>{t("Current Account")}</div>
-            <div className={"current-account"}>{currentAccount?.address}</div>
-          </CurrentAccountStyle>
-          <LockingCollateralStyle>
-            <div className={"locking-title"}>{t("Locking collateral")}</div>
-            <div className={"locking-num"}>
-              {IssueAmount / pcxPrice / 10 || 0} PCX
-            </div>
-            <div className={"locking-tip"}>{t("Unlock after completion")}</div>
-          </LockingCollateralStyle>
-          <ConfirmationIssueModalFooter>
-            <div className={"issue-footer-title"}>{t("You will receive")}</div>
-            <div className={"issue-footer-num"}>{IssueAmount} XBTC</div>
-          </ConfirmationIssueModalFooter>
-          <VaultAccountStyle>
-            <div>{t("Vault")}</div>
-            <div className={"current-account"}>
-              {vaultAddress
-                ? encodeAddress(decodeAddress(vaultAddress), 44)
-                : ""}
-            </div>
-          </VaultAccountStyle>
-          <VaultAccountStyle>
-            <div>{t("BTC address of Vault")}</div>
-            <div className={"current-account"}>{vaultBtcAddress}</div>
-          </VaultAccountStyle>
-        </Modal>
-      </ConfirmationIssueModalStyle>
+      <div className='topContent'>
+        <AccountSwitch>
+          <CoinSelect select={false} />
+          <div className='to'>To</div>
+          <CoinSelect select={true} />
+        </AccountSwitch>
+        <IssueBtcInputStyle>
+          <div className='issueNum'>
+            <InputNumber
+              value={``}
+              onChange={(e) => {
+                console.log(e)
+              }}
+            />
+            <div className={`btc-title`}>BTC</div>
+          </div>
+          <img src={ true ? arrowYellow : arrowGray } alt='to' className='arrow' />
+          <p className='receive'>{t("You will receive")}</p>
+          <div className={`issueResNum`}>0 SBTC</div>
+        </IssueBtcInputStyle>
+      </div>
+      <div className='bottomContent'>
+        <ExplainTag  title='目标账户' children={address} />
+        <ExplainTag  title='锁定抵押品' children={hypothecateNum} />
+        <ExplainTag  title='手续费' children={chargeNum} />
+        <Button  className='gray'>{t("next")}</Button>
+      </div>
     </IssueStyle>
   );
 }

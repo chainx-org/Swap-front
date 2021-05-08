@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import {NavLink} from "react-router-dom";
 
 export const SideBarStyle = styled.div`
   margin-right: 30px;

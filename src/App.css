@@ -81,12 +81,20 @@ table {
     box-shadow: none !important;
 }
 .ant-btn{
+    width: 100%;
     background: #F6C94A;
     font-size: 14px;
-    color: #282828;
+    color: #FFF;
     font-weight: bold;
     border: none;
-    border-radius: 6px;
+    border-radius: 12px;
+    height: 44px;
+}
+.ant-btn.gray {
+    background: #B8B8B9;
+}
+.ant-btn.yellow {
+    background: #F6C94A;
 }
 .ant-btn:focus, .ant-btn:active, .ant-btn:hover{
     color: #282828;

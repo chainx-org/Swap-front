@@ -1,22 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import Header from "../Header";
-import logo from "./icons/logo.svg"
 import PolkadotJS from './icons/polkadotjs.svg'
 import BgBtn from './icons/polkadotBgBtn.svg'
 import { HeaderStyle } from "../Header/style";
 import ChainStatus from "../Header/ChainStatus";
 import ChangeLanguage from "../Header/ChangeLanguage";
+
 const NoExtensionsStyle = styled.div`
     background-image: linear-gradient(180deg, #E2E1E6 0%, #F4F3F8 85%);
     position: fixed;
     z-index: 2;
     width: 100vw;
     height: 100vh;
-    // display: flex;
-    // flex-direction:column;
-    // justify-content: center;
-    // align-items: center;
 `
 const DescribeText = styled.div`
     display: flex;
