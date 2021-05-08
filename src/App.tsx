@@ -50,6 +50,11 @@ const MaskStyle = styled.div`
   height: 100vh;
 `;
 
+const Content = styled.main`
+  display: flex;
+  padding: 30px 40px 66px;
+`
+
 export const App: React.FC = () => {
   const { t } = useTranslation();
 
@@ -221,13 +226,8 @@ export const App: React.FC = () => {
       {/*    <Loading />*/}
       {/*  </MaskStyle>*/}
       {/*) : null}*/}
-      {/*{downExtensions? (*/}
-      {/*  <MaskStyle>*/}
-      {/*    <NoExtensions />*/}
-      {/*  </MaskStyle>*/}
-      {/*) : null}*/}
+      {downExtensions && <NoExtensions />}
       <bridgeStatusContext.Provider value={bridgeStatus}>
-      {/*<SideBar />*/}
       </bridgeStatusContext.Provider>
       <LayoutWrapper id={"LayoutWrapper"}>
         <ApiContext.Provider
@@ -253,9 +253,9 @@ export const App: React.FC = () => {
                   pcxPrice: pcxPrice!!,
                 }}
               >
-            
                 <Header />
-                <main>
+                <Content >
+                  <SideBar />
                   <Suspense fallback={<Loading/>}>
                     <Switch>
                       <Route path="/" exact component={Bridge} />
@@ -263,7 +263,7 @@ export const App: React.FC = () => {
                       <Route path="/vault" component={Vault} />
                     </Switch>
                   </Suspense>
-                </main>
+                </Content>
               </FeeContext.Provider>
             </RedeemRequestsContext.Provider>
           </IssueRequestsContext.Provider>
