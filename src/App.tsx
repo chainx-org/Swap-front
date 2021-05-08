@@ -33,7 +33,7 @@ import type { Percent } from "@polkadot/types/interfaces/runtime";
 import { decodeAddress, encodeAddress } from "@polkadot/keyring";
 import NoExtensions from "./components/NoExtensions";
 
-const Bridge = lazy(() => import("./page/Bridge"));
+const Bridge = lazy(() => import("./page/Bridge/home"));
 const History = lazy(() => import("./page/History/History"));
 const Vault = lazy(() => import("./page/Vault"));
 

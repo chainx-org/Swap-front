@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import {
-  BridgeCardStyle,
   BridgeStyle,
   CancelRedeemStyle,
-  FunctionSwitchButton,
   IssueModalFooter,
   IssueModalStyle,
   IssueModalTip,
@@ -200,8 +198,8 @@ function Bridge() {
   }
   return (
     <BridgeStyle>
-      <BridgeCardStyle>
-        <FunctionSwitchButton>
+      <div>
+        <div>
           <ul>
             <li
               onClick={() => {
@@ -220,9 +218,9 @@ function Bridge() {
               {t("Redeem")}
             </li>
           </ul>
-        </FunctionSwitchButton>
+        </div>
         {isActive(Tab.Issue) ? <Issue /> : <Redeem />}
-      </BridgeCardStyle>
+      </div>
       <TransactionBubbleStyle>
         <ul>
           {IssueRequestList.map((item) => (

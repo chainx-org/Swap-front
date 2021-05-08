@@ -1,5 +1,40 @@
 import styled from "styled-components";
 
+export const BridgeCardStyle = styled.div`
+  width: 500px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
+export const FunctionSwitchButton = styled.div`
+  font-family: PingFangSC-Regular;
+  font-size: 16px;
+  background-image: linear-gradient(134deg, #FAFAFB 0%, #F4F4F5 100%);
+  box-shadow: -3px -3px 4px 0 rgba(0,0,0,0.10), 3px 3px 4px 0 #FFFFFF;
+  border-radius: 19px;
+  ul{
+    width: 500px;
+    height: 52px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  li{
+    width: 50%;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &.active{
+      background: #F4F4F5;
+      box-shadow: 3px 3px 8px 0 rgba(0,0,0,0.11), -3px -3px 8px 0 #FFFFFF;
+      border-radius: 16px;
+    }
+  };
+`
+
 export const BridgeStyle = styled.div`
     width: 100%;
     display: flex;
