@@ -2,15 +2,14 @@ import styled from "styled-components";
 import {NavLink} from "react-router-dom";
 
 export const SideBarStyle = styled.div`
-  background: #F4F4F5;
-  width: 210px;
+  margin-right: 30px;
 `
 export const SideBarTab =styled.header`
   width: 40px;
   height: 80px;
   box-shadow: 3px 3px 8px 0 rgba(0,0,0,0.11), -3px -3px 8px 0 #FFFFFF;
   padding: 10px;
-  margin: 144px 0 0 40px;
+  margin: 63px 0 0 0px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
