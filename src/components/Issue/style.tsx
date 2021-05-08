@@ -1,8 +1,80 @@
 import styled from "styled-components";
 
 export const IssueStyle = styled.div`
-  margin-top: 20px;
+  margin-top: 24px;
+  width: 500px;
+  background: #F4F4F5;
+  box-shadow: 10px 10px 16px 0 rgba(0,0,0,0.06), -10px -10px 16px 0 #FFFFFF;
+  border-radius: 16px;
+  padding: 40px;
+  .topContent {
+    padding: 20px 0 24px;
+    border-bottom: 1px dashed #DBDBDB;
+    box-shadow: 0 1px 1px 0 #FFFFFF;
+  }
+  .bottomContent {
+    padding: 20px 0 ;
+  }
 `
+export const AccountSwitch = styled.div`
+  padding: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .to {
+    opacity: 0.85;
+    font-family: PingFangSC-Medium;
+    font-size: 14px;
+    color: #000000;
+    line-height: 22px;
+    font-weight: 500;
+    padding: 0 20px;
+  }
+`
+export const IssueBtcInputStyle = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 40px;
+  color: #282828;
+  .issueNum {
+    display: flex;
+    .ant-input-number {
+      width: 200px;
+      height: 44px;
+      font-size: 32px;
+      color: #8E8E8E;
+      line-height: 44px;
+    }
+    .btc-title {
+      font-family: PingFangSC-Semibold;
+      font-size: 32px;
+      line-height: 44px;
+      font-weight: 550;
+    }
+  }
+  .arrow {
+    padding: 17px 0;
+  }
+  .receive {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    font-weight: 400;
+    margin-bottom: 10px;
+  }
+  .issueResNum {
+    font-family: PingFangSC-Semibold;
+    font-size: 24px;
+    text-align: center;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+`
+
+
+
+
 export const CurrentAccountStyle = styled.div`
   background: #F6F6F6;
   border-radius: 6px;
@@ -11,40 +83,13 @@ export const CurrentAccountStyle = styled.div`
   padding: 16px;
   font-size: 12px;
   color: #282828;
-
   .current-account {
     margin-top: 4px;
     font-size: 12px;
     color: #8E8E8E;
   }
 `
-export const IssueBtcInputStyle = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 40px;
 
-  .ant-input-number {
-    width: 200px;
-    height: 44px;
-    font-size: 32px;
-    color: #8E8E8E;
-    line-height: 44px;
-  }
-
-  .btc-title {
-    font-size: 32px;
-    color: #282828;
-    font-weight: bold;
-    margin-left: 16px;
-  }
-
-  img {
-    width: 32px;
-    height: 32px;
-    margin-right: 16px;
-  }
-`
 export const LockingCollateralStyle = styled.div`
   color: #282828;
   display: flex;
