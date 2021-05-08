@@ -4,7 +4,7 @@ export const LanguageStyle = styled.div`
   cursor: pointer;
   padding-left: 20px;
   padding-right: 20px;
-  width: 84px;
+  width: 90px;
   height: 32px;
   background: #F4F4F5;
   box-shadow: 3px 3px 8px 0 rgba(0,0,0,0.11), -3px -3px 8px 0 #FFFFFF;
