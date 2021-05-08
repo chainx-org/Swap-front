@@ -52,7 +52,7 @@ const MaskStyle = styled.div`
 
 const Content = styled.main`
   display: flex;
-  padding: 30px 40px 66px;
+  padding: 30px 40px;
 `
 
 export const App: React.FC = () => {
