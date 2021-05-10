@@ -8,6 +8,7 @@ export const HeaderStyle = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 79px;
+  width: 100vw;
   .header-right{
     display: flex;
   }
