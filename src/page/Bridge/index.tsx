@@ -48,7 +48,7 @@ function Bridge() {
   const { t } = useTranslation();
   return (
     <BridgeStyle>
-    <IssueRequestSuccessCard/>
+      <IssueRequestSuccessCard/>
     </BridgeStyle>
   );
 }

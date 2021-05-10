@@ -4,6 +4,7 @@ import { useTab } from "../../hooks/useTab";
 import Issue from "../../components/Issue";
 import { useTranslation } from "react-i18next";
 import Redeem from "../../components/Redeem";
+import IssueRequestSuccessCard from "../../components/IssueRequestSuccessCard";
 enum Tab { Issue, Redeem, }
 
 function BridgeHome() {

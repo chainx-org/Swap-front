@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {FunctionSwitchButton, HistoryStyle, TableStyle} from "./style";
 import {useTranslation} from "react-i18next";
-import {Table} from "antd";
+import {Space, Table} from "antd";
 import {ColumnType} from "antd/lib/table";
 import useAccountModel from "../../hooks/useAccountModel"
 import { decodeAddress, encodeAddress } from "@polkadot/keyring";
@@ -20,107 +20,154 @@ enum HistoryTab {
 }
 
 function History() {
-    const [activeTab, setActiveTab] = useState<HistoryTab>(HistoryTab.Issue);
-    const [issueLog, setIssueLog] = useState<HistoryRow[]>([]);
     const { currentAccount } = useAccountModel();
     const {t} = useTranslation()
     const [page, setPage] = useState(0);
+    const [currentTable,setCurrentTable] = useState("issue")
 
-    useEffect(() => {
-        (async () => {
-            const response = await fetch(
-                `https://api-btc.spiderx.pro/xbridge/${
-                    activeTab === HistoryTab.Issue ? "issue_requests" : "redeem_requests"
-                }?page=0&pageSize=5&requester=${currentAccount?.address}`,
-                {
-                    method: "GET"
-                }
-            );
-            const data = await response.json();
-            let rows: HistoryRow[];
-            if (activeTab === HistoryTab.Issue) {
-                rows = (data.items as any[]).map<HistoryRow>(info => {
-                    return {
-                        id: info._id,
-                        amount: info.btcAmount / 100000000,
-                        chainxAddr: encodeAddress(decodeAddress(info.requester),44),
-                        vaultBtcAddr: info.btcAddress,
-                        hash: "",
-                        countedBlock: 0,
-                        status: info.status
-                    };
-                });
-            } else {
-                rows = (data.items as any[]).map<HistoryRow>(info => {
-                    return {
-                        id: info._id,
-                        amount: info.amount / 100000000,
-                        chainxAddr: info.requester,
-                        vaultBtcAddr: info.btcAddress,
-                        hash: "",
-                        countedBlock: 0,
-                        status: info.status
-                    };
-                });
-            }
-            setIssueLog(rows);
-        })();
-    }, [activeTab,currentAccount]);
-    const columns: ColumnType<HistoryRow>[] = [
+    const columns = [
         {
-            title: t<string>("Issue logo"),
-            dataIndex: "id",
-            key: "id"
+            title: '更新时间',
+            dataIndex: 'time',
+            key: 'title'
         },
         {
-            title: t<string>("Amount"),
-            dataIndex: "amount",
-            key: "amount"
+            title: '数量（XBTC）',
+            dataIndex: 'number',
+            key: 'number',
         },
         {
-            title: t<string>("ChainX Address"),
-            dataIndex: "chainxAddr",
-            ellipsis: true,
-            key: "chainxAddr"
+            title: 'BTC交易',
+            dataIndex: 'address',
+            key: 'address',
         },
         {
-            title: t<string>("Vault BTC Address"),
-            dataIndex: "vaultBtcAddr",
-            ellipsis: true,
-            key: "vaultBtcAddr"
+            title: '交易确认数',
+            dataIndex: 'number',
+            key: 'number',
         },
         {
-            title: t<string>("BTC transaction"),
-            dataIndex: "hash",
-            key: "hash"
+            title: 'Chainx块高',
+            dataIndex: 'number',
+            key: 'number',
         },
         {
-            title: t<string>("BTC Confirmation"),
-            dataIndex: "countedBlock",
-            key: "countedBlock"
+            title: '状态',
+            key: 'action',
+            render: (text : any,record:any) => (
+                <Space size="middle">
+                    {record.status === "进行中" && <div className={"processing"}>{record.status}</div>}
+                    {record.status === "失败" && <div className={"fail"}>{record.status}</div>}
+                    {record.status === "成功" && <div>{record.status}</div>}
+                </Space>
+            ),
+        },
+    ];
+
+    const IssueData = [
+        {
+            key: '1',
+            time: '2021-04-16 18:20',
+            number: 0.00001,
+            address: '1b2978...fd247ac',
+            status: '成功'
         },
         {
-            title: t<string>("State"),
-            dataIndex: "status",
-            key: "status"
-        }
+            key: '2',
+            time: '2021-04-16 18:20',
+            number: 0.00001,
+            address: '1b2978...fd247ac',
+            status: '进行中'
+        },
+        {
+            key: '3',
+            time: '2021-04-16 18:20',
+            number: 0.00001,
+            address: '1b2978...fd247ac',
+            status: '失败'
+        },
+        {
+            key: '4',
+            time: '2021-04-16 18:20',
+            number: 0.00001,
+            address: '1b2978...fd247ac',
+            status: '成功'
+        },
+        {
+            key: '5',
+            time: '2021-04-16 18:20',
+            number: 0.00001,
+            address: '1b2978...fd247ac',
+            status: '成功'
+        },
+        {
+            key: '6',
+            time: '2021-04-16 18:20',
+            number: 0.00001,
+            address: '1b2978...fd247ac',
+            status: '成功'
+        },
+    ];
+    const RedeemData = [
+        {
+            key: '1',
+            time: '2021-04-16 18:20',
+            number: 0.00002,
+            address: '1b2978...fd247ac',
+            status: '失败'
+        },
+        {
+            key: '2',
+            time: '2021-04-16 18:20',
+            number: 0.00003,
+            address: '1b2978...fd247ac',
+            status: '进行中'
+        },
+        {
+            key: '3',
+            time: '2021-04-16 18:20',
+            number: 0.00004,
+            address: '1b2978...fd247ac',
+            status: '失败'
+        },
+        {
+            key: '4',
+            time: '2021-04-16 18:20',
+            number: 0.00006,
+            address: '1b2978...fd247ac',
+            status: '成功'
+        },
+        {
+            key: '5',
+            time: '2021-04-16 18:20',
+            number: 0.00007,
+            address: '1b2978...fd247ac',
+            status: '成功'
+        },
+        {
+            key: '6',
+            time: '2021-04-16 18:20',
+            number: 0.00001,
+            address: '1b2978...fd247ac',
+            status: '成功'
+        },
     ];
     return (
         <HistoryStyle>
             <FunctionSwitchButton>
                 <ul>
                     <li onClick={() => {
-                        setActiveTab(HistoryTab.Issue);
+                        setCurrentTable("issue");
                         setPage(0);
-                    }} className={activeTab === HistoryTab.Issue ? "active" : "none"}>{t('issue')}</li>
+                    }}  className={currentTable === "issue" ? "active" : "none"}>{t('issue')}</li>
                     <li onClick={() => {
-                        setActiveTab(HistoryTab.Redeem);
+                        setCurrentTable("redeem");
                         setPage(0);
-                    }} className={activeTab === HistoryTab.Redeem ? "active" : "none"}>{t('Redeem')}</li>
+                    }} className={currentTable === "redeem" ? "active" : "none"}>{t('Redeem')}</li>
                 </ul>
             </FunctionSwitchButton>
             <TableStyle>
-                <Table rowKey={({ id }) => id} columns={columns} dataSource={issueLog} />
+                {currentTable === "issue" ? <Table  columns={columns} dataSource={IssueData} /> : <Table  columns={columns} dataSource={RedeemData}/> }
             </TableStyle>
         </HistoryStyle>
     )
