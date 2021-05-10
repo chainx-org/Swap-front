@@ -2,9 +2,19 @@ import styled from "styled-components";
 import React from "react";
 
 export const CardMainStyle = styled.div`
+    .opreturn-res {
+      display: flex;
+      justify-content: space-between;
+      .verticalLine {
+        width: 1px;
+        height: 108px;
+        border-left: 1px dashed #DBDBDB;
+        box-shadow: 1px 0 1px 0 #ffffff;
+        margin: 5px 0 8px 15px;
+      }
+    }
     .opreturn-title {
       display: flex;
-      margin-top: 23px;
       font-size: 14px;
       color: #282828;
       line-height: 16px;
@@ -20,6 +30,7 @@ export const CardMainStyle = styled.div`
       .step-one{
         margin-right: 9px;
         background: #F6C94A;
+        box-shadow: 3px 3px 8px 0 #EFE3C0, -3px -3px 8px 0 #FFFFFF;
         width: 30px;
         height: 30px;
         color: white;
@@ -34,8 +45,17 @@ export const CardMainStyle = styled.div`
     }
     .opreturn-content-wrapper{
       display: flex;
-      justify-content: center;
-      margin-top: 12px;
+      justify-content: flex-end;
+      margin-top: 6px;
+      .line {    
+        width: 1px;
+        height: 40px;
+        background: #DBDBDB;
+        border: 0;
+        box-shadow: 0.5px 0 0px 0 #ffffff;
+        margin: 0;
+        margin-top: 2px;
+      }
     }
     .btc-content{
       display: flex;
@@ -62,22 +82,21 @@ export const CardMainStyle = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        border-left: 1px solid #DBDBDB;;
         height: 40px;
-        box-shadow: 1px 0 1px 0 #FFFFFF;
+        cursor: pointer;
       }
     }
     .tip-wrapper{
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-end;
       margin-top: 12px;
     }
     .qr-wrapper{
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-top: 12px;
+      margin: 12px 0 0 40px;
       .qr{
         width: 380px;
         font-size: 12px;
@@ -85,23 +104,6 @@ export const CardMainStyle = styled.div`
         line-height: 16px;
         font-weight: 400;
         margin-left: 8px;
-      }
-    }
-    .tip{
-      width: 380px;
-      height: 28px;
-      border: 1px solid #F5222D;
-      border-radius: 6px;
-      font-size: 12px;
-      color: #554D4E;
-      line-height: 16px;
-      font-weight: 400;
-      display: flex;
-      background:rgba(245,34,45,0.5);;
-      justify-content: center;
-      align-items: center;
-      img{
-        margin-right: 8px;
       }
     }
     .opreturn-content{
@@ -124,21 +126,23 @@ export const CardMainStyle = styled.div`
         word-break: break-all;
         margin-right: 18.5px;
       }
+      .line {    
+        width: 1px;
+        height: 55px;
+        background: #DBDBDB;
+        border: 0;
+        box-shadow: 0.5px 0 0px 0 #ffffff;
+        margin: 0;
+        margin-top: 2px;
+      }
       .copy{
         flex: 1;
         display: flex;
         justify-content: center;
         align-items: center;
-        border-left: 1px solid #DBDBDB;;
         height: 56px;
-        box-shadow: 1px 0 1px 0 #FFFFFF;
+        cursor: pointer;
       }
-    }
-    .tip-wrapper{
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 12px;
     }
     .tip{
       width: 380px;
@@ -150,12 +154,11 @@ export const CardMainStyle = styled.div`
       line-height: 16px;
       font-weight: 400;
       display: flex;
-      background:rgba(245,34,45,0.5);;
+      background:rgba(245,34,45,0.1);
       justify-content: center;
       align-items: center;
       img{
         margin-right: 8px;
       }
     }
-
 `

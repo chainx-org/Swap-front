@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import PolkadotJS from './icons/polkadotjs.svg'
 import BgBtn from './icons/polkadotBgBtn.svg'
+import Shape1 from './icons/shape1.svg'
+import Shape2 from './icons/shape2.svg'
 import { HeaderStyle } from "../Header/style";
 import ChainStatus from "../Header/ChainStatus";
 import ChangeLanguage from "../Header/ChangeLanguage";
@@ -19,14 +21,30 @@ const DescribeText = styled.div`
     justify-content: center;
     align-items: center;
     height: 100vh;
-    h1 {
-        font-family: PingFangSC-Semibold;
-        font-size: 42px;
-        color: #282828;
-        line-height: 44px;
-        font-weight: 600;
-        margin-bottom: 54px;
+    margin-top: -79px;
+    .bgShape1 {
+        position: relative;
+        h1 {
+            font-family: PingFangSC;
+            font-size: 42px;
+            color: #282828;
+            line-height: 44px;
+            font-weight: 500;
+            margin-bottom: 54px;
+        }
+        .shape1 {
+            position: absolute;
+            z-index: -1;
+            top: -116%;
+            left: -12%;
+        }
+        .shape2 {
+            position: absolute;
+            bottom: -176px;
+            right: 0;
+        }
     }
+
     .info{
         opacity: 0.8;
         font-family: PingFangSC-Regular;
@@ -55,7 +73,11 @@ function NoExtensions(): React.ReactElement {
                 <ChangeLanguage/>
             </HeaderStyle>
             <DescribeText>
-                <h1>去信任、去中心化的实现比特币跨链到 ChainX</h1>
+                <div className='bgShape1'>
+                    <h1>去信任、去中心化的实现比特币跨链到 ChainX</h1>
+                    <img src={Shape1} alt='bgShape' className='shape1' />
+                    <img src={Shape2} alt='bgShape'  className='shape2'/>
+                </div>
                 <p className="info">请使用 PolkadotJS 插件登陆</p>
                 <a href="https://polkadot.js.org/extension/" target='_blank' className='tip'>
                     <img src={BgBtn} alt=""/>
