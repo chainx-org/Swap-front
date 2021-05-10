@@ -1,59 +1,27 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import BCHs from './icons/BCH_s.svg'
-import BTCs from './icons/BTC_S.svg'
-import DOGEs from './icons/DOGE_s.svg'
-import Sherpaxs from './icons/sherpax_s.svg'
+// import BCHs from './icons/BCH_s.svg'
+// import BTCs from './icons/BTC_S.svg'
+// import DOGEs from './icons/DOGE_s.svg'
+// import Sherpaxs from './icons/sherpax_s.svg'
 import Fill from './icons/fill.svg'
 
 interface CoinSelectProps {
   className?: string;
-  select?: boolean;
+  optionList?: any;
+  isShow?: boolean;
+  currCoin: (value: any)=>void;
+  ShowSelect?: ()=>void;
+  coinSymol?: any;
 }
-interface coinProps {
-    img_url: any,
-    coinName: string,
-    symol: string
-}
-export default function CoinSelect({className = '' , select }:CoinSelectProps): React.ReactElement<CoinSelectProps>{
+
+export default function CoinSelect({className = '' , optionList, isShow, currCoin, ShowSelect, coinSymol }:CoinSelectProps): React.ReactElement<CoinSelectProps>{
     
-    const optionList = [
-        {
-            img_url: BTCs,
-            coinName: 'BTC',
-            symol: 'Bitcoin'
-        },
-        {
-            img_url: BCHs,
-            coinName: 'BCH',
-            symol: 'Bitcoin Cash'
-        },
-        {
-            img_url: DOGEs,
-            coinName: 'DOG',
-            symol: 'Dogecoin'
-        }
-    ]
-    const [isShow, setIsShow] = useState(false)
-    const [coinSymol, setCoinSymol] = useState<coinProps>({
-        img_url: BTCs,
-        coinName: 'BTC',
-        symol: 'Bitcoin'
-    })
-    const currCoin = (value:any) => {
-        setCoinSymol(value)
-        setIsShow(!isShow)
-    }
-    const ShowSelect = () =>{
-        setIsShow(!isShow)
-    }
+    
     return (
        <Wrapper className={` ${className}`}>
            {
-            select ? <div className='currContent'>
-               <img src={Sherpaxs} alt=""/>
-               <p className='currName'>SherpaX</p>
-            </div> : <>
+            <>
                 <div className='currContent' onClick={ShowSelect}>
                     <img src={coinSymol.img_url} alt=""/>
                     <p className='currName'>{coinSymol.coinName}</p>
@@ -62,7 +30,7 @@ export default function CoinSelect({className = '' , select }:CoinSelectProps): 
                 { isShow && <div className='option'>
                     <p className='optinTitle'>ASSET</p>
                     {
-                        optionList.map((item)=>{
+                        optionList.map((item: any)=>{
                             return ( <div className='optionContent' key={item.coinName} onClick={()=>currCoin(item)}>
                                 <img src={item.img_url} alt=""/>
                                 <div className='coinSymol'>

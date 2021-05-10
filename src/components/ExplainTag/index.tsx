@@ -14,7 +14,7 @@ const Wrapper = styled.div`
     .leftTitle {
         display: flex;
         align-items: center;
-        p {
+        .title {
             white-space: nowrap;
             margin-right: 5px;
         }
@@ -42,7 +42,7 @@ export default function ExplainTag({className = '' , title, children, tooltip }:
     return (
        <Wrapper className={` ${className}`}>
            <div className='leftTitle'>
-               <p>{title}</p>
+               <div className='title'>{title}</div>
                <Tooltip title={tooltip}>
                     <img src={Question} alt=""/>
                </Tooltip>       
