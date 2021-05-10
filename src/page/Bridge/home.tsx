@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 import { BridgeCardStyle, FunctionSwitchButton } from "./style";
 import { useTab } from "../../hooks/useTab";
 import Issue from "../../components/Issue";

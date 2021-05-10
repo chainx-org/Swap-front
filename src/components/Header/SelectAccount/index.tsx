@@ -1,21 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext } from 'react';
 import { SelectAccountStyle } from "./style";
 import dropdownlogo from "../SelectAccount/icons/Drop down.svg"
-import { Modal, Radio } from "antd";
-import useAccountModel from "../../../hooks/useAccountModel";
-import { useAccountInfo } from "../../../hooks/useAccountInfo";
-import {useApi} from "../../../hooks/useApi"
+import { ApiContext } from '../../../hooks/ApiProvider';
+
 function SelectAccount() {
-  const accountModel = useAccountModel();
-  const [AccountListModal, SetAccountListModal] = useState(false);
-  const { currentAccount } = useAccountModel();
-  const { accounts } = useAccountModel();
-  const [value, setValue] = useState(currentAccount);
-  const currentAddress = currentAccount?.address;
+  const {accounts} = useContext(ApiContext)
+  console.log('accounts', accounts)
   return (
     <SelectAccountStyle>
-      <div className={"avatar"}></div>
-      <div className={"current-account"}>{currentAccount?.name}</div>
+      {/*<div className={"avatar"}></div>*/}
+      <div className={"current-account"}></div>
       <div className={"icon"}>
           <img src={dropdownlogo} alt=""/>
       </div>
