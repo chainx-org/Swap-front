@@ -81,7 +81,7 @@ export const ModalStyle = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 24px 16px;
-  height: 761px;
+  height: 720px;
   .card-header{
     font-size: 14px;
     color: #282828;
