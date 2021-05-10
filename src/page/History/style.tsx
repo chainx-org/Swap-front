@@ -1,24 +1,26 @@
 import styled from "styled-components";
 
 export const HistoryStyle = styled.div`
-  margin: 24px;
-  background: #fff;
-  height: 100%;
-  padding: 30px;
+  background: #F4F4F5;
+  box-shadow: 8px 8px 13px 0 rgba(0,0,0,0.08), -8px -8px 13px 0 #FFFFFF;
+  border-radius: 16px;
+  margin-top: 29px;
 `
 export const FunctionSwitchButton = styled.div`
   font-size: 16px;
   font-weight: bold;
   color: #8E8E8E;
   ul{
-    width: 425px;
-    height: 48px;
+    width: 520px;
+    height: 52px;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background: #F6F6F6;
-    margin-top: 30px;
-    border-radius: 6px;
+    background-image: linear-gradient(134deg, #FAFAFB 0%, #F4F4F5 100%);
+    box-shadow: -3px -3px 4px 0 rgba(0,0,0,0.10), 3px 3px 4px 0 #FFFFFF;
+    border-radius: 19px;
+    margin-top: 48px;
+    margin-left: 40px;
   }
   li{
     width: 208px;
@@ -36,6 +38,6 @@ export const FunctionSwitchButton = styled.div`
 export const TableStyle = styled.div`
  margin-top: 36px;
   .ant-table-cell{
-    background: #fff;
+    background: #F4F4F5;;
   }
 `
