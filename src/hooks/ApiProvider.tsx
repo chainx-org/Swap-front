@@ -53,7 +53,6 @@ function ApiProvider({children, url}: Props): React.ReactElement<Props> {
     });
   };
 
-
   const getAccountList = async () => {
     const extensions = await web3Enable('swap');
     if (extensions.length === 0) {
