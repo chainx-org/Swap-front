@@ -80,6 +80,7 @@
     "workbox-webpack-plugin": "5.1.4"
   },
   "devDependencies": {
+    "@commitlint/config-conventional": "^12.1.1",
     "@polkadot/extension-dapp": "^0.37.2",
     "@polkadot/typegen": "^4.2.1",
     "@testing-library/jest-dom": "^5.11.4",
@@ -90,7 +91,11 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/react-router-dom": "^5.1.7",
-    "@types/styled-components": "^5.1.9"
+    "@types/styled-components": "^5.1.9",
+    "commitizen": "^4.2.4",
+    "commitlint": "^12.1.1",
+    "cz-customizable": "^6.3.0",
+    "husky": "^5.2.0"
   },
   "scripts": {
     "start": "node scripts/start.js",
@@ -171,5 +176,16 @@
     "presets": [
       "react-app"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "_id": "x-bridge-v2@0.1.0",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-customizable"
+    }
   }
 }

@@ -1,45 +1,56 @@
 import styled from "styled-components";
 
-export const BridgeStyle = styled.div`
-  display: flex;
-  justify-content: space-between;
-`
 export const BridgeCardStyle = styled.div`
-  width: 499px;
-  height: 524px;
-  border-radius: 10px;
-  background: #fff;
-  margin: 24px;
-  border: 1px solid #EFEFEF;
+  width: 500px;
+  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
 `
 
 export const FunctionSwitchButton = styled.div`
+  font-family: PingFangSC-Regular;
   font-size: 16px;
-  font-weight: bold;
-  color: #8E8E8E;
+  background-image: linear-gradient(134deg, #FAFAFB 0%, #F4F4F5 100%);
+  box-shadow: -3px -3px 4px 0 rgba(0,0,0,0.10), 3px 3px 4px 0 #FFFFFF;
+  border-radius: 19px;
   ul{
-    width: 425px;
-    height: 48px;
+    width: 500px;
+    height: 52px;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background: #F6F6F6;
-    margin-top: 30px;
-    border-radius: 6px;
   }
   li{
-    width: 208px;
+    width: 50%;
     height: 44px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 6px;
     &.active{
-      background: #fff;
+      background: #F4F4F5;
+      box-shadow: 3px 3px 8px 0 rgba(0,0,0,0.11), -3px -3px 8px 0 #FFFFFF;
+      border-radius: 16px;
+    }
+  };
+`
+
+export const BridgeStyle = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: PingFangSC-Regular;
+    font-size: 16px;
+    color: #8E8E8E;
+    font-weight: 400;
+    &.active{
+      background: #F4F4F5;
+      box-shadow: 3px 3px 8px 0 rgba(0,0,0,0.11), -3px -3px 8px 0 #FFFFFF;
+      border-radius: 16px;
+      font-family: PingFangSC-Semibold;
       color: #282828;
+      font-weight: 600;
     }
   };
 `

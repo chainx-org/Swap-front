@@ -2,8 +2,14 @@ import styled from "styled-components";
 
 export const HeaderStyle = styled.div`
   display: flex;
-  justify-content: flex-end;
+  padding-top: 21px;
+  padding-left: 40px;
+  padding-right: 40px;
+  justify-content: space-between;
   align-items: center;
-  background: #fff;
-  height: 60px;
+  height: 79px;
+  // width: 100vw;
+  .header-right{
+    display: flex;
+  }
 `
