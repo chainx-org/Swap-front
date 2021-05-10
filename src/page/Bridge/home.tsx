@@ -7,11 +7,13 @@ import Redeem from "../../components/Redeem";
 import IssueRequestSuccessCard from "../../components/IssueRequestSuccessCard";
 enum Tab { Issue, Redeem, }
 
-function BridgeHome() {
+function BridgeHome(): React.ReactElement {
   const { t } = useTranslation();
   const { setActiveTab, isActive } = useTab(Tab.Issue);
+  const [showNext, setShowNext] = useState(true)
   return (
     <BridgeCardStyle>
+      { showNext ? <>
         <FunctionSwitchButton>
           <ul>
             <li
@@ -32,7 +34,8 @@ function BridgeHome() {
             </li>
           </ul>
         </FunctionSwitchButton>
-        {isActive(Tab.Issue) ? <Issue /> : <Redeem />}
+        {isActive(Tab.Issue) ? <Issue setShowNext={setShowNext}/> : <Redeem />} </>
+        : <IssueRequestSuccessCard /> }
     </BridgeCardStyle>
   );
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { CardFooterStyle } from "./style";
-import warningLogo from "../IssueRequestSuccessCard/icons/warm.svg";
+import ExplainTag from "../ExplainTag";
 
 interface FooterProps{
     lockCollateral :number;
@@ -10,31 +10,9 @@ interface FooterProps{
 const CardFooter:React.FunctionComponent<FooterProps> = ({lockCollateral,issueAmount,toAccount}) =>{
     return (
         <CardFooterStyle>
-            <ul>
-                <li>
-                    <div className={"font"}>
-                        <div>
-                            锁定抵押品
-                        </div>
-                        <img src={warningLogo} alt=""/>
-                    </div>
-                    <div>{lockCollateral} PCX</div>
-                </li>
-                <li>
-                    <div className={"font"}>
-                        <div>发行总额</div>
-                        <img src={warningLogo} alt=""/>
-                    </div>
-                    <div>{issueAmount} BTC</div>
-                </li>
-                <li>
-                    <div className={"font"}>
-                        <div>目标账户</div>
-                        <img src={warningLogo} alt=""/>
-                    </div>
-                    <div>{toAccount}</div>
-                </li>
-            </ul>
+            <ExplainTag title='锁定抵押品' children={<div>{lockCollateral} PCX</div>}/>
+            <ExplainTag title='发行总额' children={<div>{issueAmount} BTC</div>}/>
+            <ExplainTag title='目标账户' children={<div>{toAccount}</div>}/>
         </CardFooterStyle>
     )
 }

@@ -2,14 +2,14 @@ import styled from "styled-components";
 import React from "react";
 
 export const IssueRequestCardStyle = styled.div`
-  height: 637px;
   width: 500px;
   background: #F4F4F5;
   box-shadow: 10px 10px 16px 0 rgba(0, 0, 0, 0.06), -10px -10px 16px 0 #FFFFFF;
   border-radius: 16px;
-  padding: 40px;
+  padding: 30px 40px 16px;
   display: flex;
   flex-direction: column;
+  margin-top: 20px;
   .line{
     background: #F4F4F5;
     box-shadow: -1px -1px 2px 0 rgba(0,0,0,0.04), 1px 1px 2px 0 #FFFFFF;
@@ -23,7 +23,7 @@ export const IssueRequestCardStyle = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-
+    margin-bottom: 23px;
     img {
       height: 32px;
     }
