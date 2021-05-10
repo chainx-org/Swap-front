@@ -75,3 +75,37 @@ export const TableStyle = styled.div`
     }
   }
 `
+
+export const ModalStyle = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px;
+  height: 761px;
+  .card-header{
+    font-size: 14px;
+    color: #282828;
+    text-align: center;
+    font-weight: 400;
+  }
+  .time{
+    font-size: 32px;
+    color: #EA754B;
+    text-align: right;
+    font-weight: 600;
+  }
+  .line{
+    width: 420px;
+    height: 2px;
+    background: #F4F4F5;
+    box-shadow: -1px -1px 2px 0 rgba(0,0,0,0.04), 1px 1px 2px 0 #FFFFFF;
+    margin-top: 32px;
+  }
+  .dotted-line{
+    width: 420px;
+    height: 2px;
+    border: 1px dashed #E5E5E5;
+    box-shadow: 0 2px 1px 0 #FFFFFF;
+    margin-top: 23.5px;
+  }
+`

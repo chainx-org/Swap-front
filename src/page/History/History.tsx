@@ -1,10 +1,14 @@
 import React, {useState, useEffect} from "react";
-import {FunctionSwitchButton, HistoryStyle, TableStyle} from "./style";
+import {FunctionSwitchButton, HistoryStyle, ModalStyle, TableStyle} from "./style";
 import {useTranslation} from "react-i18next";
-import {Space, Table} from "antd";
+import {Space, Table, Modal} from "antd";
 import {ColumnType} from "antd/lib/table";
 import useAccountModel from "../../hooks/useAccountModel"
-import { decodeAddress, encodeAddress } from "@polkadot/keyring";
+import {decodeAddress, encodeAddress} from "@polkadot/keyring";
+import CardMain from "../../components/CardMain";
+import RequestID from "../../components/RequestID";
+import ModalFooter from "../../components/ModalFooter";
+
 interface HistoryRow {
     id: number;
     amount: number;
@@ -14,16 +18,17 @@ interface HistoryRow {
     countedBlock: number;
     status: "process" | "completed" | "cancelled";
 }
+
 enum HistoryTab {
     Issue,
     Redeem
 }
 
 function History() {
-    const { currentAccount } = useAccountModel();
+    const {currentAccount} = useAccountModel();
     const {t} = useTranslation()
     const [page, setPage] = useState(0);
-    const [currentTable,setCurrentTable] = useState("issue")
+    const [currentTable, setCurrentTable] = useState("issue")
 
     const columns = [
         {
@@ -54,7 +59,7 @@ function History() {
         {
             title: '状态',
             key: 'action',
-            render: (text : any,record:any) => (
+            render: (text: any, record: any) => (
                 <Space size="middle">
                     {record.status === "进行中" && <div className={"processing"}>{record.status}</div>}
                     {record.status === "失败" && <div className={"fail"}>{record.status}</div>}
@@ -159,7 +164,7 @@ function History() {
                     <li onClick={() => {
                         setCurrentTable("issue");
                         setPage(0);
-                    }}  className={currentTable === "issue" ? "active" : "none"}>{t('issue')}</li>
+                    }} className={currentTable === "issue" ? "active" : "none"}>{t('issue')}</li>
                     <li onClick={() => {
                         setCurrentTable("redeem");
                         setPage(0);
@@ -167,9 +172,29 @@ function History() {
                 </ul>
             </FunctionSwitchButton>
             <TableStyle>
-                {currentTable === "issue" ? <Table  columns={columns} dataSource={IssueData} /> : <Table  columns={columns} dataSource={RedeemData}/> }
+                {currentTable === "issue" ? <Table columns={columns} dataSource={IssueData}/> :
+                    <Table columns={columns} dataSource={RedeemData}/>}
             </TableStyle>
+            <Modal visible={true} footer={null} getContainer={false}>
+                <ModalStyle>
+                    <div className={"card-header"}>
+                        <div>
+                            <div>剩余时间</div>
+                            <img src="" alt=""/>
+                        </div>
+                        <div className={"time"}>
+                            47:56:10
+                        </div>
+                    </div>
+                    <CardMain opreturn={"81e71f40d31aa46f09da3f5d58a879c54708725f96730df2d8ac67050b6e2a07"} address={"ms3tsPc5nJZWunt3vXotJoDcoTHGohKiHC"}/>
+                    <div className={"line"}/>
+                    <RequestID requestID={"3123213123"}/>
+                    <div className={"dotted-line"}/>
+                    <ModalFooter btcReceiveAddress={"mHpAy3ahw2S7LvX...UXhG6wWRg1WBb"} lockCollateral={2} issueAmount={23} vaultPCXAddress={"5HpAy3ahw2S7…G6wWRg1WBb"} vaultBTCAddress={"5HpAy3ahw2S7…G6wWRg1WBb"}/>
+                </ModalStyle>
+            </Modal>
         </HistoryStyle>
     )
 }
+
 export default History;
