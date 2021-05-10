@@ -30,6 +30,25 @@ export const AccountSwitch = styled.div`
     font-weight: 500;
     padding: 0 20px;
   }
+  .currContent {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background: #EFEFEF;
+    box-shadow: -2px -2px 3px 0 rgba(0,0,0,0.10), 2px 2px 3px 0 #FFFFFF;
+    border-radius: 15px;
+    width: 142px;
+    height: 40px;
+    .currName {
+        opacity: 0.85;
+        font-family: PingFangSC-Medium;
+        font-size: 14px;
+        color: #000000;
+        text-align: center;
+        line-height: 22px;
+        font-weight: 500;
+    }
+  }
 `
 export const IssueBtcInputStyle = styled.div`
   display: flex;
