@@ -7,7 +7,7 @@ const Item = styled(Tooltip)`
   .title-info {
     display: flex;
     justify-content: space-between;
-    margin: 16px 16px 0 16px;
+    margin: 16px 0px 7px 0px;
     & > span:nth-child(1) {
       font-size: 12px;
       color: #282828;
@@ -16,6 +16,7 @@ const Item = styled(Tooltip)`
       display: inline-block;
       height: 20px;
       line-height: 20px;
+      font-weight: 400;
     }
     & > span:nth-child(2) {
       font-size: 12px;
@@ -25,6 +26,7 @@ const Item = styled(Tooltip)`
       display: inline-block;
       height: 20px;
       line-height: 20px;
+      font-weight: 400;
     }
   }
   .selectBtn {
@@ -32,7 +34,7 @@ const Item = styled(Tooltip)`
     height: 40px;
     display: flex;
     justify-content: space-between;
-    padding: 0 16px;
+    // padding: 0 16px;
     .divBtn {
       width: 120px;
       height: 40px;
@@ -84,6 +86,9 @@ const Item = styled(Tooltip)`
         .ant-input {
           background: none !important;
         }
+        .ant-input-suffix{
+          color:#E9A840;
+        }
       }
       .ant-input-affix-wrapper:focus,
       .ant-input-affix-wrapper-focused {
@@ -99,31 +104,32 @@ const SvgStyle = {
   margin: "15px",
 };
 const TitleInfoSecond = {
-  margin: "0px 16px 0 16px",
+  margin: "0px 0px 0 0px",
 };
 
 interface currencyItemProps {
   children?: React.ReactNode;
   className?: string;
-  label?: string;
-  value?: string;
+  currencyName: string;
+  currencyTitle: string;
 }
 function currencyItem({
   children,
   className = "",
-  label,
-  value,
+  currencyName,
+  currencyTitle,
 }: currencyItemProps): React.ReactElement<currencyItemProps> {
+  console.log("label", currencyName);
   return (
     <Item>
-      {value === "From" ? (
+      {currencyTitle === "From" ? (
         <div className="title-info">
-          <span>{value}</span>
+          <span>{currencyTitle}</span>
           <span>Balance:999.0067</span>
         </div>
       ) : (
         <div className="title-info" style={TitleInfoSecond}>
-          <span>{value}</span>
+          <span>{currencyTitle}</span>
           <span>Balance:999.0067</span>
         </div>
       )}
@@ -131,13 +137,17 @@ function currencyItem({
       <div className="selectBtn">
         <div className="divBtn">
           <span>{children}</span>
-          <span>{label}</span>
+          <span>{currencyName}</span>
           <span>
             <ArrowIcon style={SvgStyle} />
           </span>
         </div>
         <div className="input-div">
-          {value === "From" ? <Input suffix="MAX" /> : <Input suffix="" />}
+          {currencyTitle === "From" ? (
+            <Input suffix="MAX" placeholder="0.0" />
+          ) : (
+            <Input suffix="" placeholder="0.0" />
+          )}
         </div>
       </div>
     </Item>

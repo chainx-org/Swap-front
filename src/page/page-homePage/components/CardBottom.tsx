@@ -5,21 +5,22 @@ const Item = styled(Tooltip)`
   .title-info {
     display: flex;
     justify-content: space-between;
-    margin: 16px 16px 0 16px;
+    margin: 32px 0px 0 0px;
     & > span {
       display: inline-block;
-      height: 20px;
+      //   height: 17px;
       text-align: right;
       letter-spacing: 0.1px;
       font-size: 12px;
       color: #3f3f3f;
       font-weight: 500;
-      line-height: 20px;
+      line-height: 17px;
     }
   }
   .buttonDiv {
     width: 392px;
-    margin: 16px 0px 0 16px;
+    height: 44px;
+    margin: 16px 0px 0 0px;
   }
 `;
 interface BottomItemProps {
@@ -40,7 +41,6 @@ function BottomItem({
     <Item>
       <div></div>
       <div className="title-info">
-        123
         <span>{name}</span>
         <span>{value}</span>
       </div>
