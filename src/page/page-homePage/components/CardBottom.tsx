@@ -40,6 +40,7 @@ function BottomItem({
     <Item>
       <div></div>
       <div className="title-info">
+        123
         <span>{name}</span>
         <span>{value}</span>
       </div>
