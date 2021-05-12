@@ -5,6 +5,7 @@ import DOGESymbol from '../../assets/symbols_DOGE.svg';
 import ArrowBlack from '../../assets/arrow_black.svg'
 import styled from 'styled-components';
 import NormalButton from '../Button';
+import Loading from '../../assets/loading.png'
 
 const CoinInfoWrapper = styled.div`
   position: relative;
@@ -84,6 +85,33 @@ const PriceWrapper = styled.div`
   }
 `
 
+const WaitingWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 28px;
+  .loading{
+    height: 100px;
+    width: 100px;
+  }
+  .waiting{
+    font-size: 20px;
+    color: #000000;
+    text-align: center;
+    line-height: 28px;
+    font-weight: 500;
+    font-family: PingFangSC-Medium;
+  }
+  .confirm{
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #908E8E;
+    text-align: center;
+    line-height: 28px;
+    font-weight: 400;
+  }
+`
+
 interface CoinNumItem {
   coinIcon: string;
   coinName: string;
@@ -104,26 +132,33 @@ const ConfirmCard = (): React.ReactElement => {
     }
   ];
 
+  // const backContent = (
+  //   <PriceWrapper>
+  //     <div className='field'>
+  //       <span className='fieldName'>Price</span>
+  //       <span className='fieldContent'>15.83 XDOGE/XETH</span>
+  //     </div>
+  //     <div className='field'>
+  //       <span className='fieldName'>Minimum Received</span>
+  //       <span className='fieldContent'>15.83 XDOGE</span>
+  //     </div>
+  //     <div className='field'>
+  //       <span className='fieldName'>Price Impact</span>
+  //       <span className='fieldContent'>{'< 0.01%'}</span>
+  //     </div>
+  //     <div className='field'>
+  //       <span className='fieldName'>Liquidity Provider Fee</span>
+  //       <span className='fieldContent'>0.03926 XETH</span>
+  //     </div>
+  //     <NormalButton className='confirmButton' label='Confirm Swap'/>
+  //   </PriceWrapper>
+  // )
   const backContent = (
-    <PriceWrapper>
-      <div className='field'>
-        <span className='fieldName'>Price</span>
-        <span className='fieldContent'>15.83 XDOGE/XETH</span>
-      </div>
-      <div className='field'>
-        <span className='fieldName'>Minimum Received</span>
-        <span className='fieldContent'>15.83 XDOGE</span>
-      </div>
-      <div className='field'>
-        <span className='fieldName'>Price Impact</span>
-        <span className='fieldContent'>{'< 0.01%'}</span>
-      </div>
-      <div className='field'>
-        <span className='fieldName'>Liquidity Provider Fee</span>
-        <span className='fieldContent'>0.03926 XETH</span>
-      </div>
-      <NormalButton className='confirmButton' label='Confirm Swap'/>
-    </PriceWrapper>
+    <WaitingWrapper>
+        <img src={Loading} className='loading' alt="loading"/>
+      <div className='waiting'>waiting for confimation</div>
+      <div className='confirm'>Confirm this transaction in polkadot-js/extension</div>
+    </WaitingWrapper>
   )
 
   return (
