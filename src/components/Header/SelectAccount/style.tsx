@@ -1,26 +1,52 @@
 import styled from "styled-components";
 
 export const SelectAccountStyle = styled.div`
-  padding-left: 20px;
-  padding-right: 20px;
-  margin-right: 24px;
   display: flex;
+  width: 222px;
+  height: 32px;
+  // justify-content: space-between;
+  margin-right: 16px;
   align-items: center;
-  background: #F4F4F5;
-  box-shadow: 3px 3px 8px 0 rgba(0,0,0,0.11), -3px -3px 8px 0 #FFFFFF;
-  border-radius: 16px;
-  width: 100%;
-  justify-content: center;
-  .avatar{
+  background: #fff8e3;
+  border: 1px solid #282828;
+  border-radius: 18px;
+  .avatar {
     margin-right: 8px;
   }
-  .icon{
+  .icon {
     margin-left: 4px;
   }
-  .current-account{
-    font-size: 14px;
-    color: #000000;
-    font-weight: bold;
+  .current-icon {
+    // width: 20px;
+    // height: 20px;
+    // border: 1px solid black;
+    margin-left: 8px;
+  }
+  .current-name {
+    width: 82px;
+    height: 20px;
+    line-height: 20px;
+    margin-left: 6px;
+    margin-right: 16px;
+    font-family: PingFangSC-Medium;
+    font-size: 12px;
+    color: #282828;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
   }
-`
+  .current-address {
+    width: 88px;
+    height: 20px;
+    line-height: 20px;
+    margin-right: 16px;
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #282828;
+    font-weight: 400;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+`;
