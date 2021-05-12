@@ -1,73 +1,89 @@
-import React from "react";
-import { Card } from "antd";
-import styled from "styled-components";
+import React from 'react';
+import { Card } from 'antd';
+import closeBtn from '../../../assets/close-pop.svg';
+import styled from 'styled-components';
+
 const CardContainer = styled(Card)`
+  position: relative;
   .cardBox{
     padding:16px;
+    z-index: 2;
   } 
   .ant-card {
     background: rgba(255, 255, 255, 0.9);
     border: 1px solid #efefef;
-    borderRadius: 24px 24px 16px 16px;
+    border-radius: 24px 24px 16px 16px;
     box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
   }
   .ant-card-body {
-    padding: 0px;
+    padding: 0;
   }
- .topBanner{
+  .cardHeader{
+    z-index: 999;
     display:flex;
     justify-content:space-between;
+    border-bottom: 1px solid #efefef;
     .title {
-      margin: 0px 0px 7px 0px;
-      height:47.5px
+      margin: 0 0 7px 0;
       font-weight: 500;
       color: #282828;
       font-size: 16px;
       font-family: PingFangSC-Medium;
     }
-    .cancelBtn{
-      margin: 0px 0px 7px 0px;
-      height:47.5px
-      color: #282828;
-      font-size: 16px;
-      font-family: PingFangSC-Medium;
+    .closeBtn{
+      height: 28px;
+      width: 28px;
+      cursor: pointer;
     } 
- }
- .line {
-  position: absolute;
-  top: 47.5px;
-  border: 1px solid #efefef;
-  width: 424px;
-  margin-left: -16px;
-}
+  }
+  .backContent{
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #f4f4f5;
+    border: 1px solid #EFEFEF;
+    border-radius: 24px 24px 16px 16px;
+    .empty{
+      height: 245px;
+    }
+  }
 `;
 const container = {
-  border: "1px solid rgba(255, 255, 255, .5)",
-  borderRadius: "24px 24px 16px 16px",
-  margin: "auto auto",
+  border: '1px solid rgba(255, 255, 255, .5)',
+  borderRadius: '24px 24px 16px 16px',
+  margin: 'auto auto',
 };
+
 interface CardItemProps {
   children?: React.ReactNode;
   className?: string;
-  label?: string;
-  value?: string;
+  title?: string;
+  backContent?: React.ReactNode;
+  exitOption: boolean;
 }
-function ContainerCard({
-  children,
-  className = "",
-  label,
-  value,
-}: CardItemProps): React.ReactElement<CardItemProps> {
+
+function ContainerCard({children, title, exitOption, backContent, className = '',}: CardItemProps): React.ReactElement<CardItemProps> {
   return (
     <CardContainer bordered={false} style={container}>
       <div className="cardBox">
-        <div className="topBanner">
-          <div className="title">{label}</div>
-          {value === "true" && <div className="cancelBtn">X</div>}
-        </div>
-        <div className="line"></div>
-        <div>{children}</div>
+        {title &&
+        <div className="cardHeader">
+          <div className="title">{title}</div>
+          {exitOption && <img className='closeBtn' src={closeBtn} alt='close'/>}
+        </div>}
+        <div className='cardContent'>{children}</div>
+
       </div>
+      {
+        backContent &&
+        <div className='backContent'>
+          <div className="empty"/>
+          {backContent}
+        </div>
+      }
     </CardContainer>
   );
 }
