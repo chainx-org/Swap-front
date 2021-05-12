@@ -5,6 +5,8 @@ const Item = styled(Tooltip)`
   .title-info {
     display: flex;
     justify-content: space-between;
+    padding-left: 16px;
+    padding-right: 16px;
     margin: 32px 0px 0 0px;
     & > span {
       display: inline-block;
@@ -20,7 +22,9 @@ const Item = styled(Tooltip)`
   .buttonDiv {
     width: 392px;
     height: 44px;
-    margin: 16px 0px 0 0px;
+    padding-left: 16px;
+    padding-right: 16px;
+    margin: 8px 0px 15px 16px;
   }
 `;
 interface BottomItemProps {

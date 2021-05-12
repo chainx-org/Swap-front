@@ -16,6 +16,10 @@ const SvgStyle = {
   margin: "8px",
 };
 
+const Container = {
+  backgroundImage: "linear-gradient(180deg, #FAF5E8 7%, #F7F8FA 100%)",
+};
+
 const ExchangeIconStyle = styled.div`
   .box {
     width: 100%;
@@ -23,10 +27,10 @@ const ExchangeIconStyle = styled.div`
     display: inline-block;
     .iconBox {
       position: absolute;
-      bottom: 172px;
+      bottom: 165px;
       width: 26px;
       height: 26px;
-      margin-left: 120px;
+      margin-left: 130px;
     }
   }
 `;
@@ -44,10 +48,10 @@ const HomePage = (): React.ReactElement => {
   };
 
   return (
-    <>
+    <div style={Container}>
       <Header />
       <Content>
-        <SideBar />
+        {/* <SideBar /> */}
         <ContainerCard value="true" label="Swap">
           {/* 货币一 */}
           <CardItem currencyTitle="From" currencyName={currencyName[0]}>
@@ -73,7 +77,7 @@ const HomePage = (): React.ReactElement => {
           />
         </ContainerCard>
       </Content>
-    </>
+    </div>
   );
 };
 
