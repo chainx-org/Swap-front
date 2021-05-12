@@ -1,5 +1,5 @@
 import React from 'react';
-import ContainerCard from '../../../page/page-homePage/components/ContainerCard';
+import ContainerCard from '../ContainerCard';
 import ETHSymbol from '../../../assets/symbols_ETH.svg';
 import DOGESymbol from '../../../assets/symbols_DOGE.svg';
 import ArrowBlack from '../../../assets/arrow_black.svg';
@@ -22,6 +22,11 @@ interface ConfirmCardProps {
   confirmType: 'priceInfo' | 'waiting' | 'transactionStatus'
 }
 
+interface PriceFieldItem{
+  fieldName: string;
+  fieldContent: string;
+}
+
 const ConfirmCard = ({confirmType, statusValue}: ConfirmCardProps): React.ReactElement<ConfirmCardProps> => {
   const coinNumList: CoinNumItem[] = [
     {
@@ -36,7 +41,7 @@ const ConfirmCard = ({confirmType, statusValue}: ConfirmCardProps): React.ReactE
     }
   ];
 
-  const PriceFieldList = [
+  const PriceFieldList: PriceFieldItem[] = [
     {
       fieldName: 'Price',
       fieldContent: '15.83 XDOGE/XETH'
@@ -55,7 +60,7 @@ const ConfirmCard = ({confirmType, statusValue}: ConfirmCardProps): React.ReactE
     },
   ]
 
-  const backPriceContent = (
+  const backPriceContent: React.ReactNode = (
     <PriceWrapper>
       {PriceFieldList.map(item =>
         <PriceField name={item.fieldName} content={item.fieldContent}/>)
@@ -64,7 +69,7 @@ const ConfirmCard = ({confirmType, statusValue}: ConfirmCardProps): React.ReactE
     </PriceWrapper>
   )
 
-  const backWaitingContent = (
+  const backWaitingContent: React.ReactNode = (
     <WaitingWrapper>
         <img src={Loading} className='loading' alt="loading"/>
       <div className='waiting'>waiting for confimation</div>
@@ -72,7 +77,7 @@ const ConfirmCard = ({confirmType, statusValue}: ConfirmCardProps): React.ReactE
     </WaitingWrapper>
   )
 
-  const backStatusContent = (
+  const backStatusContent: React.ReactNode = (
     <StatusWrapper>
       {statusValue === 'fail' ?
         <>
@@ -88,7 +93,7 @@ const ConfirmCard = ({confirmType, statusValue}: ConfirmCardProps): React.ReactE
     </StatusWrapper>
   );
 
-  const judgeConfirmType = (type: string) => {
+  const judgeConfirmType = (type: string): React.ReactNode => {
     switch (type) {
       case 'priceInfo':
         return backPriceContent;

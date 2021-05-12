@@ -2,14 +2,13 @@ import styled from "styled-components";
 
 export const HeaderStyle = styled.div`
   display: flex;
-  padding-top: 21px;
-  padding-left: 40px;
-  padding-right: 40px;
+  height: 60px;
   justify-content: space-between;
+  // padding-top: 19px;
+  // padding-left: 16px;
+  // padding-right: 16px;
   align-items: center;
-  height: 79px;
-  // width: 100vw;
-  .header-right{
+  .header-right {
     display: flex;
   }
-`
+`;

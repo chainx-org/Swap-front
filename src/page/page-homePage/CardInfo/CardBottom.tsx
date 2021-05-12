@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Button, Tooltip } from "antd";
+import NormalButton from "../../../components/Button/index";
 
 const Item = styled(Tooltip)`
   .title-info {
     display: flex;
     justify-content: space-between;
-    margin: 32px 0 0 0;
+    padding-left: 16px;
+    padding-right: 16px;
+    margin: 32px 0px 0 0px;
     & > span {
       display: inline-block;
       //   height: 17px;
@@ -21,9 +24,12 @@ const Item = styled(Tooltip)`
   .buttonDiv {
     width: 392px;
     height: 44px;
-    margin: 16px 0 0 0;
+    padding-left: 16px;
+    padding-right: 16px;
+    margin: 8px 0px 15px 16px;
   }
 `;
+
 interface BottomItemProps {
   children?: React.ReactNode;
   className?: string;
@@ -31,16 +37,18 @@ interface BottomItemProps {
   label?: string;
   value?: string;
 }
-function BottomItem({name, label, value}: BottomItemProps): React.ReactElement<BottomItemProps> {
+function BottomItem({
+  name,
+  label,
+  value,
+}: BottomItemProps): React.ReactElement<BottomItemProps> {
   return (
     <Item>
       <div className="title-info">
         <span>{name}</span>
         <span>{value}</span>
       </div>
-      <Button type="primary" className="buttonDiv">
-        {label}
-      </Button>
+      <NormalButton label={label} className="buttonDiv" />
     </Item>
   );
 }

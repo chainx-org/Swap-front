@@ -1,12 +1,16 @@
-import React from "react";
-import styled from "styled-components";
-import { Input, Button, Tooltip } from "antd";
+import React, { useState } from "react";
+import DialogCard from "../Dialog/index";
+import { Input } from "antd";
 import { ReactComponent as ArrowIcon } from "../../../assets/ArrowIcon.svg";
-
+// import { Item, SvgStyle, TitleInfoSecond } from "./style";
+import { Tooltip, Card } from "antd";
+import styled from "styled-components";
 const Item = styled(Tooltip)`
   .title-info {
     display: flex;
     justify-content: space-between;
+    padding-left: 16px;
+    padding-right: 16px;
     margin: 16px 0px 7px 0px;
     & > span:nth-child(1) {
       font-size: 12px;
@@ -34,35 +38,45 @@ const Item = styled(Tooltip)`
     height: 40px;
     display: flex;
     justify-content: space-between;
-    // padding: 0 16px;
+    padding-left: 16px;
+    padding-right: 16px;
     .divBtn {
+      display: flex;
+      flex-direction: row;
       width: 120px;
       height: 40px;
-      display: flex;
-      justify-content: space-between;
       background: rgba(255, 255, 255, 0.9);
       border: 1px solid #efefef;
       box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.07);
       border-radius: 20px;
+      margin-right: 16px;
+      .divBtnIcon {
+        width: 40px;
+        height: 40px;
+        & > span:nth-child(1) {
+          display: inline-block;
+          margin-top: 1px;
+          height: 100%;
+          width: 100%;
+        }
+      }
+
       & > span:nth-child(1) {
         display: inline-block;
-        margin: "auto auto",
-        height: 100%;
-        width: 100%;
+        height: 40px;
+        font-size: 14px;
+        line-height: 40px;
+        font-weight: 500;
+        color: #282828;
       }
       & > span:nth-child(2) {
-        font-size: 14px;
-        color: #282828;
-        font-weight: 500;
-        display: inline-block;
-        height: 100%;
+        width: 40px;
+        height: 40px;
         line-height: 40px;
-      }
-      & > span:nth-child(3) {
+        font-weight: 500;
+        color: #282828;
         display: inline-block;
-        margin: "auto auto",
-        height: 100%;
-        width: 100%;
+        margin: "auto auto";
       }
     }
     .input-div {
@@ -86,8 +100,8 @@ const Item = styled(Tooltip)`
         .ant-input {
           background: none !important;
         }
-        .ant-input-suffix{
-          color:#E9A840;
+        .ant-input-suffix {
+          color: #e9a840;
         }
       }
       .ant-input-affix-wrapper:focus,
@@ -113,13 +127,17 @@ interface currencyItemProps {
   currencyName: string;
   currencyTitle: string;
 }
-function currencyItem({
+function CurrencyItem({
   children,
   className = "",
   currencyName,
   currencyTitle,
 }: currencyItemProps): React.ReactElement<currencyItemProps> {
+  const [isOpenDialog, setisOpenDialog] = useState(false);
   console.log("label", currencyName);
+  function OpenDialog() {
+    setisOpenDialog(true);
+  }
   return (
     <Item>
       {currencyTitle === "From" ? (
@@ -135,8 +153,11 @@ function currencyItem({
       )}
 
       <div className="selectBtn">
-        <div className="divBtn">
-          <span>{children}</span>
+        <div className="divBtn" onClick={OpenDialog}>
+          <div className="divBtnIcon">
+            <span>{children}</span>
+          </div>
+
           <span>{currencyName}</span>
           <span>
             <ArrowIcon style={SvgStyle} />
@@ -150,8 +171,9 @@ function currencyItem({
           )}
         </div>
       </div>
+      {isOpenDialog && <DialogCard />}
     </Item>
   );
 }
 
-export default currencyItem;
+export default CurrencyItem;
