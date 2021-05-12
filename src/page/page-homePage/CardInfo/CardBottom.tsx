@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Button, Tooltip } from "antd";
+import NormalButton from "../../../components/Button/index";
 
 const Item = styled(Tooltip)`
   .title-info {
@@ -47,9 +48,7 @@ function BottomItem({
         <span>{name}</span>
         <span>{value}</span>
       </div>
-      <Button type="primary" className="buttonDiv">
-        {label}
-      </Button>
+      <NormalButton label={label} className="buttonDiv" />
     </Item>
   );
 }
