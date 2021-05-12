@@ -62,7 +62,7 @@ interface CardItemProps {
   className?: string;
   title?: string;
   backContent?: React.ReactNode;
-  exitOption: boolean;
+  exitOption?: boolean;
 }
 
 function ContainerCard({children, title, exitOption, backContent, className = '',}: CardItemProps): React.ReactElement<CardItemProps> {
