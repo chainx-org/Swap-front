@@ -1,6 +1,4 @@
 import React from "react";
-import { Card } from "antd";
-import styled from "styled-components";
 import { ReactComponent as CloseIcon } from "../../../assets/close-pop.svg";
 import { CardContainer, container } from "./style";
 interface CardItemProps {

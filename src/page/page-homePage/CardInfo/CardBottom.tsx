@@ -27,6 +27,7 @@ const Item = styled(Tooltip)`
     margin: 8px 0px 15px 16px;
   }
 `;
+
 interface BottomItemProps {
   children?: React.ReactNode;
   className?: string;
@@ -41,6 +42,9 @@ function BottomItem({
   label,
   value,
 }: BottomItemProps): React.ReactElement<BottomItemProps> {
+  function openDialog() {
+    debugger;
+  }
   return (
     <Item>
       <div></div>
@@ -48,7 +52,7 @@ function BottomItem({
         <span>{name}</span>
         <span>{value}</span>
       </div>
-      <Button type="primary" className="buttonDiv">
+      <Button type="primary" className="buttonDiv" onClick={openDialog}>
         {label}
       </Button>
     </Item>

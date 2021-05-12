@@ -1,10 +1,10 @@
-import React, { lazy, Suspense, useState, useEffect } from "react";
+import React, { useState, createContext } from "react";
 import Header from "../../components/Header";
 import SideBar from "../../components/SideBar";
 import styled from "styled-components";
-import ContainerCard from "./components/ContainerCard";
-import CardItem from "./components/CardItem";
-import BottomItem from "./components/CardBottom";
+import ContainerCard from "./CardInfo/ContainerCard";
+import CardItem from "./CardInfo/CardItem";
+import BottomItem from "./CardInfo/CardBottom";
 import { ReactComponent as DogIcon } from "../../assets/symbols_DOGE.svg";
 import { ReactComponent as BtcIcon } from "../../assets/symbols_BTC.svg";
 import { ReactComponent as ExchangeIcon } from "../../assets/icon_exchange.svg";
@@ -34,7 +34,7 @@ const ExchangeIconStyle = styled.div`
     }
   }
 `;
-
+const DialogContext = createContext("flase");
 const HomePage = (): React.ReactElement => {
   const a = ["XDOGE", "XBTC"];
   const [currencyName, setCurrencyName] = useState(a);
@@ -77,6 +77,7 @@ const HomePage = (): React.ReactElement => {
           />
         </ContainerCard>
       </Content>
+      <DialogContext.Provider value="false"></DialogContext.Provider>
     </div>
   );
 };
