@@ -78,6 +78,10 @@ const PriceWrapper = styled.div`
       line-height: 17px;
     }
   }
+  
+  .confirmButton{
+    margin-top: 12px;
+  }
 `
 
 interface CoinNumItem {
@@ -118,7 +122,7 @@ const ConfirmCard = (): React.ReactElement => {
         <span className='fieldName'>Liquidity Provider Fee</span>
         <span className='fieldContent'>0.03926 XETH</span>
       </div>
-      <NormalButton label='Confirm Swap'/>
+      <NormalButton className='confirmButton' label='Confirm Swap'/>
     </PriceWrapper>
   )
 
