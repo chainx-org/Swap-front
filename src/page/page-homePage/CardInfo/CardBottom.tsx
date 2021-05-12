@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { Input, Button, Tooltip } from "antd";
+import { Button, Tooltip } from "antd";
+
 const Item = styled(Tooltip)`
   .title-info {
     display: flex;
@@ -36,23 +37,17 @@ interface BottomItemProps {
   value?: string;
 }
 function BottomItem({
-  children,
-  className = "",
   name,
   label,
   value,
 }: BottomItemProps): React.ReactElement<BottomItemProps> {
-  function openDialog() {
-    debugger;
-  }
   return (
     <Item>
-      <div></div>
       <div className="title-info">
         <span>{name}</span>
         <span>{value}</span>
       </div>
-      <Button type="primary" className="buttonDiv" onClick={openDialog}>
+      <Button type="primary" className="buttonDiv">
         {label}
       </Button>
     </Item>
