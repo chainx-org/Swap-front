@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
-import { ApiContext } from "../../../hooks/ApiProvider";
 import styled from "styled-components";
 import { ReactComponent as DogIcon } from "../../../assets/symbols_DOGE.svg";
+import { shortenString } from '../../../helper';
+import { AccountItem, AccountsContext } from '../../../hooks/AccountsProvider';
 
 const MenuBox = {
   position: "absolute" as "absolute",
@@ -11,6 +12,7 @@ const IconBox = {
   width: "100%",
   height: "100%",
 };
+
 const DropListStyle = styled.div`
   position: absolute;
   width: 189px;
@@ -69,33 +71,39 @@ const DropListStyle = styled.div`
     }
   }
 `;
+
+const Wrapper = styled.div`
+  cursor: pointer;
+`
+
 function SelectAccount() {
-  let { accounts } = useContext(ApiContext);
-  accounts = [
-    {
-      name: "xl",
-      address: "129333333.com",
-    },
-    { name: "x2", address: "123344.com" },
-  ];
-  console.log("accounts", accounts);
+  const { accountList, setCurrentAccount } = useContext(AccountsContext);
+  const changeAccount = (account: AccountItem) => {
+    setCurrentAccount({
+      address: account.address,
+      name: account.name
+    })
+  }
+
   return (
     <div style={MenuBox}>
       <DropListStyle>
         <ul>
-          {accounts.map((item, index) => {
+          {accountList.map((item, index) => {
             return (
-              <li key={index}>
-                <div className={"assets-item"}>
-                  <div className={"item-left"}>
-                    <DogIcon style={IconBox} />
+              <Wrapper key={index} onClick={() => changeAccount(item)}>
+                <li>
+                  <div className={"assets-item"}>
+                    <div className={"item-left"}>
+                      <DogIcon style={IconBox} />
+                    </div>
+                    <div className={"item-right"}>
+                      <div className={"item-name"}>{item.name}</div>
+                      <div className={"item-address"}>{shortenString(item.address)}</div>
+                    </div>
                   </div>
-                  <div className={"item-right"}>
-                    <div className={"item-name"}>{item.name}</div>
-                    <div className={"item-address"}>{item.address}</div>
-                  </div>
-                </div>
-              </li>
+                </li>
+              </Wrapper>
             );
           })}
         </ul>

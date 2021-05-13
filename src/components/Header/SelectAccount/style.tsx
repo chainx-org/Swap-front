@@ -4,6 +4,7 @@ export const SelectAccountStyle = styled.div`
   display: flex;
   width: 222px;
   height: 32px;
+  cursor: pointer;
   // justify-content: space-between;
   margin-right: 16px;
   align-items: center;

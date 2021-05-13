@@ -1,8 +1,8 @@
 export default {
   rpc: {
-    "palletSwap": {
+    "swap": {
       "getAmountInPrice": {
-        "description": "palletSwap getAmountInPrice",
+        "description": "Return amount in price by amount out",
         "params": [
           {
             "name": "amount_out",
@@ -21,7 +21,7 @@ export default {
         "type": "string"
       },
       "getAmountOutPrice": {
-        "description": "palletSwap getAmountOutPrice",
+        "description": "Return amount out price by amount in",
         "params": [
           {
             "name": "amount_in",
@@ -40,7 +40,7 @@ export default {
         "type": "string"
       },
       "getTokenList":{
-        "description": "palletSwap getTokenList",
+        "description": "Return all token list info",
         "params": [
           {
             "name": "at",
@@ -49,6 +49,25 @@ export default {
           }
         ],
         "type": "Vec<TokenInfo>"
+      },
+      "getBalance": {
+        "description": "Return balance of (asset_id, who)",
+        "params": [
+          {
+            "name": "asset_id",
+            "type": "AssetId"
+          },
+          {
+            "name": "account",
+            "type": "AccountId"
+          },
+          {
+            "name": "at",
+            "type": "Hash",
+            "isOptional": true
+          }
+        ],
+        "type": "string"
       }
     },
     xassets: {
