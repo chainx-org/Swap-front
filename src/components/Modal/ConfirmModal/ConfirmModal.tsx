@@ -7,8 +7,9 @@ import NormalButton from '../../Button';
 import Loading from '../../../assets/loading.png';
 import Error from '../../../assets/Feedback_failure.svg';
 import Success from '../../../assets/Feedback_successed.svg';
-import { CoinInfoWrapper, PriceWrapper, StatusWrapper, WaitingWrapper } from './style';
+import { CoinInfoWrapper, ConfirmModalWrapper, PriceWrapper, StatusWrapper, WaitingWrapper } from './style';
 import PriceField from './PriceField';
+import Mask from '../../Mask';
 
 interface CoinNumItem {
   coinIcon: string;
@@ -105,22 +106,25 @@ const ConfirmModal = ({confirmType, statusValue}: ConfirmCardProps): React.React
 
   return (
     <>
-      <ContainerCard exitOption title='Confirm Swap' backContent={judgeConfirmType(confirmType)}>
-        <CoinInfoWrapper>
-          <div className='numWrapper'>
-            {coinNumList.map((item: CoinNumItem) =>
-              <div className='numInfo'>
-                <div className='coinName'>
-                  <img src={item.coinIcon} alt=""/>
-                  <div className='name'>{item.coinName}</div>
+      <Mask/>
+      <ConfirmModalWrapper>
+        <ContainerCard exitOption title='Confirm Swap' backContent={judgeConfirmType(confirmType)}>
+          <CoinInfoWrapper>
+            <div className='numWrapper'>
+              {coinNumList.map((item: CoinNumItem) =>
+                <div className='numInfo'>
+                  <div className='coinName'>
+                    <img src={item.coinIcon} alt=""/>
+                    <div className='name'>{item.coinName}</div>
+                  </div>
+                  <div className='num'>{item.coinNum}</div>
                 </div>
-                <div className='num'>{item.coinNum}</div>
-              </div>
-            )}
-          </div>
-          <img className='arrowDown' src={ArrowBlack} alt=""/>
-        </CoinInfoWrapper>
-      </ContainerCard>
+              )}
+            </div>
+            <img className='arrowDown' src={ArrowBlack} alt=""/>
+          </CoinInfoWrapper>
+        </ContainerCard>
+      </ConfirmModalWrapper>
     </>
   );
 };
