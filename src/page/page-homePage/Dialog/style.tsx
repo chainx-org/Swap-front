@@ -15,9 +15,8 @@ export const DivDialog = styled.div`
   }
   .content {
     position: fixed;
-    // height: 356px;
-    width: 379px;
-    left: 523px;
+    width: 356px;
+    left: 540px;
     top: 88px;
     opacity: 1;
     background-color: #fff;
