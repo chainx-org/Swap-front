@@ -104,7 +104,6 @@ function SelectAccount() {
                   </div>
                 </li>
               </Wrapper>
-
             );
           })}
         </ul>

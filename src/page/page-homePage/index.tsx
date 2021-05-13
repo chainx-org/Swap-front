@@ -4,11 +4,10 @@ import ContainerCard from "../../components/Card/ContainerCard";
 import styled from "styled-components";
 import CardItem from "./CardInfo/CardItem";
 import BottomItem from "./CardInfo/CardBottom";
-
 import { ReactComponent as DogIcon } from "../../assets/symbols_DOGE.svg";
 import { ReactComponent as BtcIcon } from "../../assets/symbols_BTC.svg";
 import { ReactComponent as ExchangeIcon } from "../../assets/icon_exchange.svg";
-import { ApiContext } from '../../hooks/ApiProvider';
+import { AccountsContext } from '../../hooks/AccountsProvider';
 
 const Container = styled.div`
   background-image: linear-gradient(180deg, #faf5e8 7%, #f7f8fa 100%);
@@ -54,7 +53,7 @@ const HomePage = (): React.ReactElement => {
       coinIcon: <BtcIcon style={SvgStyle} />,
     },
   ]);
-  const {isExtensionInjected} = useContext(ApiContext)
+  const {isExtensionInjected} = useContext(AccountsContext)
 
   return (
     <Container>
