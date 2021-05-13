@@ -4,6 +4,7 @@ import ContainerCard from "../../components/Card/ContainerCard";
 import styled from "styled-components";
 import CardItem from "./CardInfo/CardItem";
 import BottomItem from "./CardInfo/CardBottom";
+import SwapInfo from "./CardInfo/SwapInfo";
 import { ReactComponent as DogIcon } from "../../assets/symbols_DOGE.svg";
 import { ReactComponent as BtcIcon } from "../../assets/symbols_BTC.svg";
 import { ReactComponent as ExchangeIcon } from "../../assets/icon_exchange.svg";
@@ -86,8 +87,10 @@ const HomePage = (): React.ReactElement => {
             btnLabel={!isExtensionInjected? "Connect Wallet": 'Swap'}
             value="1%"
           />
+          {/* Swap info */}
         </ContainerCard>
       </Content>
+      <SwapInfo />
     </Container>
   );
 };
