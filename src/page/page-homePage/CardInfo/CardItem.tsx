@@ -50,6 +50,7 @@ const Item = styled(Tooltip)`
       box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.07);
       border-radius: 20px;
       margin-right: 16px;
+      align-items: center;
       .divBtnIcon {
         width: 40px;
         height: 40px;
@@ -58,6 +59,11 @@ const Item = styled(Tooltip)`
           margin-top: 1px;
           height: 100%;
           width: 100%;
+        }
+        & > svg {
+          margin: 14px 14px 16px 14px;
+          height: 12px;
+          width: 8px;
         }
       }
 
@@ -141,10 +147,6 @@ const Item = styled(Tooltip)`
   }
 `;
 
-const SvgStyle = {
-  margin: "15px",
-};
-
 interface currencyItemProps {
   children?: React.ReactNode;
   className?: string;
@@ -177,9 +179,9 @@ function CurrencyItem({
           </div>
 
           <span>{currencyName}</span>
-          <span>
-            <ArrowIcon style={SvgStyle} />
-          </span>
+          <div className="divBtnIcon">
+            <ArrowIcon />
+          </div>
         </div>
         <div className="input-div">
           {currencyTitle === "From" ? (
