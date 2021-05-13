@@ -54,51 +54,43 @@ interface CardItemProps {
   title?: string;
   backContent?: React.ReactNode;
   exitOption: boolean;
+  DialogControl?: any;
 }
 
 function ContainerCard({
   children,
   title,
   exitOption,
+  DialogControl,
   backContent,
   className = "",
 }: CardItemProps): React.ReactElement<CardItemProps> {
-  const [isAccountListOpen, setIsAccountListOpen] = useState(true);
-  //   const closeCard = (e: {
-  //     nativeEvent: { stopImmediatePropagation: () => void };
-  //   }) => {
-  //     e.nativeEvent.stopImmediatePropagation();
-  //     setIsAccountListOpen(!isAccountListOpen);
-  //   };
-  function closeCard() {
-    setIsAccountListOpen(!isAccountListOpen);
-  }
   return (
     <CardContainer>
-      {isAccountListOpen && (
-        <div className="containerBox">
-          {title && (
-            <div className="cardHeader">
-              <div className="title">{title}</div>
-              {exitOption && (
-                <img
-                  className="closeBtn"
-                  src={closeBtn}
-                  alt="close"
-                  onClick={closeCard}
-                />
-              )}
-            </div>
-          )}
-          <div className="cardContent">{children}</div>
-          {backContent && (
-            <div className="backContent">
-              <div className="empty" />
-              {backContent}
-            </div>
-          )}
-        </div>
-      )}
+      <div className="containerBox">
+        {title && (
+          <div className="cardHeader">
+            <div className="title">{title}</div>
+            {exitOption && (
+              <img
+                className="closeBtn"
+                src={closeBtn}
+                alt="close"
+                onClick={() => {
+                  DialogControl(false);
+                }}
+              />
+            )}
+          </div>
+        )}
+        <div className="cardContent">{children}</div>
+        {backContent && (
+          <div className="backContent">
+            <div className="empty" />
+            {backContent}
+          </div>
+        )}
+      </div>
     </CardContainer>
   );
 }

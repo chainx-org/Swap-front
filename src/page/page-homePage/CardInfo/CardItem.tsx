@@ -159,12 +159,7 @@ function CurrencyItem({
   currencyTitle,
 }: currencyItemProps): React.ReactElement<currencyItemProps> {
   const [isOpenDialog, setisOpenDialog] = useState(false);
-  console.log("label", currencyName);
-  function OpenDialog() {
-    debugger;
-    console.log(isOpenDialog, "isOpenDialog");
-    setisOpenDialog(!isOpenDialog);
-  }
+
   return (
     <Item>
       {currencyTitle === "From" ? (
@@ -180,7 +175,12 @@ function CurrencyItem({
       )}
 
       <div className="selectBtn">
-        <div className="divBtn" onClick={OpenDialog}>
+        <div
+          className="divBtn"
+          onClick={() => {
+            setisOpenDialog(!isOpenDialog);
+          }}
+        >
           <div className="divBtnIcon">
             <span>{children}</span>
           </div>
@@ -198,13 +198,9 @@ function CurrencyItem({
           )}
         </div>
       </div>
-      {/* {isOpenDialog && <DialogCard isOpen={isOpenDialog} />} */}
       {isOpenDialog && (
         <div>
-          {/* <div className="mask"></div>
-          <div className="content"> */}
-          <DialogCard isOpen={isOpenDialog}></DialogCard>
-          {/* </div> */}
+          < OpenDialog={setisOpenDialog}></DialogCard>
         </div>
       )}
     </Item>

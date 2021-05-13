@@ -68,9 +68,12 @@ const DialogItem = styled.div`
 `;
 interface DialogCardProps {
   isOpen?: Boolean;
+  OpenDialog?: any;
 }
+// const DialogCard = ({OpenDialog }) => {
 function DialogCard({
   isOpen,
+  OpenDialog,
 }: DialogCardProps): React.ReactElement<DialogCardProps> {
   const accounts = [
     {
@@ -110,40 +113,35 @@ function DialogCard({
       value: "12.0024",
     },
   ];
-  const [isOpenDialog, setisOpenDialog] = useState(isOpen);
-  function closeCard() {
-    debugger;
-    console.log(isOpenDialog, "isOpenDialog");
-    setisOpenDialog(false);
-  }
-  // console.log("isOpenDialog" + isOpen);
   return (
     <div>
-      {isOpenDialog && (
-        <DivDialog>
-          <div className="mask"></div>
-          <div className="content">
-            <ContainerCard exitOption={true} title="Select a token">
-              {accounts.map((item, index) => {
-                return (
-                  <DialogItem>
-                    <div className="item" key={index}>
-                      <div className="left-item">
-                        <div className="left-icon">{item.icon}</div>
-                        <div className="right-info">
-                          <span>{item.name}</span>
-                          <span>{item.type}</span>
-                        </div>
+      <DivDialog>
+        <div className="mask"></div>
+        <div className="content">
+          <ContainerCard
+            exitOption={true}
+            title="Select a token"
+            DialogControl={OpenDialog}
+          >
+            {accounts.map((item, index) => {
+              return (
+                <DialogItem>
+                  <div className="item" key={index}>
+                    <div className="left-item">
+                      <div className="left-icon">{item.icon}</div>
+                      <div className="right-info">
+                        <span>{item.name}</span>
+                        <span>{item.type}</span>
                       </div>
-                      <div className="right-item">{item.value}</div>
                     </div>
-                  </DialogItem>
-                );
-              })}
-            </ContainerCard>
-          </div>
-        </DivDialog>
-      )}
+                    <div className="right-item">{item.value}</div>
+                  </div>
+                </DialogItem>
+              );
+            })}
+          </ContainerCard>
+        </div>
+      </DivDialog>
     </div>
   );
 }
