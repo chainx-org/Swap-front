@@ -72,6 +72,7 @@ const Item = styled(Tooltip)`
       & > span:nth-child(2) {
         width: 40px;
         height: 40px;
+        font-size: 14px;
         line-height: 40px;
         font-weight: 500;
         color: #282828;
@@ -158,7 +159,6 @@ function CurrencyItem({
   currencyName,
   currencyTitle,
 }: currencyItemProps): React.ReactElement<currencyItemProps> {
-
   const [isOpenDialog, setisOpenDialog] = useState(false);
 
   return (
@@ -201,7 +201,7 @@ function CurrencyItem({
       </div>
       {isOpenDialog && (
         <div>
-          <DialogCard onCancel={setisOpenDialog}/>
+          <DialogCard onCancel={setisOpenDialog} />
         </div>
       )}
     </Item>
