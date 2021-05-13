@@ -8,7 +8,7 @@ export const CoinInfoWrapper = styled.div`
     height: 16px;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -100%);
+    transform: translateX(-50%);
   }
   .numWrapper{
     width: 100%;

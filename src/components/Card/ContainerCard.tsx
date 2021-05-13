@@ -3,11 +3,13 @@ import closeBtn from "../../assets/close-pop.svg";
 import styled from "styled-components";
 
 const CardContainer = styled.div`
+  height: fit-content;
   position: relative;
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid #efefef;
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
   border-radius: 24px 24px 16px 16px;
+  
   .cardHeader {
     z-index: 999;
     display: flex;
