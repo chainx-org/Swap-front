@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Button, Tooltip } from "antd";
 import NormalButton from "../../../components/Button/index";
+import ConfirmModal from '../../../components/Modal/ConfirmModal/ConfirmModal';
 
 const Item = styled(Tooltip)`
   .title-info {
@@ -33,22 +34,24 @@ const Item = styled(Tooltip)`
 interface BottomItemProps {
   children?: React.ReactNode;
   className?: string;
-  name?: string;
-  label?: string;
-  value?: string;
+  name: string;
+  btnLabel: string;
+  value: string;
 }
 function BottomItem({
   name,
-  label,
+  btnLabel,
   value,
 }: BottomItemProps): React.ReactElement<BottomItemProps> {
+  const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false)
   return (
     <Item>
       <div className="title-info">
         <span>{name}</span>
         <span>{value}</span>
       </div>
-      <NormalButton label={label} className="buttonDiv" />
+      <NormalButton label={btnLabel} className="buttonDiv" onClick={() => setIsConfirmOpen(true)} />
+      {isConfirmOpen&& <ConfirmModal onCancel={setIsConfirmOpen}  confirmType={'priceInfo'}/>}
     </Item>
   );
 }

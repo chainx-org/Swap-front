@@ -158,6 +158,7 @@ function CurrencyItem({
   currencyName,
   currencyTitle,
 }: currencyItemProps): React.ReactElement<currencyItemProps> {
+
   const [isOpenDialog, setisOpenDialog] = useState(false);
 
   return (
@@ -200,7 +201,7 @@ function CurrencyItem({
       </div>
       {isOpenDialog && (
         <div>
-          <DialogCard OpenDialog={setisOpenDialog}></DialogCard>
+          <DialogCard onCancel={setisOpenDialog}/>
         </div>
       )}
     </Item>

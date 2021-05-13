@@ -16,7 +16,7 @@ export const App: React.FC = () => {
   return (
     <>
       <LayoutWrapper id={'LayoutWrapper'}>
-        <ApiProvider url='wss://chainx.supercube.pro/ws'>
+        <ApiProvider url='ws://127.0.0.1:9999'>
           <HomePage/>
         </ApiProvider>
       </LayoutWrapper>

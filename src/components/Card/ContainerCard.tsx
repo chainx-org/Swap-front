@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React  from "react";
 import closeBtn from "../../assets/close-pop.svg";
 import styled from "styled-components";
 
 const CardContainer = styled.div`
+  height: fit-content;
   position: relative;
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid #efefef;
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
   border-radius: 24px 24px 16px 16px;
+  
   .cardHeader {
-    z-index: 999;
+    z-index: 3;
     display: flex;
     justify-content: space-between;
     height: 47px;
@@ -33,15 +35,18 @@ const CardContainer = styled.div`
       cursor: pointer;
     }
   }
+  .cardContent{
+    z-index: 2;
+  }
   .backContent {
     position: absolute;
     z-index: -1;
     top: 0;
     left: 0;
-    height: 100%;
     width: 100%;
     background: #f4f4f5;
     border: 1px solid #efefef;
+    height: fit-content;
     border-radius: 24px 24px 16px 16px;
     .empty {
       height: 245px;
@@ -53,16 +58,14 @@ interface CardItemProps {
   className?: string;
   title?: string;
   backContent?: React.ReactNode;
-  exitOption: boolean;
-  DialogControl?: any;
+  onCancel?: React.Dispatch<boolean>;
 }
 
 function ContainerCard({
   children,
   title,
-  exitOption,
-  DialogControl,
   backContent,
+  onCancel,
   className = "",
 }: CardItemProps): React.ReactElement<CardItemProps> {
   return (
@@ -71,13 +74,13 @@ function ContainerCard({
         {title && (
           <div className="cardHeader">
             <div className="title">{title}</div>
-            {exitOption && (
+            {onCancel && (
               <img
                 className="closeBtn"
                 src={closeBtn}
                 alt="close"
                 onClick={() => {
-                  DialogControl(false);
+                  onCancel(false);
                 }}
               />
             )}

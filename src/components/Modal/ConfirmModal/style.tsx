@@ -8,7 +8,7 @@ export const CoinInfoWrapper = styled.div`
     height: 16px;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -100%);
+    transform: translateX(-50%);
   }
   .numWrapper{
     width: 100%;
@@ -75,6 +75,7 @@ export const PriceWrapper = styled.div`
   
   .confirmButton{
     margin-top: 12px;
+    width: 368px;
   } 
 `;
 
@@ -125,3 +126,11 @@ export const StatusWrapper = styled.div`
     margin-bottom: 24px;
   }
 `;
+
+export const ConfirmModalWrapper = styled.div`
+  position: fixed;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -85%);
+`

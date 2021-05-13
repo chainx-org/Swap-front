@@ -1,15 +1,15 @@
 import React from 'react';
-import ContainerCard from '../ContainerCard';
+import ContainerCard from '../../Card/ContainerCard';
 import ETHSymbol from '../../../assets/symbols_ETH.svg';
 import DOGESymbol from '../../../assets/symbols_DOGE.svg';
 import ArrowBlack from '../../../assets/arrow_black.svg';
 import NormalButton from '../../Button';
 import Loading from '../../../assets/loading.png';
 import Error from '../../../assets/Feedback_failure.svg';
-import Success from '../../../assets/Feedback_successed.svg'
-import { CoinInfoWrapper, PriceWrapper, StatusWrapper, WaitingWrapper } from './style';
+import Success from '../../../assets/Feedback_successed.svg';
+import { CoinInfoWrapper, ConfirmModalWrapper, PriceWrapper, StatusWrapper, WaitingWrapper } from './style';
 import PriceField from './PriceField';
-
+import Mask from '../../Mask';
 
 interface CoinNumItem {
   coinIcon: string;
@@ -19,15 +19,16 @@ interface CoinNumItem {
 
 interface ConfirmCardProps {
   statusValue?: 'success' | 'fail';
-  confirmType: 'priceInfo' | 'waiting' | 'transactionStatus'
+  confirmType: 'priceInfo' | 'waiting' | 'transactionStatus';
+  onCancel: React.Dispatch<boolean>;
 }
 
-interface PriceFieldItem{
+interface PriceFieldItem {
   fieldName: string;
   fieldContent: string;
 }
 
-const ConfirmCard = ({confirmType, statusValue}: ConfirmCardProps): React.ReactElement<ConfirmCardProps> => {
+const ConfirmModal = ({confirmType, statusValue, onCancel}: ConfirmCardProps): React.ReactElement<ConfirmCardProps> => {
   const coinNumList: CoinNumItem[] = [
     {
       coinIcon: ETHSymbol,
@@ -58,7 +59,7 @@ const ConfirmCard = ({confirmType, statusValue}: ConfirmCardProps): React.ReactE
       fieldName: 'Liquidity Provider Fee',
       fieldContent: '0.03926 XETH'
     },
-  ]
+  ];
 
   const backPriceContent: React.ReactNode = (
     <PriceWrapper>
@@ -67,15 +68,15 @@ const ConfirmCard = ({confirmType, statusValue}: ConfirmCardProps): React.ReactE
       }
       <NormalButton className='confirmButton' label='Confirm Swap'/>
     </PriceWrapper>
-  )
+  );
 
   const backWaitingContent: React.ReactNode = (
     <WaitingWrapper>
-        <img src={Loading} className='loading' alt="loading"/>
+      <img src={Loading} className='loading' alt="loading"/>
       <div className='waiting'>waiting for confimation</div>
       <div className='confirm'>Confirm this transaction in polkadot-js/extension</div>
     </WaitingWrapper>
-  )
+  );
 
   const backStatusContent: React.ReactNode = (
     <StatusWrapper>
@@ -83,7 +84,7 @@ const ConfirmCard = ({confirmType, statusValue}: ConfirmCardProps): React.ReactE
         <>
           <img src={Error} className='status' alt="status"/>
           <div className='statusValue'>cause</div>
-        </>:
+        </> :
         <>
           <img src={Success} className='status' alt="status"/>
           <div className='statusValue'>transaction submitted</div>
@@ -102,26 +103,31 @@ const ConfirmCard = ({confirmType, statusValue}: ConfirmCardProps): React.ReactE
       case 'transactionStatus':
         return backStatusContent;
     }
-  }
+  };
 
   return (
-    <ContainerCard exitOption title='Confirm Swap' backContent={judgeConfirmType(confirmType)}>
-      <CoinInfoWrapper>
-        <div className='numWrapper'>
-          {coinNumList.map((item: CoinNumItem) =>
-            <div className='numInfo'>
-              <div className='coinName'>
-                <img src={item.coinIcon} alt=""/>
-                <div className='name'>{item.coinName}</div>
-              </div>
-              <div className='num'>{item.coinNum}</div>
+    <>
+      <Mask/>
+      <ConfirmModalWrapper>
+        <ContainerCard onCancel={onCancel} title='Confirm Swap' backContent={judgeConfirmType(confirmType)}>
+          <CoinInfoWrapper>
+            <div className='numWrapper'>
+              {coinNumList.map((item: CoinNumItem) =>
+                <div className='numInfo'>
+                  <div className='coinName'>
+                    <img src={item.coinIcon} alt=""/>
+                    <div className='name'>{item.coinName}</div>
+                  </div>
+                  <div className='num'>{item.coinNum}</div>
+                </div>
+              )}
             </div>
-          )}
-        </div>
-        <img className='arrowDown' src={ArrowBlack} alt=""/>
-      </CoinInfoWrapper>
-    </ContainerCard>
+            <img className='arrowDown' src={ArrowBlack} alt=""/>
+          </CoinInfoWrapper>
+        </ContainerCard>
+      </ConfirmModalWrapper>
+    </>
   );
 };
 
-export default ConfirmCard;
+export default ConfirmModal;
