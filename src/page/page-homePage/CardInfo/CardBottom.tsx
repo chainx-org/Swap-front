@@ -33,13 +33,13 @@ const Item = styled(Tooltip)`
 interface BottomItemProps {
   children?: React.ReactNode;
   className?: string;
-  name?: string;
-  label?: string;
-  value?: string;
+  name: string;
+  btnLabel: string;
+  value: string;
 }
 function BottomItem({
   name,
-  label,
+  btnLabel,
   value,
 }: BottomItemProps): React.ReactElement<BottomItemProps> {
   return (
@@ -48,7 +48,7 @@ function BottomItem({
         <span>{name}</span>
         <span>{value}</span>
       </div>
-      <NormalButton label={label} className="buttonDiv" />
+      <NormalButton label={btnLabel} className="buttonDiv" />
     </Item>
   );
 }

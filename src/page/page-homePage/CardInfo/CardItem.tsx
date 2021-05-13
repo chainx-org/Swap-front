@@ -133,10 +133,9 @@ function CurrencyItem({
   currencyName,
   currencyTitle,
 }: currencyItemProps): React.ReactElement<currencyItemProps> {
-  const [isOpenDialog, setisOpenDialog] = useState(false);
-  console.log("label", currencyName);
+  const [isOpenDialog, setIsOpenDialog] = useState(false);
   function OpenDialog() {
-    setisOpenDialog(true);
+    setIsOpenDialog(true);
   }
   return (
     <Item>

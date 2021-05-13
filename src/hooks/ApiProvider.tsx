@@ -7,6 +7,7 @@ import { web3AccountsSubscribe, web3Enable } from '@polkadot/extension-dapp';
 
 interface ApiProps {
   isApiReady: boolean;
+  isExtensionInjected: boolean;
   accounts: AccountItem[];
   api: ApiPromise | null;
 }
@@ -27,6 +28,7 @@ function ApiProvider({children, url}: Props): React.ReactElement<Props> {
   const [isApiReady, setApiReady] = useState(false);
   const [accounts, setAccounts] = useState<AccountItem[]>([])
   const [api, setApi ] = useState<ApiPromise | null>(null)
+  const [isExtensionInjected, setIsExtensionInjected] = useState<boolean>(false)
 
   const apiInit = (): void => {
     const types = Object.values(definitions).reduce(
@@ -36,6 +38,11 @@ function ApiProvider({children, url}: Props): React.ReactElement<Props> {
     notification.warn({message: 'Wait ws connecting...'});
     const provider = new WsProvider(url);
     const api = new ApiPromise({provider, types});
+    const newTypes = {
+      "Address": "MultiAddress",
+      "LookupSource": "MultiAddress"
+    }
+    api.registerTypes(newTypes);
     api.on('error', (err) => {
         notification.error({
           message: `Cannot connect to ws endpoint. `
@@ -55,9 +62,11 @@ function ApiProvider({children, url}: Props): React.ReactElement<Props> {
 
   const getAccountList = async () => {
     const extensions = await web3Enable('swap');
+    console.log('extensions',extensions)
     if (extensions.length === 0) {
       return;
     }
+    setIsExtensionInjected(true)
     const account$ = await web3AccountsSubscribe(accounts => {
       const accountsList = accounts.map(acc => ({
         address: acc.address,
@@ -76,7 +85,8 @@ function ApiProvider({children, url}: Props): React.ReactElement<Props> {
     <ApiContext.Provider value={{
       isApiReady,
       accounts,
-      api
+      api,
+      isExtensionInjected
     }}>
       {children}
     </ApiContext.Provider>
