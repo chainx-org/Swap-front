@@ -25,6 +25,9 @@ const DropListStyle = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    & > li:last-child {
+      height: 87px;
+    }
   }
   li {
     height: 70px;
@@ -35,7 +38,7 @@ const DropListStyle = styled.div`
   }
   .assets-item {
     padding: 13px 16px;
-    height: 60px;
+    height: 70px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -52,12 +55,14 @@ const DropListStyle = styled.div`
       .item-name {
         font-family: NotoSansSC-Medium;
         font-size: 14px;
+        line-height: 20px;
         color: #282828;
         font-weight: 500;
       }
       .item-address {
         font-family: NotoSansSC-Regular;
         font-size: 12px;
+        line-height: 17px;
         color: #8e8e8e;
         font-weight: 400;
       }

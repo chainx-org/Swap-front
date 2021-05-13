@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import closeBtn from "../../assets/close-pop.svg";
 import styled from "styled-components";
 
@@ -56,12 +56,14 @@ interface CardItemProps {
   title?: string;
   backContent?: React.ReactNode;
   exitOption: boolean;
+  DialogControl?: any;
 }
 
 function ContainerCard({
   children,
   title,
   exitOption,
+  DialogControl,
   backContent,
   className = "",
 }: CardItemProps): React.ReactElement<CardItemProps> {
@@ -72,7 +74,14 @@ function ContainerCard({
           <div className="cardHeader">
             <div className="title">{title}</div>
             {exitOption && (
-              <img className="closeBtn" src={closeBtn} alt="close" />
+              <img
+                className="closeBtn"
+                src={closeBtn}
+                alt="close"
+                onClick={() => {
+                  DialogControl(false);
+                }}
+              />
             )}
           </div>
         )}

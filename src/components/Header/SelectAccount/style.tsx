@@ -17,17 +17,22 @@ export const SelectAccountStyle = styled.div`
     margin-left: 4px;
   }
   .current-icon {
-    // width: 20px;
-    // height: 20px;
+    // width: 16px;
+    // height: 16px;
     // border: 1px solid black;
     margin-left: 8px;
+    margin-right: 6px;
+    & > svg {
+      width: 16px;
+      height: 16px;
+    }
   }
   .current-name {
     width: 82px;
-    height: 20px;
-    line-height: 20px;
-    margin-left: 6px;
+    height: 17px;
+    line-height: 17px;
     margin-right: 16px;
+    box-sizing: content-box;
     font-family: PingFangSC-Medium;
     font-size: 12px;
     color: #282828;
@@ -37,7 +42,7 @@ export const SelectAccountStyle = styled.div`
     white-space: nowrap;
   }
   .current-address {
-    width: 88px;
+    width: 82px;
     height: 20px;
     line-height: 20px;
     margin-right: 16px;
@@ -45,8 +50,8 @@ export const SelectAccountStyle = styled.div`
     font-size: 12px;
     color: #282828;
     font-weight: 400;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    // overflow: hidden;
+    // text-overflow: ellipsis;
+    // white-space: nowrap;
   }
 `;
