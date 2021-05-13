@@ -61,7 +61,7 @@ const HomePage = (): React.ReactElement => {
       <Header />
       <Content>
         {/*<ConfirmModal confirmType={'waiting'}/>*/}
-        <ContainerCard exitOption={false} title="Swap">
+        <ContainerCard title="Swap">
           {/* 货币一 */}
           <CardItem currencyTitle="From" currencyName={coinInfo[0].coinName}>
             {coinInfo[0].coinIcon}

@@ -19,7 +19,8 @@ interface CoinNumItem {
 
 interface ConfirmCardProps {
   statusValue?: 'success' | 'fail';
-  confirmType: 'priceInfo' | 'waiting' | 'transactionStatus'
+  confirmType: 'priceInfo' | 'waiting' | 'transactionStatus';
+  onCancel: React.Dispatch<boolean>;
 }
 
 interface PriceFieldItem {
@@ -27,7 +28,7 @@ interface PriceFieldItem {
   fieldContent: string;
 }
 
-const ConfirmModal = ({confirmType, statusValue}: ConfirmCardProps): React.ReactElement<ConfirmCardProps> => {
+const ConfirmModal = ({confirmType, statusValue, onCancel}: ConfirmCardProps): React.ReactElement<ConfirmCardProps> => {
   const coinNumList: CoinNumItem[] = [
     {
       coinIcon: ETHSymbol,
@@ -108,7 +109,7 @@ const ConfirmModal = ({confirmType, statusValue}: ConfirmCardProps): React.React
     <>
       <Mask/>
       <ConfirmModalWrapper>
-        <ContainerCard exitOption title='Confirm Swap' backContent={judgeConfirmType(confirmType)}>
+        <ContainerCard onCancel={onCancel} title='Confirm Swap' backContent={judgeConfirmType(confirmType)}>
           <CoinInfoWrapper>
             <div className='numWrapper'>
               {coinNumList.map((item: CoinNumItem) =>

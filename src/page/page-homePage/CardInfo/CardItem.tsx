@@ -201,7 +201,7 @@ function CurrencyItem({
       </div>
       {isOpenDialog && (
         <div>
-          <DialogCard OpenDialog={setisOpenDialog}/>
+          <DialogCard onCancel={setisOpenDialog}/>
         </div>
       )}
     </Item>
