@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState } from "react";
 import Header from "../../components/Header";
 import ContainerCard from "../../components/Card/ContainerCard";
 import styled from "styled-components";
@@ -8,7 +8,7 @@ import SwapInfo from "./CardInfo/SwapInfo";
 import { ReactComponent as DogIcon } from "../../assets/symbols_DOGE.svg";
 import { ReactComponent as BtcIcon } from "../../assets/symbols_BTC.svg";
 import { ReactComponent as ExchangeIcon } from "../../assets/icon_exchange.svg";
-import { AccountsContext } from '../../hooks/AccountsProvider';
+import { AccountsContext } from "../../hooks/AccountsProvider";
 
 const Container = styled.div`
   background-image: linear-gradient(180deg, #faf5e8 7%, #f7f8fa 100%);
@@ -54,14 +54,14 @@ const HomePage = (): React.ReactElement => {
       coinIcon: <BtcIcon style={SvgStyle} />,
     },
   ]);
-  const {isExtensionInjected} = useContext(AccountsContext)
+  const { isExtensionInjected } = useContext(AccountsContext);
 
   return (
     <Container>
       <Header />
       <Content>
         {/*<ConfirmModal confirmType={'waiting'}/>*/}
-        <ContainerCard title="Swap">
+        <ContainerCard title="Swap" className={"cardContent"}>
           {/* 货币一 */}
           <CardItem currencyTitle="From" currencyName={coinInfo[0].coinName}>
             {coinInfo[0].coinIcon}
@@ -84,7 +84,7 @@ const HomePage = (): React.ReactElement => {
           {/* 底部按钮 */}
           <BottomItem
             name="Slippage Tolerance"
-            btnLabel={!isExtensionInjected? "Connect Wallet": 'Swap'}
+            btnLabel={!isExtensionInjected ? "Connect Wallet" : "Swap"}
             value="1%"
           />
           {/* Swap info */}

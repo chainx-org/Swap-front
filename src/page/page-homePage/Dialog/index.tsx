@@ -1,8 +1,8 @@
 import React from "react";
-import { DialogItem, DivDialog } from './style';
+import { DialogItem, DivDialog } from "./style";
 import ContainerCard from "../../../components/Card/ContainerCard";
 import { ReactComponent as DogIcon } from "../../../assets/symbols_DOGE.svg";
-import Mask from '../../../components/Mask';
+import Mask from "../../../components/Mask";
 
 interface DialogCardProps {
   isOpen?: Boolean;
@@ -54,11 +54,12 @@ function DialogCard({
   return (
     <div>
       <DivDialog>
-        <Mask/>
+        <Mask />
         <div className="content">
           <ContainerCard
             onCancel={onCancel}
             title="Select a token"
+            className={"card-list-content"}
           >
             {accounts.map((item, index) => {
               return (
