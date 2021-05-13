@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Card } from "antd";
 import closeBtn from "../../assets/close-pop.svg";
 import styled from "styled-components";
@@ -63,25 +63,42 @@ function ContainerCard({
   backContent,
   className = "",
 }: CardItemProps): React.ReactElement<CardItemProps> {
+  const [isAccountListOpen, setIsAccountListOpen] = useState(true);
+  const closeCard = (e: {
+    nativeEvent: { stopImmediatePropagation: () => void };
+  }) => {
+    e.nativeEvent.stopImmediatePropagation();
+    setIsAccountListOpen(!isAccountListOpen);
+  };
+  //   function closeCard() {
+  //     setIsAccountListOpen(!isAccountListOpen);
+  //   }
   return (
     <CardContainer>
-      <div className="containerBox">
-        {title && (
-          <div className="cardHeader">
-            <div className="title">{title}</div>
-            {exitOption && (
-              <img className="closeBtn" src={closeBtn} alt="close" />
-            )}
-          </div>
-        )}
-        <div className="cardContent">{children}</div>
-        {backContent && (
-          <div className="backContent">
-            <div className="empty" />
-            {backContent}
-          </div>
-        )}
-      </div>
+      {isAccountListOpen && (
+        <div className="containerBox">
+          {title && (
+            <div className="cardHeader">
+              <div className="title">{title}</div>
+              {exitOption && (
+                <img
+                  className="closeBtn"
+                  src={closeBtn}
+                  alt="close"
+                  onClick={closeCard}
+                />
+              )}
+            </div>
+          )}
+          <div className="cardContent">{children}</div>
+          {backContent && (
+            <div className="backContent">
+              <div className="empty" />
+              {backContent}
+            </div>
+          )}
+        </div>
+      )}
     </CardContainer>
   );
 }
