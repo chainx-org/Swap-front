@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-
+import { ReactComponent as Question } from "../../../assets/icon_question.svg";
 const Item = styled.div`
   .Box {
     width: 424px;
@@ -33,7 +33,7 @@ const Item = styled.div`
               }
               & > span:nth-child(2) {
                   display: inline-block;
-                    height: 17px;
+                  height: 17px;
                   font-size: 12px;
                   line-height: 17px;
                   font-family: PingFangSC-Medium;
@@ -42,7 +42,24 @@ const Item = styled.div`
                   text-align: right;
                   font-weight: 500;
                 }
+            .item-left{
+                display: flex;
+                flex-direction:row;
+                & > span:nth-child(1) {
+                    display: inline-block;
+                    //   height: 17px;
+                    text-align: right;
+                    letter-spacing: 0.1px;
+                    line-height: 17px;
+                    margin-right:4px;
+                    font-family: PingFangSC-Regular;
+                    font-size: 12px;
+                    color: #908E8E;
+                    font-weight: 400;
+                  }
+            }
         }
+
         & >div:nth-child(2){
             & > span:nth-child(2) {
                 display: inline-block;
@@ -59,24 +76,30 @@ const Item = styled.div`
        
   }
 `;
-
+const accounts = [
+  {
+    title: "Maximum Sold",
+    info: "15.83 DOT",
+  },
+  { title: "Price Impact", info: "< 0.01%" },
+  { title: "Liquidity Provider Fee", info: "0.03926 DOT" },
+];
 function SwapInfo() {
   return (
     <Item>
       <div className="Box">
         <div className="info">
-          <div className="item">
-            <span>122</span>
-            <span>fvfvf</span>
-          </div>
-          <div className="item">
-            <span>122</span>
-            <span>fvfvf</span>
-          </div>
-          <div className="item">
-            <span>122</span>
-            <span>fvfvf</span>
-          </div>
+          {accounts.map((item, index) => {
+            return (
+              <div className="item" key={index}>
+                <div className="item-left">
+                  <span>{item.title}</span>
+                  <Question />
+                </div>
+                <span>{item.info}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
     </Item>
