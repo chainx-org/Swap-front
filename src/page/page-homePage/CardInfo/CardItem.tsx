@@ -11,7 +11,7 @@ const Item = styled(Tooltip)`
     justify-content: space-between;
     padding-left: 16px;
     padding-right: 16px;
-    margin: 16px 0px 7px 0px;
+    margin: 0px 0px 7px 0px;
     & > span:nth-child(1) {
       font-size: 12px;
       color: #282828;
@@ -86,6 +86,7 @@ const Item = styled(Tooltip)`
       .ant-input {
         height: 100%;
         background: #f7f8fa;
+        position: static;
         // border: 1px solid #d9d9d9;
         border-radius: 12px;
       }
@@ -143,9 +144,6 @@ const Item = styled(Tooltip)`
 const SvgStyle = {
   margin: "15px",
 };
-const TitleInfoSecond = {
-  margin: "0px 0px 0 0px",
-};
 
 interface currencyItemProps {
   children?: React.ReactNode;
@@ -163,18 +161,10 @@ function CurrencyItem({
 
   return (
     <Item>
-      {currencyTitle === "From" ? (
-        <div className="title-info">
-          <span>{currencyTitle}</span>
-          <span>Balance:999.0067</span>
-        </div>
-      ) : (
-        <div className="title-info" style={TitleInfoSecond}>
-          <span>{currencyTitle}</span>
-          <span>Balance:999.0067</span>
-        </div>
-      )}
-
+      <div className="title-info">
+        <span>{currencyTitle}</span>
+        <span>Balance:999.0067</span>
+      </div>
       <div className="selectBtn">
         <div
           className="divBtn"
