@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { Card } from "antd";
+import React, { useState } from "react";
 import closeBtn from "../../assets/close-pop.svg";
 import styled from "styled-components";
+
 const CardContainer = styled.div`
   position: relative;
   background: rgba(255, 255, 255, 0.9);
