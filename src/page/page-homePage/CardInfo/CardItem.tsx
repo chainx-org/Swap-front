@@ -160,7 +160,12 @@ function CurrencyItem({
   currencyTitle,
 }: currencyItemProps): React.ReactElement<currencyItemProps> {
   const [isOpenDialog, setisOpenDialog] = useState(false);
-
+  const [inPutValue, setInputValue] = useState("");
+  const inputNumberOnly = (item: string) => {
+    item = item.replace(/[^\d.]/g, "");
+    setInputValue(item);
+    return item;
+  };
   return (
     <Item>
       <div className="title-info">
@@ -185,9 +190,24 @@ function CurrencyItem({
         </div>
         <div className="input-div">
           {currencyTitle === "From" ? (
-            <Input suffix="MAX" placeholder="0.0" />
+            <Input
+              suffix="MAX"
+              placeholder="0.0"
+              onChange={(e) => {
+                e.target.value = inputNumberOnly(e.target.value);
+                console.log(e);
+              }}
+              value={inPutValue}
+            ></Input>
           ) : (
-            <Input suffix="" placeholder="0.0" />
+            <Input
+              suffix=""
+              placeholder="0.0"
+              onChange={(e) => {
+                e.target.value = inputNumberOnly(e.target.value);
+              }}
+              value={inPutValue}
+            />
           )}
         </div>
       </div>
