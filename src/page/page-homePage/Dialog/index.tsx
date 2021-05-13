@@ -66,7 +66,12 @@ const DialogItem = styled.div`
     }
   }
 `;
-function DialogCard() {
+interface DialogCardProps {
+  isOpen?: Boolean;
+}
+function DialogCard({
+  isOpen,
+}: DialogCardProps): React.ReactElement<DialogCardProps> {
   const accounts = [
     {
       name: "XBTC",
@@ -105,17 +110,17 @@ function DialogCard() {
       value: "12.0024",
     },
   ];
-  const [isAccountListOpen, setIsAccountListOpen] = useState(true);
-  const closeCard = (e: {
-    nativeEvent: { stopImmediatePropagation: () => void };
-  }) => {
-    e.nativeEvent.stopImmediatePropagation();
-    setIsAccountListOpen(!isAccountListOpen);
-  };
+  const [isOpenDialog, setisOpenDialog] = useState(isOpen);
+  function closeCard() {
+    debugger;
+    console.log(isOpenDialog, "isOpenDialog");
+    setisOpenDialog(false);
+  }
+  // console.log("isOpenDialog" + isOpen);
   return (
-    <DivDialog onClick={closeCard}>
-      {isAccountListOpen && (
-        <div>
+    <div>
+      {isOpenDialog && (
+        <DivDialog>
           <div className="mask"></div>
           <div className="content">
             <ContainerCard exitOption={true} title="Select a token">
@@ -137,9 +142,9 @@ function DialogCard() {
               })}
             </ContainerCard>
           </div>
-        </div>
+        </DivDialog>
       )}
-    </DivDialog>
+    </div>
   );
 }
 

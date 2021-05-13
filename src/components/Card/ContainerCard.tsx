@@ -64,15 +64,15 @@ function ContainerCard({
   className = "",
 }: CardItemProps): React.ReactElement<CardItemProps> {
   const [isAccountListOpen, setIsAccountListOpen] = useState(true);
-  const closeCard = (e: {
-    nativeEvent: { stopImmediatePropagation: () => void };
-  }) => {
-    e.nativeEvent.stopImmediatePropagation();
-    setIsAccountListOpen(!isAccountListOpen);
-  };
-  //   function closeCard() {
+  //   const closeCard = (e: {
+  //     nativeEvent: { stopImmediatePropagation: () => void };
+  //   }) => {
+  //     e.nativeEvent.stopImmediatePropagation();
   //     setIsAccountListOpen(!isAccountListOpen);
-  //   }
+  //   };
+  function closeCard() {
+    setIsAccountListOpen(!isAccountListOpen);
+  }
   return (
     <CardContainer>
       {isAccountListOpen && (
