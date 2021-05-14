@@ -6,7 +6,7 @@ import type { ITuple } from '@polkadot/types/types';
 import type { Order } from '@polkadot/types/interfaces/parachains';
 import type { AccountId, Balance, BlockNumber, H256 } from '@polkadot/types/interfaces/runtime';
 import type { VoteWeight } from '@polkadot/types/interfaces/staking';
-import type { BtcAddress } from 'x-bridge-v2/interfaces/xGatewayBitcoinV2';
+import type { BtcAddress } from '../xGatewayBitcoinV2';
 
 /** @name AddrStr */
 export interface AddrStr extends Text {}
