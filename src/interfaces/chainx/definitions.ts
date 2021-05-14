@@ -18,7 +18,7 @@ export default {
             "isOptional": true
           }
         ],
-        "type": "string"
+        "type": "u128"
       },
       "getAmountOutPrice": {
         "description": "Return amount out price by amount in",
@@ -37,7 +37,7 @@ export default {
             "isOptional": true
           }
         ],
-        "type": "string"
+        "type": "u128"
       },
       "getTokenList":{
         "description": "Return all token list info",
@@ -67,7 +67,7 @@ export default {
             "isOptional": true
           }
         ],
-        "type": "string"
+        "type": "u128"
       }
     },
     xassets: {
