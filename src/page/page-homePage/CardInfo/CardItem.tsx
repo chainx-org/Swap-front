@@ -158,6 +158,7 @@ interface currencyItemProps {
   className?: string;
   currencyName: string;
   currencyTitle: string;
+  currencyBalence: string;
   addCoin?: any;
   showSwapInfo?: any;
   inputCoinValue: {
@@ -171,6 +172,7 @@ function CurrencyItem({
   className = "",
   currencyName,
   currencyTitle,
+  currencyBalence,
   addCoin,
   showSwapInfo,
   inputCoinValue,
@@ -178,25 +180,32 @@ function CurrencyItem({
   const [isOpenDialog, setisOpenDialog] = useState(false);
   const inputNumberOnly = (item: string) => {
     item = item.replace(/[^\d.]/g, "");
-    const index = item.indexOf(".");
-    const str1 = item.slice(0, index + 1);
-    let str2 = item.slice(index + 1);
+    const i = item.indexOf(".");
+    const str1 = item.slice(0, i + 1);
+    let str2 = item.slice(i + 1);
     str2 = str2.replace(/[^\d]/g, "");
     const strAll = str1 + str2;
+    // /控制底部灰框和按钮的/
     strAll != "" ? showSwapInfo(true) : showSwapInfo(false);
-    coinValue(strAll);
+    // debugger;
+    let canSwap = inputCoinValue.coinInput[index].canSwap;
+    parseFloat(strAll) > parseFloat(currencyBalence)
+      ? (canSwap = false)
+      : (canSwap = true);
+    coinValue(strAll, canSwap);
     return strAll;
   };
 
-  const coinValue = (value: string) => {
+  const coinValue = (value: string, canSwap: Boolean) => {
     inputCoinValue.coinInput[index].coinInput = value;
+    inputCoinValue.coinInput[index].canSwap = canSwap;
     inputCoinValue.setCoinInput([...inputCoinValue.coinInput]);
   };
   return (
     <Item>
       <div className="title-info">
         <span>{currencyTitle}</span>
-        <span>Balance:999.0067</span>
+        <span>Balance:{currencyBalence}</span>
       </div>
       <div className="selectBtn">
         <div

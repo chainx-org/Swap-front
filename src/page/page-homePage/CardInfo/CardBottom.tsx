@@ -32,6 +32,16 @@ const Item = styled(Tooltip)`
     .ant-btn {
     }
   }
+  .cannot-swap {
+    width: 392px;
+    height: 44px;
+    padding-left: 16px;
+    padding-right: 16px;
+    margin: 8px 0px 15px 16px;
+    position: static;
+    background: #b8b8b9;
+    border-radius: 12px;
+  }
 `;
 
 interface BottomItemProps {
@@ -45,6 +55,7 @@ function BottomItem({
   name,
   btnLabel,
   value,
+  className,
 }: BottomItemProps): React.ReactElement<BottomItemProps> {
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
   return (
@@ -55,7 +66,7 @@ function BottomItem({
       </div>
       <NormalButton
         label={btnLabel}
-        className="buttonDiv"
+        className={className}
         onClick={() => setIsConfirmOpen(true)}
       />
       {isConfirmOpen && (
