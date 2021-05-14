@@ -55,6 +55,7 @@ const HomePage = (): React.ReactElement => {
     },
   ]);
   const { isExtensionInjected } = useContext(AccountsContext);
+  const [isShowSwapInfo, setIsShowSwapInfo] = useState(false);
   const addCoin = (item: any, index: any) => {
     if (
       coinInfo.some((n) => {
@@ -80,6 +81,7 @@ const HomePage = (): React.ReactElement => {
             currencyName={coinInfo[0].coinName}
             index={0}
             addCoin={addCoin}
+            showSwapInfo={setIsShowSwapInfo}
           >
             {coinInfo[0].coinIcon}
           </CardItem>
@@ -100,6 +102,7 @@ const HomePage = (): React.ReactElement => {
             currencyName={coinInfo[1].coinName}
             index={1}
             addCoin={addCoin}
+            showSwapInfo={setIsShowSwapInfo}
           >
             {coinInfo[1].coinIcon}
           </CardItem>
@@ -112,7 +115,7 @@ const HomePage = (): React.ReactElement => {
           {/* Swap info */}
         </ContainerCard>
       </Content>
-      <SwapInfo />
+      {isShowSwapInfo && <SwapInfo />}
     </Container>
   );
 };

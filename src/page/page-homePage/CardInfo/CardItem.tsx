@@ -154,6 +154,7 @@ interface currencyItemProps {
   currencyTitle: string;
   index: Number;
   addCoin?: any;
+  showSwapInfo?: any;
 }
 function CurrencyItem({
   children,
@@ -162,6 +163,7 @@ function CurrencyItem({
   currencyTitle,
   index,
   addCoin,
+  showSwapInfo,
 }: currencyItemProps): React.ReactElement<currencyItemProps> {
   const [isOpenDialog, setisOpenDialog] = useState(false);
   const [inPutValue, setInputValue] = useState("");
@@ -172,6 +174,7 @@ function CurrencyItem({
     let str2 = item.slice(index + 1);
     str2 = str2.replace(/[^\d]/g, "");
     const strAll = str1 + str2;
+    strAll != "" ? showSwapInfo(true) : showSwapInfo(false);
     setInputValue(strAll);
     return strAll;
   };
@@ -204,7 +207,6 @@ function CurrencyItem({
               placeholder="0.0"
               onChange={(e) => {
                 e.target.value = inputNumberOnly(e.target.value);
-                console.log(e);
               }}
               value={inPutValue}
             ></Input>

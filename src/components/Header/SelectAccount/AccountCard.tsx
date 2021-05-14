@@ -2,8 +2,8 @@ import React, { useContext, useState, useEffect } from "react";
 import { SelectAccountStyle } from "./style";
 import SelectAccount from "./SelectAccount";
 import { ReactComponent as DogIcon } from "../../../assets/symbols_DOGE.svg";
-import { AccountsContext } from '../../../hooks/AccountsProvider';
-import { shortenString } from '../../../helper';
+import { AccountsContext } from "../../../hooks/AccountsProvider";
+import { shortenString } from "../../../helper";
 
 const IconStyle = {
   margin: "2px 0px 0px 0px",
@@ -23,10 +23,10 @@ function AccountCard() {
 
   useEffect(() => {
     document.addEventListener("click", hideAllMenu);
-  }, [])
+  }, []);
 
   useEffect(() => {
-    setAddress(shortenString(currentAccount.address))
+    setAddress(shortenString(currentAccount.address));
   }, [currentAccount.address]);
 
   return (
