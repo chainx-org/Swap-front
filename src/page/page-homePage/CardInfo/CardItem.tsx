@@ -193,6 +193,7 @@ function CurrencyItem({
       ? (canSwap = false)
       : (canSwap = true);
     coinValue(strAll, canSwap);
+    coinChangeTo(strAll);
     return strAll;
   };
 
@@ -200,6 +201,10 @@ function CurrencyItem({
     inputCoinValue.coinInput[index].coinInput = value;
     inputCoinValue.coinInput[index].canSwap = canSwap;
     inputCoinValue.setCoinInput([...inputCoinValue.coinInput]);
+  };
+
+  const coinChangeTo = (value: string) => {
+    debugger;
   };
   return (
     <Item>
