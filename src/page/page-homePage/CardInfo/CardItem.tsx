@@ -54,6 +54,11 @@ const Item = styled(Tooltip)`
       .divBtnIcon {
         width: 40px;
         height: 40px;
+        .icon {
+          margin: 10px 0px 10px 0px;
+          padding-left: 10px;
+          // border: 1px solid black;
+        }
         & > span:nth-child(1) {
           display: inline-block;
           margin-top: 1px;
@@ -201,7 +206,9 @@ function CurrencyItem({
           }}
         >
           <div className="divBtnIcon">
-            <span>{children}</span>
+            <div className="icon">
+              <span>{children}</span>
+            </div>
           </div>
 
           <span>{currencyName}</span>

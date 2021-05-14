@@ -18,9 +18,6 @@ const Content = styled.main`
   justify-content: center;
   margin-top: 90px;
 `;
-const SvgStyle = {
-  margin: "8px",
-};
 
 const ExchangeIconStyle = styled.div`
   .box {
@@ -52,11 +49,11 @@ const HomePage = (): React.ReactElement => {
   const [coinInfo, setCoinInfo] = useState<CoinInfo[]>([
     {
       coinName: "XDOT",
-      coinIcon: <DogIcon style={SvgStyle} />,
+      coinIcon: <DogIcon />,
     },
     {
       coinName: "XDOGE",
-      coinIcon: <BtcIcon style={SvgStyle} />,
+      coinIcon: <BtcIcon />,
     },
   ]);
   const [coinInput, setCoinInput] = useState<CoinInput[]>([
