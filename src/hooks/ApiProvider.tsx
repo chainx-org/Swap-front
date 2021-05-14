@@ -25,9 +25,14 @@ function ApiProvider({children, url}: Props): React.ReactElement<Props> {
       (res, {types}) => ({...res, ...types}),
       {}
     );
+    const rpc = Object.values(definitions).reduce(
+      //@ts-ignore
+      (res, {rpc}) => ({...res, ...rpc}),
+      {}
+    );
     notification.warn({message: 'Wait ws connecting...'});
     const provider = new WsProvider(url);
-    const api = new ApiPromise({provider, types});
+    const api = new ApiPromise({provider, types, rpc});
     const newTypes = {
       "Address": "MultiAddress",
       "LookupSource": "MultiAddress"

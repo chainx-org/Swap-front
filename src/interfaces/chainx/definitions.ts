@@ -463,8 +463,8 @@ export default {
   types: {
     "AssetId": "u32",
     "TokenInfo": {
-      "assert_id": "AssetId",
-      "assert_info": "AssetInfo"
+      "assertId": "AssetId",
+      "assertInfo": "AssetInfo"
     },
     OrderStatus: {
       _enum: [
