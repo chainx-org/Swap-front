@@ -27,6 +27,7 @@ interface ConfirmCardProps {
   statusValue?: "success" | "fail";
   confirmType: "priceInfo" | "waiting" | "transactionStatus";
   onCancel: React.Dispatch<boolean>;
+  swapCoinInfo: any;
 }
 
 interface PriceFieldItem {
@@ -38,19 +39,9 @@ const ConfirmModal = ({
   confirmType,
   statusValue,
   onCancel,
+  swapCoinInfo,
 }: ConfirmCardProps): React.ReactElement<ConfirmCardProps> => {
-  const coinNumList: CoinNumItem[] = [
-    {
-      coinIcon: ETHSymbol,
-      coinName: "XETH",
-      coinNum: 0.00245451,
-    },
-    {
-      coinIcon: DOGESymbol,
-      coinName: "XDOGE",
-      coinNum: 9999.0024,
-    },
-  ];
+  const coinNumList: CoinNumItem[] = swapCoinInfo;
 
   const PriceFieldList: PriceFieldItem[] = [
     {

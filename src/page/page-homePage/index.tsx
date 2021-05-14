@@ -64,9 +64,20 @@ const HomePage = (): React.ReactElement => {
     { coinIndex: 0, coinInput: "", canSwap: true },
     { coinIndex: 1, coinInput: "", canSwap: true },
   ]);
-  const { isExtensionInjected } = useContext(AccountsContext);
   const [isShowSwapInfo, setIsShowSwapInfo] = useState(false);
-  const [canSwap, setCanSwap] = useState(true);
+  const { isExtensionInjected } = useContext(AccountsContext);
+  const swapCoin = [
+    {
+      coinName: coinInfo[0].coinName,
+      coinIcon: coinInfo[0].coinIcon,
+      coinNum: coinInput[0].coinInput,
+    },
+    {
+      coinName: coinInfo[1].coinName,
+      coinIcon: coinInfo[1].coinIcon,
+      coinNum: coinInput[1].coinInput,
+    },
+  ];
   const clearCoinInput = () => {
     setCoinInput([
       ...[
@@ -140,6 +151,7 @@ const HomePage = (): React.ReactElement => {
             <BottomItem
               name="Slippage Tolerance"
               value="1%"
+              swapCoinInfo={swapCoin}
               btnLabel={!isExtensionInjected ? "Connect Wallet" : "Swap"}
               className="buttonDiv"
             />
