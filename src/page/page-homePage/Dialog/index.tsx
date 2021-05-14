@@ -1,73 +1,86 @@
 import React from "react";
-import { DialogItem, DivDialog } from './style';
+import { DialogItem, DivDialog } from "./style";
 import ContainerCard from "../../../components/Card/ContainerCard";
 import { ReactComponent as DogIcon } from "../../../assets/symbols_DOGE.svg";
-import Mask from '../../../components/Mask';
+import Mask from "../../../components/Mask";
+import { AnyAaaaRecord } from "node:dns";
 
 interface DialogCardProps {
-  isOpen?: Boolean;
+  index?: Number;
   onCancel: React.Dispatch<boolean>;
+  addCoinItem: any;
 }
 // const DialogCard = ({OpenDialog }) => {
 function DialogCard({
-  isOpen,
+  index,
   onCancel,
+  addCoinItem,
 }: DialogCardProps): React.ReactElement<DialogCardProps> {
   const accounts = [
     {
-      name: "XBTC",
+      coinName: "XBTC",
       type: "Bitcoin",
-      icon: <DogIcon />,
+      coinIcon: <DogIcon />,
       value: "234.0024",
     },
     {
-      name: "XBCH",
+      coinName: "XBCH",
       type: "Bitcoin Cash",
-      icon: <DogIcon />,
+      coinIcon: <DogIcon />,
       value: "12.0024",
     },
     {
-      name: "XDOGE",
+      coinName: "XDOGE",
       type: "Dogecoin",
-      icon: <DogIcon />,
+      coinIcon: <DogIcon />,
       value: "12.0024",
     },
     {
-      name: "XBTC",
+      coinName: "XBTC",
       type: "Bitcoin",
-      icon: <DogIcon />,
+      coinIcon: <DogIcon />,
       value: "234.0024",
     },
     {
-      name: "XETH",
+      coinName: "XETH",
       type: "Ether",
-      icon: <DogIcon />,
+      coinIcon: <DogIcon />,
       value: "0.0",
     },
     {
-      name: "XDOT",
+      coinName: "XDOT",
       type: "Polkadot",
-      icon: <DogIcon />,
+      coinIcon: <DogIcon />,
       value: "12.0024",
     },
   ];
+  const clickItem = (item: any, index: any) => {
+    addCoinItem(item, index);
+    onCancel(false);
+    // () => addCoinItem(item);
+  };
   return (
     <div>
       <DivDialog>
-        <Mask/>
+        <Mask />
         <div className="content">
           <ContainerCard
             onCancel={onCancel}
             title="Select a token"
+            className={"card-list-content"}
           >
-            {accounts.map((item, index) => {
+            {accounts.map((item, i) => {
               return (
                 <DialogItem>
-                  <div className="item" key={index}>
+                  <div
+                    className="item"
+                    key={i}
+                    onClick={() => clickItem(item, { index })}
+                  >
                     <div className="left-item">
-                      <div className="left-icon">{item.icon}</div>
+                      <div className="left-coinIcon">{item.coinIcon}</div>
                       <div className="right-info">
-                        <span>{item.name}</span>
+                        <span>{item.coinName}</span>
                         <span>{item.type}</span>
                       </div>
                     </div>

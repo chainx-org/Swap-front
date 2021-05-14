@@ -56,6 +56,7 @@ import type { VestingInfo } from '@polkadot/types/interfaces/vesting';
 import type { AddrStr, Amount, AmountOf, AssetInfo, AssetLedger, AssetRestriction, AssetRestrictions, AssetType, BondRequirement, BtcDepositCache, BtcHeader, BtcHeaderIndex, BtcHeaderInfo, BtcNetwork, BtcParams, BtcPartialMerkleTree, BtcRelayedTxInfo, BtcTransaction, BtcTrusteeAddrInfo, BtcTrusteeIntentionProps, BtcTrusteeSessionInfo, BtcTrusteeType, BtcTxResult, BtcTxState, BtcTxType, BtcTxVerifier, BtcVoteResult, BtcWithdrawalProposal, Chain, ChainAddress, ClaimRestriction, CurrencyId, CurrencyPair, Decimals, Depth, Desc, FixedAssetPower, FullPairInfo, GenericTrusteeIntentionProps, GenericTrusteeSessionInfo, GlobalDistribution, Handicap, HandicapInfo, LockedType, Memo, MinerLedger, MiningAssetInfo, MiningDistribution, MiningWeight, NetworkType, NominatorLedger, OrderExecutedInfo, OrderId, OrderInfo, OrderProperty, OrderStatus, OrderType, Page, Price, PriceFluctuation, ReferralId, RpcBalance, RpcFeeDetails, RpcInclusionFee, RpcMiningDividendInfo, RpcMiningWeight, RpcOrder, RpcPrice, RpcTotalAssetInfo, RpcVoteWeight, RpcWithdrawalRecord, Side, StakingRequirement, String, Token, TokenInfo, TotalAssetInfo, TradingHistoryIndex, TradingPairId, TradingPairInfo, TradingPairProfile, TrusteeInfoConfig, Unbonded, UnbondedIndex, ValidatorInfo, ValidatorLedger, ValidatorProfile, WithdrawalLimit, WithdrawalRecord, WithdrawalRecordId, WithdrawalRecordOf, WithdrawalState } from './chainx';
 import type { BlockNumberFor, BtcAddress, CurrencyIdOf, ErrorCode, IssueRequest, PerDispatchClass, RedeemRequest, RequestId, RpcVaultInfo, Status, SystemVault, TradingPrice, Vault, VaultStatus } from './xGatewayBitcoinV2';
 
+
 declare module '@polkadot/types/types/registry' {
   export interface InterfaceTypes {
     'Compact<AccountIndex>': Compact<AccountIndex>;
@@ -914,6 +915,10 @@ declare module '@polkadot/types/types/registry' {
     'Option<TAssetBalance>': Option<TAssetBalance>;
     'Option<TAssetDepositBalance>': Option<TAssetDepositBalance>;
     'Option<TeleportAsset>': Option<TeleportAsset>;
+<<<<<<< HEAD
+=======
+    // 'Option<Text>': Option<Text>;
+>>>>>>> 4bdd70d391dcb42f9771d84e59aae9f6ff89c405
     'Option<Text>': Option<Text>;
     'Option<Timepoint>': Option<Timepoint>;
     'Option<Token>': Option<Token>;
@@ -1773,6 +1778,10 @@ declare module '@polkadot/types/types/registry' {
     'Vec<TAssetBalance>': Vec<TAssetBalance>;
     'Vec<TAssetDepositBalance>': Vec<TAssetDepositBalance>;
     'Vec<TeleportAsset>': Vec<TeleportAsset>;
+<<<<<<< HEAD
+=======
+    // 'Vec<Text>': Vec<Text>;
+>>>>>>> 4bdd70d391dcb42f9771d84e59aae9f6ff89c405
     'Vec<Text>': Vec<Text>;
     'Vec<Timepoint>': Vec<Timepoint>;
     'Vec<Token>': Vec<Token>;

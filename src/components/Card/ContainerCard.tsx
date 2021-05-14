@@ -39,6 +39,9 @@ const CardContainer = styled.div`
     z-index: 2;
     padding-top: 16px;
   }
+  .card-list-content {
+    z-index: 2;
+  }
   .backContent {
     position: absolute;
     z-index: -1;
@@ -87,7 +90,7 @@ function ContainerCard({
             )}
           </div>
         )}
-        <div className="cardContent">{children}</div>
+        <div className={className}>{children}</div>
         {backContent && (
           <div className="backContent">
             <div className="empty" />

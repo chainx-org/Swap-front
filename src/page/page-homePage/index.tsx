@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState } from "react";
 import Header from "../../components/Header";
 import ContainerCard from "../../components/Card/ContainerCard";
 import styled from "styled-components";
@@ -8,7 +8,7 @@ import SwapInfo from "./CardInfo/SwapInfo";
 import { ReactComponent as DogIcon } from "../../assets/symbols_DOGE.svg";
 import { ReactComponent as BtcIcon } from "../../assets/symbols_BTC.svg";
 import { ReactComponent as ExchangeIcon } from "../../assets/icon_exchange.svg";
-import { AccountsContext } from '../../hooks/AccountsProvider';
+import { AccountsContext } from "../../hooks/AccountsProvider";
 
 const Container = styled.div`
   background-image: linear-gradient(180deg, #faf5e8 7%, #f7f8fa 100%);
@@ -18,9 +18,6 @@ const Content = styled.main`
   justify-content: center;
   margin-top: 90px;
 `;
-const SvgStyle = {
-  margin: "8px",
-};
 
 const ExchangeIconStyle = styled.div`
   .box {
@@ -43,54 +40,102 @@ interface CoinInfo {
   coinIcon: React.ReactNode;
 }
 
+interface CoinInput {
+  coinIndex: Number;
+  coinInput: any;
+}
+
 const HomePage = (): React.ReactElement => {
   const [coinInfo, setCoinInfo] = useState<CoinInfo[]>([
     {
       coinName: "XDOT",
-      coinIcon: <DogIcon style={SvgStyle} />,
+      coinIcon: <DogIcon />,
     },
     {
       coinName: "XDOGE",
-      coinIcon: <BtcIcon style={SvgStyle} />,
+      coinIcon: <BtcIcon />,
     },
   ]);
-  const {isExtensionInjected} = useContext(AccountsContext)
+  const [coinInput, setCoinInput] = useState<CoinInput[]>([
+    { coinIndex: 0, coinInput: "" },
+    { coinIndex: 1, coinInput: "" },
+  ]);
+  const { isExtensionInjected } = useContext(AccountsContext);
+  const [isShowSwapInfo, setIsShowSwapInfo] = useState(false);
+  const clearCoinInput = () => {
+    setCoinInput([
+      ...[
+        { coinIndex: 0, coinInput: "" },
+        { coinIndex: 1, coinInput: "" },
+      ],
+    ]);
+  };
+  const addCoin = (item: any, index: any) => {
+    if (
+      coinInfo.some((n) => {
+        return n.coinName === item.coinName;
+      })
+    ) {
+      alert("error");
+      return;
+    }
+    coinInfo[index.index] = item;
+    let list = coinInfo;
+    setCoinInfo([...list]);
+    clearCoinInput();
+  };
+  const exChangeIcon = () => {
+    setCoinInfo([...coinInfo].reverse());
+    clearCoinInput();
+    setIsShowSwapInfo(false);
+  };
 
   return (
     <Container>
       <Header />
       <Content>
         {/*<ConfirmModal confirmType={'waiting'}/>*/}
-        <ContainerCard title="Swap">
+        <ContainerCard title="Swap" className={"cardContent"}>
           {/* 货币一 */}
-          <CardItem currencyTitle="From" currencyName={coinInfo[0].coinName}>
+          <CardItem
+            index={0}
+            currencyTitle="From"
+            currencyName={coinInfo[0].coinName}
+            addCoin={addCoin}
+            showSwapInfo={setIsShowSwapInfo}
+            inputCoinValue={{ coinInput, setCoinInput }}
+          >
             {coinInfo[0].coinIcon}
           </CardItem>
           {/* 转换icon */}
           <ExchangeIconStyle>
-            <div
-              className="box"
-              onClick={() => setCoinInfo([...coinInfo].reverse())}
-            >
+            <div className="box" onClick={exChangeIcon}>
               <div className="iconBox">
                 <ExchangeIcon />
               </div>
             </div>
           </ExchangeIconStyle>
           {/* 货币二 */}
-          <CardItem currencyTitle="To" currencyName={coinInfo[1].coinName}>
+          <CardItem
+            index={1}
+            currencyTitle="To"
+            currencyName={coinInfo[1].coinName}
+            addCoin={addCoin}
+            showSwapInfo={setIsShowSwapInfo}
+            inputCoinValue={{ coinInput, setCoinInput }}
+          >
             {coinInfo[1].coinIcon}
           </CardItem>
           {/* 底部按钮 */}
           <BottomItem
             name="Slippage Tolerance"
-            btnLabel={!isExtensionInjected? "Connect Wallet": 'Swap'}
+            btnLabel={!isExtensionInjected ? "Connect Wallet" : "Swap"}
             value="1%"
           />
           {/* Swap info */}
         </ContainerCard>
       </Content>
-      <SwapInfo />
+      {isShowSwapInfo && <SwapInfo />}
     </Container>
   );
 };

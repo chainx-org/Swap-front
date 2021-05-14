@@ -54,6 +54,11 @@ const Item = styled(Tooltip)`
       .divBtnIcon {
         width: 40px;
         height: 40px;
+        .icon {
+          margin: 10px 0px 10px 0px;
+          padding-left: 10px;
+          // border: 1px solid black;
+        }
         & > span:nth-child(1) {
           display: inline-block;
           margin-top: 1px;
@@ -148,23 +153,44 @@ const Item = styled(Tooltip)`
 `;
 
 interface currencyItemProps {
+  index: any;
   children?: React.ReactNode;
   className?: string;
   currencyName: string;
   currencyTitle: string;
+  addCoin?: any;
+  showSwapInfo?: any;
+  inputCoinValue: {
+    coinInput: any;
+    setCoinInput: any;
+  };
 }
 function CurrencyItem({
+  index,
   children,
   className = "",
   currencyName,
   currencyTitle,
+  addCoin,
+  showSwapInfo,
+  inputCoinValue,
 }: currencyItemProps): React.ReactElement<currencyItemProps> {
   const [isOpenDialog, setisOpenDialog] = useState(false);
-  const [inPutValue, setInputValue] = useState("");
   const inputNumberOnly = (item: string) => {
     item = item.replace(/[^\d.]/g, "");
-    setInputValue(item);
-    return item;
+    const index = item.indexOf(".");
+    const str1 = item.slice(0, index + 1);
+    let str2 = item.slice(index + 1);
+    str2 = str2.replace(/[^\d]/g, "");
+    const strAll = str1 + str2;
+    strAll != "" ? showSwapInfo(true) : showSwapInfo(false);
+    coinValue(strAll);
+    return strAll;
+  };
+
+  const coinValue = (value: string) => {
+    inputCoinValue.coinInput[index].coinInput = value;
+    inputCoinValue.setCoinInput([...inputCoinValue.coinInput]);
   };
   return (
     <Item>
@@ -180,7 +206,9 @@ function CurrencyItem({
           }}
         >
           <div className="divBtnIcon">
-            <span>{children}</span>
+            <div className="icon">
+              <span>{children}</span>
+            </div>
           </div>
 
           <span>{currencyName}</span>
@@ -195,9 +223,8 @@ function CurrencyItem({
               placeholder="0.0"
               onChange={(e) => {
                 e.target.value = inputNumberOnly(e.target.value);
-                console.log(e);
               }}
-              value={inPutValue}
+              value={inputCoinValue.coinInput[0].coinInput}
             ></Input>
           ) : (
             <Input
@@ -206,14 +233,18 @@ function CurrencyItem({
               onChange={(e) => {
                 e.target.value = inputNumberOnly(e.target.value);
               }}
-              value={inPutValue}
+              value={inputCoinValue.coinInput[1].coinInput}
             />
           )}
         </div>
       </div>
       {isOpenDialog && (
         <div>
-          <DialogCard onCancel={setisOpenDialog} />
+          <DialogCard
+            onCancel={setisOpenDialog}
+            index={index}
+            addCoinItem={addCoin}
+          />
         </div>
       )}
     </Item>
