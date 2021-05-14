@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import ApiProvider from './hooks/ApiProvider';
 import HomePage from './page/page-homePage';
 import { AccountsProvider } from './hooks/AccountsProvider';
+import { TokenProvider } from './hooks/TokenProvider';
 
 const LayoutWrapper = styled.div`
   display: flex;
@@ -17,7 +18,9 @@ export const App: React.FC = () => {
       <LayoutWrapper id={'LayoutWrapper'}>
         <ApiProvider url='ws://127.0.0.1:9999'>
           <AccountsProvider>
-            <HomePage/>
+            <TokenProvider>
+              <HomePage/>
+            </TokenProvider>
           </AccountsProvider>
         </ApiProvider>
       </LayoutWrapper>
