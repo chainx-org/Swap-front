@@ -225,7 +225,7 @@ function CurrencyItem({
                 e.target.value = inputNumberOnly(e.target.value);
               }}
               value={inputCoinValue.coinInput[0].coinInput}
-            ></Input>
+            />
           ) : (
             <Input
               suffix=""

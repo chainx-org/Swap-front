@@ -64,7 +64,7 @@ const ConfirmModal = ({confirmType, statusValue, onCancel}: ConfirmCardProps): R
   const backPriceContent: React.ReactNode = (
     <PriceWrapper>
       {PriceFieldList.map(item =>
-        <PriceField name={item.fieldName} content={item.fieldContent}/>)
+        <PriceField key={item.fieldName} name={item.fieldName} content={item.fieldContent}/>)
       }
       <NormalButton className='confirmButton' label='Confirm Swap'/>
     </PriceWrapper>
