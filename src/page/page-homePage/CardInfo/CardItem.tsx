@@ -152,19 +152,28 @@ interface currencyItemProps {
   className?: string;
   currencyName: string;
   currencyTitle: string;
+  index: Number;
+  addCoin?: any;
 }
 function CurrencyItem({
   children,
   className = "",
   currencyName,
   currencyTitle,
+  index,
+  addCoin,
 }: currencyItemProps): React.ReactElement<currencyItemProps> {
   const [isOpenDialog, setisOpenDialog] = useState(false);
   const [inPutValue, setInputValue] = useState("");
   const inputNumberOnly = (item: string) => {
     item = item.replace(/[^\d.]/g, "");
-    setInputValue(item);
-    return item;
+    const index = item.indexOf(".");
+    const str1 = item.slice(0, index + 1);
+    let str2 = item.slice(index + 1);
+    str2 = str2.replace(/[^\d]/g, "");
+    const strAll = str1 + str2;
+    setInputValue(strAll);
+    return strAll;
   };
   return (
     <Item>
@@ -213,7 +222,11 @@ function CurrencyItem({
       </div>
       {isOpenDialog && (
         <div>
-          <DialogCard onCancel={setisOpenDialog} />
+          <DialogCard
+            onCancel={setisOpenDialog}
+            index={index}
+            addCoinItem={addCoin}
+          />
         </div>
       )}
     </Item>

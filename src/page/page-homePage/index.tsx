@@ -55,7 +55,19 @@ const HomePage = (): React.ReactElement => {
     },
   ]);
   const { isExtensionInjected } = useContext(AccountsContext);
-
+  const addCoin = (item: any, index: any) => {
+    if (
+      coinInfo.some((n) => {
+        return n.coinName === item.coinName;
+      })
+    ) {
+      alert("error");
+      return;
+    }
+    coinInfo[index.index] = item;
+    let list = coinInfo;
+    setCoinInfo([...list]);
+  };
   return (
     <Container>
       <Header />
@@ -63,7 +75,12 @@ const HomePage = (): React.ReactElement => {
         {/*<ConfirmModal confirmType={'waiting'}/>*/}
         <ContainerCard title="Swap" className={"cardContent"}>
           {/* 货币一 */}
-          <CardItem currencyTitle="From" currencyName={coinInfo[0].coinName}>
+          <CardItem
+            currencyTitle="From"
+            currencyName={coinInfo[0].coinName}
+            index={0}
+            addCoin={addCoin}
+          >
             {coinInfo[0].coinIcon}
           </CardItem>
           {/* 转换icon */}
@@ -78,7 +95,12 @@ const HomePage = (): React.ReactElement => {
             </div>
           </ExchangeIconStyle>
           {/* 货币二 */}
-          <CardItem currencyTitle="To" currencyName={coinInfo[1].coinName}>
+          <CardItem
+            currencyTitle="To"
+            currencyName={coinInfo[1].coinName}
+            index={1}
+            addCoin={addCoin}
+          >
             {coinInfo[1].coinIcon}
           </CardItem>
           {/* 底部按钮 */}
