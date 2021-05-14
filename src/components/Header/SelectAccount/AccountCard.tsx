@@ -12,6 +12,7 @@ const IconStyle = {
 function AccountCard() {
   const [isAccountListOpen, setIsAccountListOpen] = useState(false);
   const { currentAccount } = useContext(AccountsContext);
+  const [name, setName] = useState(currentAccount.name);
   const [address, setAddress] = useState(currentAccount.address);
   const selectAccountList = (e: any) => {
     e.nativeEvent.stopImmediatePropagation();
@@ -27,6 +28,7 @@ function AccountCard() {
 
   useEffect(() => {
     setAddress(shortenString(currentAccount.address));
+    setName(shortenString(currentAccount.name));
   }, [currentAccount.address]);
 
   return (
@@ -35,7 +37,7 @@ function AccountCard() {
         <div className={"current-icon"}>
           <DogIcon style={IconStyle} />
         </div>
-        <div className={"current-name"}>Pedro Amorim</div>
+        <div className={"current-name"}>{name}</div>
         <div className={"current-address"}>{address}</div>
       </SelectAccountStyle>
       {isAccountListOpen && <SelectAccount />}

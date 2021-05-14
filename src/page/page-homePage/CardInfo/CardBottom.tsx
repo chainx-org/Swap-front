@@ -59,7 +59,10 @@ function BottomItem({
         onClick={() => setIsConfirmOpen(true)}
       />
       {isConfirmOpen && (
-        <ConfirmModal onCancel={setIsConfirmOpen} confirmType={"priceInfo"} />
+        <ConfirmModal
+          onCancel={setIsConfirmOpen}
+          confirmType={"transactionStatus"}
+        />
       )}
     </Item>
   );
