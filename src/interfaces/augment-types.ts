@@ -915,10 +915,6 @@ declare module '@polkadot/types/types/registry' {
     'Option<TAssetBalance>': Option<TAssetBalance>;
     'Option<TAssetDepositBalance>': Option<TAssetDepositBalance>;
     'Option<TeleportAsset>': Option<TeleportAsset>;
-<<<<<<< HEAD
-=======
-    // 'Option<Text>': Option<Text>;
->>>>>>> 4bdd70d391dcb42f9771d84e59aae9f6ff89c405
     'Option<Text>': Option<Text>;
     'Option<Timepoint>': Option<Timepoint>;
     'Option<Token>': Option<Token>;
@@ -1778,10 +1774,6 @@ declare module '@polkadot/types/types/registry' {
     'Vec<TAssetBalance>': Vec<TAssetBalance>;
     'Vec<TAssetDepositBalance>': Vec<TAssetDepositBalance>;
     'Vec<TeleportAsset>': Vec<TeleportAsset>;
-<<<<<<< HEAD
-=======
-    // 'Vec<Text>': Vec<Text>;
->>>>>>> 4bdd70d391dcb42f9771d84e59aae9f6ff89c405
     'Vec<Text>': Vec<Text>;
     'Vec<Timepoint>': Vec<Timepoint>;
     'Vec<Token>': Vec<Token>;
