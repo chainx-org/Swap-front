@@ -63,6 +63,15 @@ export const DialogItem = styled.div`
           height: 20px;
         }
       }
+      .left-coinIcon{
+        width:20px;
+        height:20px;
+        margin-right: 7px;
+        & > svg {
+          width: 20px;
+          height: 20px;
+        }
+      }
       .right-info{
         display:flex;
         flex-direction:column;
