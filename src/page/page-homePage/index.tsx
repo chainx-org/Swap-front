@@ -43,6 +43,11 @@ interface CoinInfo {
   coinIcon: React.ReactNode;
 }
 
+interface CoinInput {
+  coinIndex: Number;
+  coinInput: any;
+}
+
 const HomePage = (): React.ReactElement => {
   const [coinInfo, setCoinInfo] = useState<CoinInfo[]>([
     {
@@ -54,8 +59,20 @@ const HomePage = (): React.ReactElement => {
       coinIcon: <BtcIcon style={SvgStyle} />,
     },
   ]);
+  const [coinInput, setCoinInput] = useState<CoinInput[]>([
+    { coinIndex: 0, coinInput: "" },
+    { coinIndex: 1, coinInput: "" },
+  ]);
   const { isExtensionInjected } = useContext(AccountsContext);
   const [isShowSwapInfo, setIsShowSwapInfo] = useState(false);
+  const clearCoinInput = () => {
+    setCoinInput([
+      ...[
+        { coinIndex: 0, coinInput: "" },
+        { coinIndex: 1, coinInput: "" },
+      ],
+    ]);
+  };
   const addCoin = (item: any, index: any) => {
     if (
       coinInfo.some((n) => {
@@ -68,7 +85,14 @@ const HomePage = (): React.ReactElement => {
     coinInfo[index.index] = item;
     let list = coinInfo;
     setCoinInfo([...list]);
+    clearCoinInput();
   };
+  const exChangeIcon = () => {
+    setCoinInfo([...coinInfo].reverse());
+    clearCoinInput();
+    setIsShowSwapInfo(false);
+  };
+
   return (
     <Container>
       <Header />
@@ -77,20 +101,18 @@ const HomePage = (): React.ReactElement => {
         <ContainerCard title="Swap" className={"cardContent"}>
           {/* 货币一 */}
           <CardItem
+            index={0}
             currencyTitle="From"
             currencyName={coinInfo[0].coinName}
-            index={0}
             addCoin={addCoin}
             showSwapInfo={setIsShowSwapInfo}
+            inputCoinValue={{ coinInput, setCoinInput }}
           >
             {coinInfo[0].coinIcon}
           </CardItem>
           {/* 转换icon */}
           <ExchangeIconStyle>
-            <div
-              className="box"
-              onClick={() => setCoinInfo([...coinInfo].reverse())}
-            >
+            <div className="box" onClick={exChangeIcon}>
               <div className="iconBox">
                 <ExchangeIcon />
               </div>
@@ -98,11 +120,12 @@ const HomePage = (): React.ReactElement => {
           </ExchangeIconStyle>
           {/* 货币二 */}
           <CardItem
+            index={1}
             currencyTitle="To"
             currencyName={coinInfo[1].coinName}
-            index={1}
             addCoin={addCoin}
             showSwapInfo={setIsShowSwapInfo}
+            inputCoinValue={{ coinInput, setCoinInput }}
           >
             {coinInfo[1].coinIcon}
           </CardItem>
