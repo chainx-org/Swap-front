@@ -13,7 +13,6 @@ const Item = styled(Tooltip)`
     margin: 32px 0px 0 0px;
     & > span {
       display: inline-block;
-      //   height: 17px;
       text-align: right;
       letter-spacing: 0.1px;
       font-size: 12px;
@@ -32,6 +31,16 @@ const Item = styled(Tooltip)`
     .ant-btn {
     }
   }
+  .cannot-swap {
+    width: 392px;
+    height: 44px;
+    padding-left: 16px;
+    padding-right: 16px;
+    margin: 8px 0px 15px 16px;
+    position: static;
+    background: #b8b8b9;
+    border-radius: 12px;
+  }
 `;
 
 interface BottomItemProps {
@@ -40,11 +49,14 @@ interface BottomItemProps {
   name: string;
   btnLabel: string;
   value: string;
+  swapCoinInfo?: any;
 }
 function BottomItem({
   name,
   btnLabel,
   value,
+  className,
+  swapCoinInfo,
 }: BottomItemProps): React.ReactElement<BottomItemProps> {
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
   return (
@@ -53,13 +65,23 @@ function BottomItem({
         <span>{name}</span>
         <span>{value}</span>
       </div>
-      <NormalButton
-        label={btnLabel}
-        className="buttonDiv"
-        onClick={() => setIsConfirmOpen(true)}
-      />
+      {className === "buttonDiv" && (
+        <NormalButton
+          label={btnLabel}
+          className={className}
+          onClick={() => setIsConfirmOpen(true)}
+        />
+      )}
+      {className === "cannot-swap" && (
+        <NormalButton label={btnLabel} className={className} />
+      )}
+
       {isConfirmOpen && (
-        <ConfirmModal onCancel={setIsConfirmOpen} confirmType={"priceInfo"} />
+        <ConfirmModal
+          onCancel={setIsConfirmOpen}
+          confirmType={"priceInfo"}
+          swapCoinInfo={swapCoinInfo}
+        />
       )}
     </Item>
   );

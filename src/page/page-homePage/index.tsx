@@ -38,11 +38,13 @@ const ExchangeIconStyle = styled.div`
 interface CoinInfo {
   coinName: string;
   coinIcon: React.ReactNode;
+  coinBalence: string;
 }
 
 interface CoinInput {
   coinIndex: Number;
   coinInput: any;
+  canSwap: Boolean;
 }
 
 const HomePage = (): React.ReactElement => {
@@ -50,23 +52,37 @@ const HomePage = (): React.ReactElement => {
     {
       coinName: "XDOT",
       coinIcon: <DogIcon />,
+      coinBalence: "999.0067",
     },
     {
       coinName: "XDOGE",
       coinIcon: <BtcIcon />,
+      coinBalence: "999.0067",
     },
   ]);
   const [coinInput, setCoinInput] = useState<CoinInput[]>([
-    { coinIndex: 0, coinInput: "" },
-    { coinIndex: 1, coinInput: "" },
+    { coinIndex: 0, coinInput: "", canSwap: true },
+    { coinIndex: 1, coinInput: "", canSwap: true },
   ]);
-  const { isExtensionInjected } = useContext(AccountsContext);
   const [isShowSwapInfo, setIsShowSwapInfo] = useState(false);
+  const { isExtensionInjected } = useContext(AccountsContext);
+  const swapCoin = [
+    {
+      coinName: coinInfo[0].coinName,
+      coinIcon: coinInfo[0].coinIcon,
+      coinNum: coinInput[0].coinInput,
+    },
+    {
+      coinName: coinInfo[1].coinName,
+      coinIcon: coinInfo[1].coinIcon,
+      coinNum: coinInput[1].coinInput,
+    },
+  ];
   const clearCoinInput = () => {
     setCoinInput([
       ...[
-        { coinIndex: 0, coinInput: "" },
-        { coinIndex: 1, coinInput: "" },
+        { coinIndex: 0, coinInput: "", canSwap: true },
+        { coinIndex: 1, coinInput: "", canSwap: true },
       ],
     ]);
   };
@@ -100,8 +116,10 @@ const HomePage = (): React.ReactElement => {
           <CardItem
             index={0}
             currencyTitle="From"
+            currencyBalence={coinInfo[0].coinBalence}
             currencyName={coinInfo[0].coinName}
             addCoin={addCoin}
+            // canSwap={setCanSwap}
             showSwapInfo={setIsShowSwapInfo}
             inputCoinValue={{ coinInput, setCoinInput }}
           >
@@ -120,18 +138,33 @@ const HomePage = (): React.ReactElement => {
             index={1}
             currencyTitle="To"
             currencyName={coinInfo[1].coinName}
+            currencyBalence={coinInfo[1].coinBalence}
             addCoin={addCoin}
+            // canSwap={setCanSwap}
             showSwapInfo={setIsShowSwapInfo}
             inputCoinValue={{ coinInput, setCoinInput }}
           >
             {coinInfo[1].coinIcon}
           </CardItem>
           {/* 底部按钮 */}
-          <BottomItem
-            name="Slippage Tolerance"
-            btnLabel={!isExtensionInjected ? "Connect Wallet" : "Swap"}
-            value="1%"
-          />
+          {coinInput[0].canSwap && coinInput[1].canSwap && (
+            <BottomItem
+              name="Slippage Tolerance"
+              value="1%"
+              swapCoinInfo={swapCoin}
+              btnLabel={!isExtensionInjected ? "Connect Wallet" : "Swap"}
+              className="buttonDiv"
+            />
+          )}
+          {(!coinInput[0].canSwap || !coinInput[1].canSwap) && (
+            <BottomItem
+              name="Slippage Tolerance"
+              value="1%"
+              btnLabel={"Insufficient DOT Balance"}
+              className="cannot-swap"
+            />
+          )}
+
           {/* Swap info */}
         </ContainerCard>
       </Content>

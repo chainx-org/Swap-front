@@ -10,7 +10,6 @@ interface DialogCardProps {
   onCancel: React.Dispatch<boolean>;
   addCoinItem: any;
 }
-// const DialogCard = ({OpenDialog }) => {
 function DialogCard({
   index,
   onCancel,
@@ -21,43 +20,42 @@ function DialogCard({
       coinName: "XBTC",
       type: "Bitcoin",
       coinIcon: <DogIcon />,
-      value: "234.0024",
+      coinBalence: "234.0024",
     },
     {
       coinName: "XBCH",
       type: "Bitcoin Cash",
       coinIcon: <DogIcon />,
-      value: "12.0024",
+      coinBalence: "12.0024",
     },
     {
       coinName: "XDOGE",
       type: "Dogecoin",
       coinIcon: <DogIcon />,
-      value: "12.0024",
+      coinBalence: "12.0024",
     },
     {
       coinName: "XBTC",
       type: "Bitcoin",
       coinIcon: <DogIcon />,
-      value: "234.0024",
+      coinBalence: "234.0024",
     },
     {
       coinName: "XETH",
       type: "Ether",
       coinIcon: <DogIcon />,
-      value: "0.0",
+      coinBalence: "0.0",
     },
     {
       coinName: "XDOT",
       type: "Polkadot",
       coinIcon: <DogIcon />,
-      value: "12.0024",
+      coinBalence: "12.0024",
     },
   ];
   const clickItem = (item: any, index: any) => {
     addCoinItem(item, index);
     onCancel(false);
-    // () => addCoinItem(item);
   };
   return (
     <div>
@@ -84,7 +82,7 @@ function DialogCard({
                         <span>{item.type}</span>
                       </div>
                     </div>
-                    <div className="right-item">{item.value}</div>
+                    <div className="right-item">{item.coinBalence}</div>
                   </div>
                 </DialogItem>
               );
