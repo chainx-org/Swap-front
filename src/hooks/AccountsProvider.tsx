@@ -14,16 +14,37 @@ export interface AccountsData {
   setCurrentAccount: React.Dispatch<AccountItem>;
 }
 
+export interface TokenItem{
+  id: number;
+  unit: string;
+  name: string;
+  decimals: number;
+}
+
+export interface TokenInfo extends TokenItem{
+  assetNumber: number;
+}
+
+export interface AccountBalance{
+  XBTC: TokenInfo;
+  XBCH: TokenInfo;
+  XDOGE: TokenInfo;
+  XETH: TokenInfo;
+  XDOT: TokenInfo;
+}
+
 export const AccountsContext = createContext<AccountsData>({} as AccountsData);
+
+const balanceType: string[] = ['PCX', 'XBTC', 'XBCH', 'XDOGE', 'XETH', 'XDOT']
 
 export const AccountsProvider: FC = ({children}) => {
   const {isApiReady} = useContext(ApiContext)
   const [accountList, setAccountList] = useState<AccountItem[]>([])
+  const [isExtensionInjected, setIsExtensionInjected] = useState<boolean>(false)
   const [currentAccount, setCurrentAccount] = useState<AccountItem>({
     address: '',
     name: '',
   })
-  const [isExtensionInjected, setIsExtensionInjected] = useState<boolean>(false)
 
   const getAccountList = async () => {
     const extensions = await web3Enable('swap');
@@ -49,15 +70,47 @@ export const AccountsProvider: FC = ({children}) => {
       address: '',
       name: '',
     })
-
   }, [accountList])
+
+  // useEffect(() => {
+  //   if(isApiReady&& api){
+  //     //@ts-ignore
+  //     api.rpc.swap.getTokenList().then(list => setTokenList(list.map((i: any) => ({
+  //       id: Number(i.assertId),
+  //       unit: i.assertInfo.token.toString(),
+  //       name: i.assertInfo.chain.toString(),
+  //       decimals: Number(i.assertInfo.decimals)
+  //     }))))
+  //   }
+  // }, [isApiReady, currentAccount.address])
+  //
+  // let cc: any[] = []
+  // useEffect(() => {
+  //   if(tokenList.length> 0){
+  //     tokenList.map((t: TokenItem) => (
+  //     //@ts-ignore
+  //       api.rpc.swap.getBalance(t.id, '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY').then(balance => {
+  //         setAccountBalance({
+  //           ...accountBalance,
+  //           [balanceType[t.id]]: {
+  //             id: t.id,
+  //             unit: t.unit,
+  //             name: t.name,
+  //             decimals: t.decimals,
+  //             assetNumber: Number(balance)
+  //           }
+  //         })
+  //       })
+  //     ))
+  //   }
+  // }, [tokenList, currentAccount.address])
 
   return (
     <AccountsContext.Provider value={{
       isExtensionInjected,
       accountList,
       currentAccount,
-      setCurrentAccount
+      setCurrentAccount,
     }}>
       {children}
     </AccountsContext.Provider>

@@ -16,7 +16,7 @@ export const App: React.FC = () => {
   return (
     <>
       <LayoutWrapper id={'LayoutWrapper'}>
-        <ApiProvider url='ws://127.0.0.1:9999'>
+        <ApiProvider url='ws://127.0.0.1:9977'>
           <AccountsProvider>
             <TokenProvider>
               <HomePage/>
