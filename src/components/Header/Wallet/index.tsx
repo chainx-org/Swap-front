@@ -24,7 +24,8 @@ function Wallet() {
   }, []);
   return (
     <WalletWrapperStyle>
-      <WalletStyle onClick={showMenu}>
+      {/* <WalletStyle onClick={showMenu}>*/}
+      <WalletStyle>
         <WalletLogo />
       </WalletStyle>
       {dropToggle && (
