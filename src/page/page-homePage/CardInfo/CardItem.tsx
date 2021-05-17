@@ -4,8 +4,8 @@ import { Input } from "antd";
 import { ReactComponent as ArrowIcon } from "../../../assets/ArrowIcon.svg";
 import { Tooltip, Card } from "antd";
 import styled from "styled-components";
-import { useApiReady } from "../../../hooks/useApiReady";
-import { useApi } from "../../../hooks/useApi";
+// import { useApiReady } from "../../../hooks/useApiReady";
+// import { useApi } from "../../../hooks/useApi";
 const Item = styled(Tooltip)`
   .title-info {
     display: flex;
@@ -194,7 +194,7 @@ function CurrencyItem({
       ? (canSwap = false)
       : (canSwap = true);
     coinValue(strAll, canSwap);
-    coinChangeTo(strAll);
+    // coinChangeTo(strAll);
     return strAll;
   };
 
@@ -203,10 +203,10 @@ function CurrencyItem({
     inputCoinValue.coinInput[index].canSwap = canSwap;
     inputCoinValue.setCoinInput([...inputCoinValue.coinInput]);
   };
-  const api = useApi();
-  async function coinChangeTo(value: string) {
-    //  const a =  await api.rpc.swap.getBalance(t.id, '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY').then(e => {e})
-  }
+  // const api = useApi();
+  // async function coinChangeTo(value: string) {
+  //   //  const a =  await api.rpc.swap.getBalance(t.id, '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY').then(e => {e})
+  // }
 
   return (
     <Item>
@@ -241,7 +241,7 @@ function CurrencyItem({
                 e.target.value = inputNumberOnly(e.target.value);
               }}
               value={inputCoinValue.coinInput[0].coinInput}
-            ></Input>
+            />
           ) : (
             <Input
               suffix=""
