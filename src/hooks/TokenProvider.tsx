@@ -11,6 +11,7 @@ import ETHSymbol from "../assets/symbols_ETH.svg";
 import DOGESymbol from "../assets/symbols_DOGE.svg";
 import BtcIcon from "../assets/symbols_BTC.svg";
 import BhcIcon from "../assets/symbols_BHC.svg";
+import pcx from "../assets/chainx-pcx.svg";
 export interface TokenData {
   tokenList: TokenItem[] | [];
   accountBalance: AccountBalance | {};
@@ -73,7 +74,7 @@ export const TokenProvider: FC = ({ children }) => {
       console.log(item.unit, "item.unit");
       switch (item.unit) {
         case "PCX":
-          item.icon = DOGESymbol;
+          item.icon = pcx;
           break;
         case "XBTC":
           item.icon = BtcIcon;

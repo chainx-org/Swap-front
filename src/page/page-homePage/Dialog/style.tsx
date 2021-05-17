@@ -24,7 +24,7 @@ export const DivDialog = styled.div`
     border: 1px solid #efefef;
     border-radius: 24px 24px 16px 16px;
     box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
-    z-index: 5;
+    z-index: 7;
   }
 `;
 
