@@ -1,7 +1,7 @@
 import React from "react";
 import { DialogItem, DivDialog } from "./style";
 import ContainerCard from "../../../components/Card/ContainerCard";
-import { ReactComponent as DogIcon } from "../../../assets/symbols_DOGE.svg";
+import DogIcon from "../../../assets/symbols_DOGE.svg";
 import Mask from "../../../components/Mask";
 import { AnyAaaaRecord } from "node:dns";
 
@@ -19,37 +19,37 @@ function DialogCard({
     {
       coinName: "XBTC",
       type: "Bitcoin",
-      coinIcon: <DogIcon />,
+      coinIcon: DogIcon,
       coinBalence: "234.0024",
     },
     {
       coinName: "XBCH",
       type: "Bitcoin Cash",
-      coinIcon: <DogIcon />,
+      coinIcon: DogIcon,
       coinBalence: "12.0024",
     },
     {
       coinName: "XDOGE",
       type: "Dogecoin",
-      coinIcon: <DogIcon />,
+      coinIcon: DogIcon,
       coinBalence: "12.0024",
     },
     {
       coinName: "XBTC",
       type: "Bitcoin",
-      coinIcon: <DogIcon />,
+      coinIcon: DogIcon,
       coinBalence: "234.0024",
     },
     {
       coinName: "XETH",
       type: "Ether",
-      coinIcon: <DogIcon />,
+      coinIcon: DogIcon,
       coinBalence: "0.0",
     },
     {
       coinName: "XDOT",
       type: "Polkadot",
-      coinIcon: <DogIcon />,
+      coinIcon: DogIcon,
       coinBalence: "12.0024",
     },
   ];
@@ -76,7 +76,13 @@ function DialogCard({
                     onClick={() => clickItem(item, { index })}
                   >
                     <div className="left-item">
-                      <div className="left-coinIcon">{item.coinIcon}</div>
+                      <div className="left-coinIcon">
+                        <img
+                          src={item.coinIcon}
+                          className="status"
+                          alt="status"
+                        />
+                      </div>
                       <div className="right-info">
                         <span>{item.coinName}</span>
                         <span>{item.type}</span>

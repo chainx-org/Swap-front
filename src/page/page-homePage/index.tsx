@@ -5,8 +5,8 @@ import styled from "styled-components";
 import CardItem from "./CardInfo/CardItem";
 import BottomItem from "./CardInfo/CardBottom";
 import SwapInfo from "./CardInfo/SwapInfo";
-import { ReactComponent as DogIcon } from "../../assets/symbols_DOGE.svg";
-import { ReactComponent as BtcIcon } from "../../assets/symbols_BTC.svg";
+import DogIcon from "../../assets/symbols_DOGE.svg";
+import BtcIcon from "../../assets/symbols_BTC.svg";
 import { ReactComponent as ExchangeIcon } from "../../assets/icon_exchange.svg";
 import { AccountsContext } from "../../hooks/AccountsProvider";
 
@@ -37,7 +37,7 @@ const ExchangeIconStyle = styled.div`
 
 interface CoinInfo {
   coinName: string;
-  coinIcon: React.ReactNode;
+  coinIcon: string;
   coinBalence: string;
 }
 
@@ -51,12 +51,12 @@ const HomePage = (): React.ReactElement => {
   const [coinInfo, setCoinInfo] = useState<CoinInfo[]>([
     {
       coinName: "XDOT",
-      coinIcon: <DogIcon />,
+      coinIcon: DogIcon,
       coinBalence: "999.0067",
     },
     {
       coinName: "XDOGE",
-      coinIcon: <BtcIcon />,
+      coinIcon: BtcIcon,
       coinBalence: "999.0067",
     },
   ]);
@@ -119,11 +119,10 @@ const HomePage = (): React.ReactElement => {
             currencyBalence={coinInfo[0].coinBalence}
             currencyName={coinInfo[0].coinName}
             addCoin={addCoin}
-            // canSwap={setCanSwap}
             showSwapInfo={setIsShowSwapInfo}
             inputCoinValue={{ coinInput, setCoinInput }}
           >
-            {coinInfo[0].coinIcon}
+            <img src={coinInfo[0].coinIcon} alt="" />
           </CardItem>
           {/* 转换icon */}
           <ExchangeIconStyle>
@@ -140,11 +139,10 @@ const HomePage = (): React.ReactElement => {
             currencyName={coinInfo[1].coinName}
             currencyBalence={coinInfo[1].coinBalence}
             addCoin={addCoin}
-            // canSwap={setCanSwap}
             showSwapInfo={setIsShowSwapInfo}
             inputCoinValue={{ coinInput, setCoinInput }}
           >
-            {coinInfo[1].coinIcon}
+            <img src={coinInfo[1].coinIcon} alt="" />
           </CardItem>
           {/* 底部按钮 */}
           {coinInput[0].canSwap && coinInput[1].canSwap && (

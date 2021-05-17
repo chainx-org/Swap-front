@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import DialogCard from "../Dialog/index";
 import { Input } from "antd";
 import { ReactComponent as ArrowIcon } from "../../../assets/ArrowIcon.svg";
-// import { Item, SvgStyle, TitleInfoSecond } from "./style";
 import { Tooltip, Card } from "antd";
 import styled from "styled-components";
+import { useApiReady } from "../../../hooks/useApiReady";
+import { useApi } from "../../../hooks/useApi";
 const Item = styled(Tooltip)`
   .title-info {
     display: flex;
@@ -202,10 +203,11 @@ function CurrencyItem({
     inputCoinValue.coinInput[index].canSwap = canSwap;
     inputCoinValue.setCoinInput([...inputCoinValue.coinInput]);
   };
+  const api = useApi();
+  async function coinChangeTo(value: string) {
+    //  const a =  await api.rpc.swap.getBalance(t.id, '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY').then(e => {e})
+  }
 
-  const coinChangeTo = (value: string) => {
-    debugger;
-  };
   return (
     <Item>
       <div className="title-info">
