@@ -26,6 +26,7 @@ const ExchangeIconStyle = styled.div`
     display: inline-block;
     .iconBox {
       position: absolute;
+      z-index: 0;
       bottom: 165px;
       width: 26px;
       height: 26px;
@@ -36,9 +37,11 @@ const ExchangeIconStyle = styled.div`
 `;
 
 interface CoinInfo {
-  coinName: string;
-  coinIcon: string;
-  coinBalence: string;
+  id: string;
+  unit: string;
+  icon: string;
+  coinBalance: string;
+  decimals: Number;
 }
 
 interface CoinInput {
@@ -50,14 +53,18 @@ interface CoinInput {
 const HomePage = (): React.ReactElement => {
   const [coinInfo, setCoinInfo] = useState<CoinInfo[]>([
     {
-      coinName: "XDOT",
-      coinIcon: DogIcon,
-      coinBalence: "999.0067",
+      id: "1",
+      unit: "XDOT",
+      icon: DogIcon,
+      coinBalance: "999.0067",
+      decimals: 1,
     },
     {
-      coinName: "XDOGE",
-      coinIcon: BtcIcon,
-      coinBalence: "999.0067",
+      id: "2",
+      unit: "XDOGE",
+      icon: BtcIcon,
+      coinBalance: "999.0067",
+      decimals: 1,
     },
   ]);
   const [coinInput, setCoinInput] = useState<CoinInput[]>([
@@ -68,13 +75,17 @@ const HomePage = (): React.ReactElement => {
   const { isExtensionInjected } = useContext(AccountsContext);
   const swapCoin = [
     {
-      coinName: coinInfo[0].coinName,
-      coinIcon: coinInfo[0].coinIcon,
+      id: coinInfo[0].id,
+      unit: coinInfo[0].unit,
+      icon: coinInfo[0].icon,
+      decimals: coinInfo[0].decimals,
       coinNum: coinInput[0].coinInput,
     },
     {
-      coinName: coinInfo[1].coinName,
-      coinIcon: coinInfo[1].coinIcon,
+      id: coinInfo[1].id,
+      unit: coinInfo[1].unit,
+      icon: coinInfo[1].icon,
+      decimals: coinInfo[1].decimals,
       coinNum: coinInput[1].coinInput,
     },
   ];
@@ -89,7 +100,7 @@ const HomePage = (): React.ReactElement => {
   const addCoin = (item: any, index: any) => {
     if (
       coinInfo.some((n) => {
-        return n.coinName === item.coinName;
+        return n.unit === item.unit;
       })
     ) {
       alert("error");
@@ -116,13 +127,13 @@ const HomePage = (): React.ReactElement => {
           <CardItem
             index={0}
             currencyTitle="From"
-            currencyBalence={coinInfo[0].coinBalence}
-            currencyName={coinInfo[0].coinName}
+            currencyBalence={coinInfo[0].coinBalance}
+            currencyName={coinInfo[0].unit}
             addCoin={addCoin}
             showSwapInfo={setIsShowSwapInfo}
             inputCoinValue={{ coinInput, setCoinInput }}
           >
-            <img src={coinInfo[0].coinIcon} alt="" />
+            <img src={coinInfo[0].icon} alt="" />
           </CardItem>
           {/* 转换icon */}
           <ExchangeIconStyle>
@@ -136,13 +147,13 @@ const HomePage = (): React.ReactElement => {
           <CardItem
             index={1}
             currencyTitle="To"
-            currencyName={coinInfo[1].coinName}
-            currencyBalence={coinInfo[1].coinBalence}
+            currencyName={coinInfo[1].unit}
+            currencyBalence={coinInfo[1].coinBalance}
             addCoin={addCoin}
             showSwapInfo={setIsShowSwapInfo}
             inputCoinValue={{ coinInput, setCoinInput }}
           >
-            <img src={coinInfo[1].coinIcon} alt="" />
+            <img src={coinInfo[1].icon} alt="" />
           </CardItem>
           {/* 底部按钮 */}
           {coinInput[0].canSwap && coinInput[1].canSwap && (

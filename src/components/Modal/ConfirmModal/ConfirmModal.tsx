@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import NormalButton from "../../Button";
 import ContainerCard from "../../Card/ContainerCard";
 import BackStatusContent from "./backStatusContent";
+import { ApiContext } from "../../../hooks/ApiProvider";
 import ETHSymbol from "../../../assets/symbols_ETH.svg";
 import DOGESymbol from "../../../assets/symbols_DOGE.svg";
 import ArrowBlack from "../../../assets/arrow_black.svg";
-import NormalButton from "../../Button";
 import Loading from "../../../assets/loading.png";
 import Error from "../../../assets/Feedback_failure.svg";
 import Success from "../../../assets/Feedback_successed.svg";
@@ -43,6 +44,7 @@ const ConfirmModal = ({
   onCancel,
   swapCoinInfo,
 }: ConfirmCardProps): React.ReactElement<ConfirmCardProps> => {
+  const { api, isApiReady } = useContext(ApiContext);
   const [statusIcon, setStatusIcon] = useState(confirmType);
   const coinNumList: CoinNumItem[] = swapCoinInfo;
 
@@ -109,9 +111,25 @@ const ConfirmModal = ({
 
   function confirmSwap() {
     setStatusIcon("transactionStatus");
-    console.log(confirmType, "confirmType");
-
+    // console.log(confirmType, "confirmType");
+    console.log(coinNumList, "coinNumList");
+    debugger;
     //调用一下接口，
+    if (isApiReady && api) {
+      //@ts-ignore
+      let result = api.tx.swap.swapExactTokensForTokens(
+        100,
+        100,
+        [0, 1],
+        "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        100
+      );
+      // .then((list: any) => {
+      //   console.log(list, "list");
+      // });
+      console.log(result, "result");
+    }
+    debugger;
     //成功就关闭这个弹框，显示成功的弹框，失败就显示失败信息的弹框
     return;
   }

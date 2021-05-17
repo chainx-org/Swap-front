@@ -203,10 +203,6 @@ function CurrencyItem({
     inputCoinValue.coinInput[index].canSwap = canSwap;
     inputCoinValue.setCoinInput([...inputCoinValue.coinInput]);
   };
-  // const api = useApi();
-  // async function coinChangeTo(value: string) {
-  //   //  const a =  await api.rpc.swap.getBalance(t.id, '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY').then(e => {e})
-  // }
 
   return (
     <Item>
