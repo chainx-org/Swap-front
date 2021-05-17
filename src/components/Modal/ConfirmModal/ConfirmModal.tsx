@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import ContainerCard from "../../Card/ContainerCard";
+import BackStatusContent from "./backStatusContent";
 import ETHSymbol from "../../../assets/symbols_ETH.svg";
 import DOGESymbol from "../../../assets/symbols_DOGE.svg";
 import ArrowBlack from "../../../assets/arrow_black.svg";
@@ -7,6 +8,7 @@ import NormalButton from "../../Button";
 import Loading from "../../../assets/loading.png";
 import Error from "../../../assets/Feedback_failure.svg";
 import Success from "../../../assets/Feedback_successed.svg";
+import DogIcon from "../../../assets/symbols_DOGE.svg";
 import {
   CoinInfoWrapper,
   ConfirmModalWrapper,
@@ -41,6 +43,7 @@ const ConfirmModal = ({
   onCancel,
   swapCoinInfo,
 }: ConfirmCardProps): React.ReactElement<ConfirmCardProps> => {
+  const [statusIcon, setStatusIcon] = useState(confirmType);
   const coinNumList: CoinNumItem[] = swapCoinInfo;
 
   const PriceFieldList: PriceFieldItem[] = [
@@ -74,7 +77,7 @@ const ConfirmModal = ({
       <NormalButton
         className="confirmButton"
         label="Confirm Swap"
-        onClick={() => confirmSwap}
+        onClick={confirmSwap}
       />
     </PriceWrapper>
   );
@@ -90,20 +93,7 @@ const ConfirmModal = ({
   );
 
   const backStatusContent: React.ReactNode = (
-    <StatusWrapper>
-      {statusValue === "fail" ? (
-        <>
-          <img src={Error} className="status" alt="status" />
-          <div className="statusValue">cause</div>
-        </>
-      ) : (
-        <>
-          <img src={Success} className="status" alt="status" />
-          <div className="statusValue">transaction submitted</div>
-        </>
-      )}
-      <NormalButton label="Close" />
-    </StatusWrapper>
+    <BackStatusContent statusValue={statusValue} />
   );
 
   const judgeConfirmType = (type: string): React.ReactNode => {
@@ -117,8 +107,15 @@ const ConfirmModal = ({
     }
   };
 
-  const confirmSwap = () => {};
-  console.log(confirmType, "confirmType");
+  function confirmSwap() {
+    setStatusIcon("transactionStatus");
+    console.log(confirmType, "confirmType");
+
+    //调用一下接口，
+    //成功就关闭这个弹框，显示成功的弹框，失败就显示失败信息的弹框
+    return;
+  }
+
   return (
     <>
       <Mask />
@@ -126,7 +123,7 @@ const ConfirmModal = ({
         <ContainerCard
           onCancel={onCancel}
           title="Confirm Swap"
-          backContent={judgeConfirmType(confirmType)}
+          backContent={judgeConfirmType(statusIcon)}
         >
           <CoinInfoWrapper>
             <div className="numWrapper">
