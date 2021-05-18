@@ -5,6 +5,7 @@ import styled from "styled-components";
 import CardItem from "./CardInfo/CardItem";
 import BottomItem from "./CardInfo/CardBottom";
 import SwapInfo from "./CardInfo/SwapInfo";
+import { TokenContext } from "../../hooks/TokenProvider";
 import DogIcon from "../../assets/symbols_DOGE.svg";
 import BtcIcon from "../../assets/symbols_BTC.svg";
 import { ReactComponent as ExchangeIcon } from "../../assets/icon_exchange.svg";
@@ -36,13 +37,13 @@ const ExchangeIconStyle = styled.div`
   }
 `;
 
-interface CoinInfo {
-  id: string;
-  unit: string;
-  icon: string;
-  coinBalance: string;
-  decimals: Number;
-}
+// interface CoinInfo {
+//   id: number;
+//   unit: string;
+//   icon: string;
+//   coinBalance: string;
+//   decimals: Number;
+// }
 
 interface CoinInput {
   coinIndex: Number;
@@ -51,28 +52,16 @@ interface CoinInput {
 }
 
 const HomePage = (): React.ReactElement => {
-  const [coinInfo, setCoinInfo] = useState<CoinInfo[]>([
-    {
-      id: "1",
-      unit: "XDOT",
-      icon: DogIcon,
-      coinBalance: "999.0067",
-      decimals: 1,
-    },
-    {
-      id: "2",
-      unit: "XDOGE",
-      icon: BtcIcon,
-      coinBalance: "999.0067",
-      decimals: 1,
-    },
-  ]);
+  const { coinList } = useContext(TokenContext);
+  console.log(coinList, "coinList");
+  const [coinInfo, setCoinInfo] = useState(coinList[0]);
   const [coinInput, setCoinInput] = useState<CoinInput[]>([
     { coinIndex: 0, coinInput: "", canSwap: true },
     { coinIndex: 1, coinInput: "", canSwap: true },
   ]);
   const [isShowSwapInfo, setIsShowSwapInfo] = useState(false);
   const { isExtensionInjected } = useContext(AccountsContext);
+
   const swapCoin = [
     {
       id: coinInfo[0].id,
@@ -99,7 +88,7 @@ const HomePage = (): React.ReactElement => {
   };
   const addCoin = (item: any, index: any) => {
     if (
-      coinInfo.some((n) => {
+      coinInfo.some((n: { unit: any }) => {
         return n.unit === item.unit;
       })
     ) {
@@ -113,6 +102,7 @@ const HomePage = (): React.ReactElement => {
   };
   const exChangeIcon = () => {
     setCoinInfo([...coinInfo].reverse());
+    debugger;
     clearCoinInput();
     setIsShowSwapInfo(false);
   };
@@ -124,11 +114,12 @@ const HomePage = (): React.ReactElement => {
         {/*<ConfirmModal confirmType={'waiting'}/>*/}
         <ContainerCard title="Swap" className={"cardContent"}>
           {/* 货币一 */}
+          {/* {coinList}12 */}
           <CardItem
             index={0}
             currencyTitle="From"
-            currencyBalence={coinInfo[0].coinBalance}
             currencyName={coinInfo[0].unit}
+            currencyBalence={coinInfo[0].coinBalance}
             addCoin={addCoin}
             showSwapInfo={setIsShowSwapInfo}
             inputCoinValue={{ coinInput, setCoinInput }}
@@ -173,7 +164,6 @@ const HomePage = (): React.ReactElement => {
               className="cannot-swap"
             />
           )}
-
           {/* Swap info */}
         </ContainerCard>
       </Content>

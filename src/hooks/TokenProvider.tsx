@@ -12,9 +12,11 @@ import DOGESymbol from "../assets/symbols_DOGE.svg";
 import BtcIcon from "../assets/symbols_BTC.svg";
 import BhcIcon from "../assets/symbols_BHC.svg";
 import pcx from "../assets/chainx-pcx.svg";
+import { BigNumber } from "bignumber.js";
 export interface TokenData {
   tokenList: TokenItem[] | [];
   accountBalance: AccountBalance | {};
+  coinList: any;
 }
 
 export interface TokenItem {
@@ -52,8 +54,28 @@ export const TokenProvider: FC = ({ children }) => {
   const { currentAccount } = useContext(AccountsContext);
   const [accountBalance, setAccountBalance] = useState<AccountBalance | {}>({});
   const [tokenList, setTokenList] = useState<TokenItem[] | []>([]);
+  const [coinList, setCoinList] = useState([
+    [
+      {
+        id: 0,
+        unit: "XDOT",
+        icon: "DogIcon",
+        coinBalance: "999.0067",
+        decimals: 1,
+      },
+      {
+        id: 1,
+        unit: "XDOGE",
+        icon: "BtcIcon",
+        coinBalance: "999.0067",
+        decimals: 1,
+      },
+    ],
+  ]);
+
   console.log("tokenList", tokenList);
   console.log("accountBalance", accountBalance);
+  console.log("coinList", coinList);
   useEffect(() => {
     if (isApiReady && api) {
       //@ts-ignore
@@ -71,7 +93,6 @@ export const TokenProvider: FC = ({ children }) => {
   }, [isApiReady, currentAccount.address]);
   function addCoinIcon(accountList: any) {
     accountList.map((item: any) => {
-      console.log(item.unit, "item.unit");
       switch (item.unit) {
         case "PCX":
           item.icon = pcx;
@@ -101,32 +122,75 @@ export const TokenProvider: FC = ({ children }) => {
     if (tokenList.length > 0) {
       addCoinIcon(tokenList);
       let result: any[] = [];
-      tokenList.map((t: TokenItem) =>
-        //@ts-ignore
-        api.rpc.swap
-          .getBalance(t.id, "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY")
-          .then((balance: any) => {
-            result.push({
-              ...accountBalance,
-              [balanceType[t.id]]: {
-                id: t.id,
-                unit: t.unit,
-                name: t.name,
-                decimals: t.decimals,
-                assetNumber: Number(balance),
-              },
+      const promiseList: Promise<void>[] = [];
+      tokenList.map((t: TokenItem) => {
+        const promise = new Promise<void>((resolve, reject) => {
+          //@ts-ignore
+          api.rpc.swap
+            .getBalance(
+              t.id,
+              "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
+            )
+            .then((balance: any) => {
+              result.push({
+                ...accountBalance,
+                [balanceType[t.id]]: {
+                  id: t.id,
+                  unit: t.unit,
+                  name: t.name,
+                  decimals: t.decimals,
+                  assetNumber: Number(balance),
+                },
+              });
+              setAccountBalance(result);
+              resolve();
+            })
+            .catch(() => {
+              reject();
             });
-            setAccountBalance(result);
-          })
-      );
+        });
+        promiseList.push(promise);
+      });
+      Promise.all(promiseList).then(() => {
+        let coinBalance: any = addCoinBalance(tokenList, result);
+        setCoinList([...coinBalance]);
+      });
     }
   }, [tokenList, currentAccount.address]);
+
+  function accuracy(decimalsInput: number, balance: number) {
+    let accuracyResult = new BigNumber(balance);
+    let divisionNumber = new BigNumber(Math.pow(10, decimalsInput));
+    accuracyResult = accuracyResult.dividedBy(divisionNumber);
+    let result = accuracyResult.toNumber();
+    let resultFix = result.toFixed(4);
+    return resultFix;
+  }
+  function addCoinBalance(accountList: any, Balance: any) {
+    Balance.map((item: any) => {
+      const keys = Object.keys(item);
+      accountList.map(
+        (child: { unit: string; coinBalance: any; decimals: any }) => {
+          if (child.unit === keys[0]) {
+            child.decimals = item[keys[0]]["decimals"];
+            child.coinBalance = accuracy(
+              item[keys[0]]["decimals"],
+              item[keys[0]]["assetNumber"]
+            );
+          }
+        }
+      );
+      console.log(accountList, "accountList");
+    });
+    return accountList;
+  }
 
   return (
     <TokenContext.Provider
       value={{
         tokenList,
         accountBalance,
+        coinList,
       }}
     >
       {children}

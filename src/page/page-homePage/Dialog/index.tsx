@@ -55,8 +55,12 @@ function DialogCard({
   }
 
   useEffect(() => {
-    let result: any = addCoinBalance(account, accountBalance);
-    setAccount([...result]);
+    if (accountBalance != "") {
+      let result: any = addCoinBalance(account, accountBalance);
+      setAccount([...result]);
+    } else {
+      alert("error");
+    }
   }, []);
   return (
     <div>
