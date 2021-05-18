@@ -5,8 +5,8 @@ import styled from "styled-components";
 import CardItem from "./CardInfo/CardItem";
 import BottomItem from "./CardInfo/CardBottom";
 import SwapInfo from "./CardInfo/SwapInfo";
-import { ReactComponent as DogIcon } from "../../assets/symbols_DOGE.svg";
-import { ReactComponent as BtcIcon } from "../../assets/symbols_BTC.svg";
+import DogIcon from "../../assets/symbols_DOGE.svg";
+import BtcIcon from "../../assets/symbols_BTC.svg";
 import { ReactComponent as ExchangeIcon } from "../../assets/icon_exchange.svg";
 import { AccountsContext } from "../../hooks/AccountsProvider";
 import { ApiContext } from "../../hooks/ApiProvider";
@@ -28,6 +28,7 @@ const ExchangeIconStyle = styled.div`
     display: inline-block;
     .iconBox {
       position: absolute;
+      z-index: 0;
       bottom: 165px;
       width: 26px;
       height: 26px;
@@ -36,12 +37,6 @@ const ExchangeIconStyle = styled.div`
     }
   }
 `;
-
-interface CoinInfo {
-  coinName: string;
-  coinIcon: React.ReactNode;
-  coinBalence: string;
-}
 
 interface CoinInput {
   coinIndex: Number;
@@ -69,18 +64,24 @@ const HomePage = (): React.ReactElement => {
   let [number, setNumber] = useState(0);
   let [number2, setNumber2] = useState(0);
   const { tokenList, accountBalance } = useContext(TokenContext);
-  const [coinInfo, setCoinInfo] = useState<CoinInfo[]>([
-    {
-      coinName: "XDOT",
-      coinIcon: <DogIcon />,
-      coinBalence: "999.0067",
-    },
-    {
-      coinName: "XDOGE",
-      coinIcon: <BtcIcon />,
-      coinBalence: "999.0067",
-    },
-  ]);
+  // const [coinInfo, setCoinInfo] = useState<CoinInfo[]>([
+  //   {
+  //     coinName: "XDOT",
+  //     coinIcon: <DogIcon />,
+  //     coinBalence: "999.0067",
+  //   },
+  //   {
+  //     coinName: "XDOGE",
+  //     coinIcon: <BtcIcon />,
+  //     coinBalence: "999.0067",
+  //   },
+  // ]);
+  const { coinList } = useContext(TokenContext);
+  console.log(coinList, "coinList");
+
+  //取前两项给card显示。即取coinList的前两项放到coinInfo中
+  const [coinInfo, setCoinInfo] = useState([coinList[0], coinList[1]]);
+  console.log(coinInfo, "coinInfo");
   const [coinInput, setCoinInput] = useState<CoinInput[]>([
     { coinIndex: 0, coinInput: inPrice, canSwap: true },
     { coinIndex: 1, coinInput: outPrice, canSwap: true },
@@ -95,9 +96,9 @@ const HomePage = (): React.ReactElement => {
           tokenList[1].id,
         ])
         .then((list: any) => {
+          // console.log(list)
           //@ts-ignore
-          setOutPrice(parseInt(Number(list)) / Math.pow(10, tokenList[0].decimals)
-          );
+          setOutPrice(parseInt(Number(list)) / Math.pow(10, tokenList[0].decimals));
         });
       setCoinInput([
         { coinIndex: 0, coinInput: inPrice, canSwap: true },
@@ -116,8 +117,7 @@ const HomePage = (): React.ReactElement => {
         ])
         .then((list: any) => {
           //@ts-ignore
-          setInPrice(parseInt(Number(list)) / Math.pow(10, tokenList[1].decimals)
-          );
+          setInPrice(parseInt(Number(list)) / Math.pow(10, tokenList[1].decimals));
         });
       setCoinInput([
         { coinIndex: 0, coinInput: inPrice, canSwap: true },
@@ -128,16 +128,27 @@ const HomePage = (): React.ReactElement => {
   
   const [isShowSwapInfo, setIsShowSwapInfo] = useState(false);
   const { isExtensionInjected } = useContext(AccountsContext);
+
   const swapCoin = [
     {
       coinName: coinInfo[0].coinName,
       coinIcon: coinInfo[0].coinIcon,
       coinNum: inPrice,
+      id: coinInfo[0].id,
+      unit: coinInfo[0].unit,
+      icon: coinInfo[0].icon,
+      decimals: coinInfo[0].decimals,
+      // coinNum: coinInput[0].coinInput,
     },
     {
       coinName: coinInfo[1].coinName,
       coinIcon: coinInfo[1].coinIcon,
       coinNum: outPrice,
+      id: coinInfo[1].id,
+      unit: coinInfo[1].unit,
+      icon: coinInfo[1].icon,
+      decimals: coinInfo[1].decimals,
+      // coinNum: coinInput[1].coinInput,
     },
   ];
   const clearCoinInput = () => {
@@ -150,8 +161,8 @@ const HomePage = (): React.ReactElement => {
   };
   const addCoin = (item: any, index: any) => {
     if (
-      coinInfo.some((n) => {
-        return n.coinName === item.coinName;
+      coinInfo.some((n: { unit: any }) => {
+        return n.unit === item.unit;
       })
     ) {
       alert("error");
@@ -164,10 +175,13 @@ const HomePage = (): React.ReactElement => {
   };
   const exChangeIcon = () => {
     setCoinInfo([...coinInfo].reverse());
+    // debugger;
     clearCoinInput();
     setIsShowSwapInfo(false);
   };
-
+  useEffect(() => {
+    setCoinInfo([coinList[0], coinList[1]]);
+  }, [coinList]);
   
   console.log('isShowSwapInfo',isShowSwapInfo)
   return (
@@ -193,12 +207,11 @@ const HomePage = (): React.ReactElement => {
               index={0}
               currencyTitle="From"
               currencyBalence={coinInfo[0].coinBalence}
-              currencyName={coinInfo[0].coinName}
               addCoin={addCoin}
               // canSwap={setCanSwap}
               showSwapInfo={setIsShowSwapInfo}
               inputCoinValue={{ coinInput, setCoinInput }}
-              
+            currencyName={coinInfo[0].unit}
             >
               {coinInfo[0].coinIcon}
             </CardItem>
@@ -214,13 +227,12 @@ const HomePage = (): React.ReactElement => {
             <CardItem
               index={1}
               currencyTitle="To"
-              currencyName={coinInfo[1].coinName}
               currencyBalence={coinInfo[1].coinBalence}
               addCoin={addCoin}
               // canSwap={setCanSwap}
               showSwapInfo={setIsShowSwapInfo}
               inputCoinValue={{ coinInput, setCoinInput }}
-              
+            currencyName={coinInfo[1].unit}
             >
               {coinInfo[1].coinIcon}
             </CardItem>
@@ -251,7 +263,8 @@ const HomePage = (): React.ReactElement => {
         {isShowSwapInfo && <SwapInfo />}
       </Container>
     </PriceContext.Provider>
-  );
+  
+  )
 };
 
 export default HomePage;

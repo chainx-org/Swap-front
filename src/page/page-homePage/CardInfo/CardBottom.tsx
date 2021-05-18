@@ -64,7 +64,7 @@ function BottomItem({
   const [transferStatus, setTransferStatus] =
     useState<"priceInfo" | "waiting" | "transactionStatus">("priceInfo");
   const [statusValue, setStatusValue] = useState<"success" | "fail">("success");
-
+  console.log('transferStatus',transferStatus)
   return (
     <Item>
       <div className="title-info">
@@ -91,6 +91,7 @@ function BottomItem({
           // "priceInfo" | "waiting" | "transactionStatus"
           statusValue={statusValue}
           setStatusValue={setStatusValue}
+          transferStatus={transferStatus}
           setTransferStatus={setTransferStatus}
           confirmType={transferStatus}
           swapCoinInfo={swapCoinInfo}

@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const MaskWrapper = styled.div`
   width: 100%;
@@ -11,13 +11,11 @@ const MaskWrapper = styled.div`
   background-color: #000;
   opacity: 0.4;
   color: #f00;
-  z-index: 0;
-`
+  z-index: 2;
+`;
 
 const Mask = (): React.ReactElement => {
-  return (
-    <MaskWrapper/>
-  )
-}
+  return <MaskWrapper />;
+};
 
-export default Mask
+export default Mask;

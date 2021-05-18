@@ -1,7 +1,6 @@
-import React from 'react';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
-import styled from 'styled-components';
-import HomePage from '../../../page/page-homePage/index';
+import React from "react";
+import { BrowserRouter as Router, Link } from "react-router-dom";
+import styled from "styled-components";
 
 const LinkDiv = styled.div`
   .linkBox {
@@ -24,10 +23,10 @@ const LinkDiv = styled.div`
         border-bottom: 2px solid black;
       }
     }
-    .linkName:hover {
-      color: black;
-      border-bottom: 2px solid black;
-    }
+    // .linkName:hover {
+    //   color: black;
+    //   border-bottom: 2px solid black;
+    // }
   }
 `;
 
@@ -39,12 +38,12 @@ class TabList extends React.Component<MyState, any> {
   constructor(props: MyState) {
     super(props);
     this.state = {
-      currentActive: 'Swap',
+      currentActive: "Swap",
     };
   }
 
   changeFlag(val: string) {
-    this.setState({currentActive: val});
+    this.setState({ currentActive: val });
   }
 
   render() {
@@ -55,18 +54,19 @@ class TabList extends React.Component<MyState, any> {
             <Link
               to="/"
               className={`linkName ${
-                this.state.currentActive === 'Swap' ? 'active' : ''
+                this.state.currentActive === "Swap" ? "active" : ""
               }`}
-              onClick={this.changeFlag.bind(this, 'Swap')}
+              onClick={this.changeFlag.bind(this, "Swap")}
             >
               Swap
             </Link>
             <Link
               to="/"
               className={`linkName ${
-                this.state.currentActive === 'Pool' ? 'active' : ''
+                this.state.currentActive === "Pool" ? "active" : ""
               }`}
-              onClick={this.changeFlag.bind(this, 'Pool')}
+              // onClick={this.changeFlag.bind(this, "Pool")}
+              // dis
             >
               Pool
             </Link>

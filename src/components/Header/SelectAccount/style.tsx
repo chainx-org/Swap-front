@@ -22,7 +22,8 @@ export const SelectAccountStyle = styled.div`
     // height: 16px;
     // border: 1px solid black;
     margin-left: 8px;
-    margin-right: 6px;
+    margin-right: 8px;
+    margin-top: -4px;
     & > svg {
       width: 16px;
       height: 16px;

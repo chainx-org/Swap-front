@@ -2,12 +2,13 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import DialogCard from "../Dialog/index";
 import { Input } from "antd";
 import { ReactComponent as ArrowIcon } from "../../../assets/ArrowIcon.svg";
-// import { Item, SvgStyle, TitleInfoSecond } from "./style";
 import { Tooltip, Card } from "antd";
 import styled from "styled-components";
 import { ApiContext } from "../../../hooks/ApiProvider";
 import { TokenContext } from "../../../hooks/TokenProvider";
 import { PriceContext } from "..";
+// import { useApiReady } from "../../../hooks/useApiReady";
+// import { useApi } from "../../../hooks/useApi";
 const Item = styled(Tooltip)`
   .title-info {
     display: flex;
@@ -60,6 +61,10 @@ const Item = styled(Tooltip)`
         .icon {
           margin: 10px 0px 10px 0px;
           padding-left: 10px;
+          & > img {
+            width: 20px;
+            height: 20px;
+          }
           // border: 1px solid black;
         }
         & > span:nth-child(1) {
@@ -144,7 +149,9 @@ const Item = styled(Tooltip)`
     position: fixed;
     width: 356px;
     left: 540px;
-    top: 88px;
+    top: 50%;
+    margin-top: -100px;
+    transform: translateY(-50%);
     opacity: 1;
     background-color: #fff;
     background: rgba(255, 255, 255, 0.9);
@@ -221,7 +228,7 @@ currencyItemProps): React.ReactElement<currencyItemProps> {
       ? (canSwap = false)
       : (canSwap = true);
     coinValue(strAll, canSwap);
-    coinChangeTo(strAll);
+    // coinChangeTo(strAll);
     return strAll;
   };
 
@@ -231,9 +238,6 @@ currencyItemProps): React.ReactElement<currencyItemProps> {
     inputCoinValue.setCoinInput([...inputCoinValue.coinInput]);
   };
 
-  const coinChangeTo = (value: string) => {
-    // debugger;
-  };
   return (
     <Item>
       <div className="title-info">
@@ -248,9 +252,7 @@ currencyItemProps): React.ReactElement<currencyItemProps> {
           }}
         >
           <div className="divBtnIcon">
-            <div className="icon">
-              <span>{children}</span>
-            </div>
+            <div className="icon">{children}</div>
           </div>
 
           <span>{currencyName}</span>

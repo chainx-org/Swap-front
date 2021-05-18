@@ -11,20 +11,20 @@ export const DivDialog = styled.div`
     background-color: #000;
     opacity: 0.4;
     color: #f00;
-    z-index: 4;
+    z-index: 400;
   }
   .content {
     position: fixed;
     width: 356px;
-    left: 540px;
-    top: 88px;
+    left: 38%;
+    top: 35%;
     opacity: 1;
     background-color: #fff;
     background: rgba(255, 255, 255, 0.9);
     border: 1px solid #efefef;
     border-radius: 24px 24px 16px 16px;
     box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
-    z-index: 5;
+    z-index: 7;
   }
 `;
 
@@ -43,7 +43,7 @@ export const DialogItem = styled.div`
   height: 64px;
   .item {
     display:flex;
-    flex-direction:row;
+    justify-content: space-between;
     width: 356px;
     height: 64px;
     .left-item {
@@ -52,7 +52,7 @@ export const DialogItem = styled.div`
       width: 100px;
       height: 64px;
       margin-left:16px;
-      margin-right:100px;
+      // margin-right:100px;
       align-items: center;
       .left-icon{
         width:20px;
@@ -67,7 +67,7 @@ export const DialogItem = styled.div`
         width:20px;
         height:20px;
         margin-right: 7px;
-        & > svg {
+        & > img {
           width: 20px;
           height: 20px;
         }
@@ -98,7 +98,7 @@ export const DialogItem = styled.div`
       }
     }
     .right-item {
-      width: 111px;
+      // width: 111px;
       height: 20px;
       margin:22px; 24px;
       line-height: 20px;

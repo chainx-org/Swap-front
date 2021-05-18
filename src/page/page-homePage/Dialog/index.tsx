@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { DialogItem, DivDialog } from "./style";
 import ContainerCard from "../../../components/Card/ContainerCard";
-import { ReactComponent as DogIcon } from "../../../assets/symbols_DOGE.svg";
 import Mask from "../../../components/Mask";
-import { AnyAaaaRecord } from "node:dns";
+import BigNumber from "bignumber.js";
+import { TokenContext } from "../../../hooks/TokenProvider";
+import DogIcon from "../../../assets/symbols_DOGE.svg";
+import ETHSymbol from "../../../assets/symbols_ETH.svg";
+import DOGESymbol from "../../../assets/symbols_DOGE.svg";
+import { Result } from "antd";
 
 interface DialogCardProps {
   index?: Number;
@@ -15,48 +19,49 @@ function DialogCard({
   onCancel,
   addCoinItem,
 }: DialogCardProps): React.ReactElement<DialogCardProps> {
-  const accounts = [
-    {
-      coinName: "XBTC",
-      type: "Bitcoin",
-      coinIcon: <DogIcon />,
-      coinBalence: "234.0024",
-    },
-    {
-      coinName: "XBCH",
-      type: "Bitcoin Cash",
-      coinIcon: <DogIcon />,
-      coinBalence: "12.0024",
-    },
-    {
-      coinName: "XDOGE",
-      type: "Dogecoin",
-      coinIcon: <DogIcon />,
-      coinBalence: "12.0024",
-    },
-    {
-      coinName: "XBTC",
-      type: "Bitcoin",
-      coinIcon: <DogIcon />,
-      coinBalence: "234.0024",
-    },
-    {
-      coinName: "XETH",
-      type: "Ether",
-      coinIcon: <DogIcon />,
-      coinBalence: "0.0",
-    },
-    {
-      coinName: "XDOT",
-      type: "Polkadot",
-      coinIcon: <DogIcon />,
-      coinBalence: "12.0024",
-    },
-  ];
+  const { accountBalance, tokenList } = useContext(TokenContext);
+  console.log(tokenList, "tokenList");
+  const [account, setAccount] = useState(tokenList);
   const clickItem = (item: any, index: any) => {
     addCoinItem(item, index);
     onCancel(false);
   };
+  function accuracy(decimalsInput: number, balance: number) {
+    let accuracyResult = new BigNumber(balance);
+    let divisionNumber = new BigNumber(Math.pow(10, decimalsInput));
+    accuracyResult = accuracyResult.dividedBy(divisionNumber);
+    let result = accuracyResult.toNumber();
+    let resultFix = result.toFixed(4);
+    console.log(resultFix);
+    return resultFix;
+  }
+  function addCoinBalance(accountList: any, Balance: any) {
+    Balance.map((item: any) => {
+      const keys = Object.keys(item);
+      accountList.map(
+        (child: { unit: string; coinBalance: any; decimals: any }) => {
+          if (child.unit === keys[0]) {
+            child.decimals = item[keys[0]]["decimals"];
+            child.coinBalance = accuracy(
+              item[keys[0]]["decimals"],
+              item[keys[0]]["assetNumber"]
+            );
+          }
+        }
+      );
+      console.log(accountList, "accountList");
+    });
+    return accountList;
+  }
+
+  useEffect(() => {
+    if (accountBalance != "") {
+      let result: any = addCoinBalance(account, accountBalance);
+      setAccount([...result]);
+    } else {
+      alert("error");
+    }
+  }, []);
   return (
     <div>
       <DivDialog>
@@ -67,7 +72,7 @@ function DialogCard({
             title="Select a token"
             className={"card-list-content"}
           >
-            {accounts.map((item, i) => {
+            {account.map((item: any, i: any) => {
               return (
                 <DialogItem>
                   <div
@@ -76,13 +81,15 @@ function DialogCard({
                     onClick={() => clickItem(item, { index })}
                   >
                     <div className="left-item">
-                      <div className="left-coinIcon">{item.coinIcon}</div>
+                      <div className="left-coinIcon">
+                        <img src={item.icon} className="status" alt="status" />
+                      </div>
                       <div className="right-info">
-                        <span>{item.coinName}</span>
-                        <span>{item.type}</span>
+                        <span>{item.unit}</span>
+                        <span>{item.name}</span>
                       </div>
                     </div>
-                    <div className="right-item">{item.coinBalence}</div>
+                    <div className="right-item">{item.coinBalance}</div>
                   </div>
                 </DialogItem>
               );

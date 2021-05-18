@@ -1,13 +1,16 @@
 import React, { useContext, useState, useEffect } from "react";
 import { SelectAccountStyle } from "./style";
 import SelectAccount from "./SelectAccount";
-import { ReactComponent as DogIcon } from "../../../assets/symbols_DOGE.svg";
+import DogIcon from "../../../assets/symbols_DOGE.svg";
 import { AccountsContext } from "../../../hooks/AccountsProvider";
 import { shortenString } from "../../../helper";
+import styled from "styled-components";
 
-const IconStyle = {
-  margin: "2px 0px 0px 0px",
-};
+const IconStyle = styled.div`
+  width: 16px;
+  height: 16px;
+  margin: "0px 0px 0px 0px";
+`;
 
 function AccountCard() {
   const [isAccountListOpen, setIsAccountListOpen] = useState(false);
@@ -35,7 +38,10 @@ function AccountCard() {
     <div>
       <SelectAccountStyle onClick={selectAccountList}>
         <div className={"current-icon"}>
-          <DogIcon style={IconStyle} />
+          {/* < style={IconStyle} /> */}
+          <IconStyle>
+            <img src={DogIcon} alt="" />
+          </IconStyle>
         </div>
         <div className={"current-name"}>{name}</div>
         <div className={"current-address"}>{address}</div>
