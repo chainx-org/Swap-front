@@ -148,10 +148,11 @@ const Item = styled(Tooltip)`
   .content {
     position: fixed;
     width: 356px;
-    left: 540px;
+    left: 50%;
     top: 50%;
     margin-top: -100px;
     transform: translateY(-50%);
+    transform: translateX(-50%);
     opacity: 1;
     background-color: #fff;
     background: rgba(255, 255, 255, 0.9);
@@ -218,9 +219,8 @@ currencyItemProps): React.ReactElement<currencyItemProps> {
     // .substr(0,8);
     const strAll = str1 + str2;
     // /控制底部灰框和按钮的/
-    (strAll != "" && inPrice && outPrice)
-      ?
-        showSwapInfo(true)
+    strAll != "" && inPrice && outPrice
+      ? showSwapInfo(true)
       : showSwapInfo(false);
     // debugger;
     let canSwap = inputCoinValue.coinInput[index].canSwap;
