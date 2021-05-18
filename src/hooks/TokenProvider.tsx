@@ -13,6 +13,7 @@ import DOGESymbol from "../assets/symbols_DOGE.svg";
 import BtcIcon from "../assets/symbols_BTC.svg";
 import BhcIcon from "../assets/symbols_BHC.svg";
 import pcx from "../assets/chainx-pcx.svg";
+import XDOT from "../assets/symbols_DOT.svg";
 import { BigNumber } from "bignumber.js";
 export interface TokenData {
   tokenList: TokenItem[] | [];
@@ -102,7 +103,7 @@ export const TokenProvider: FC = ({ children }) => {
     {
       id: 0,
       unit: "XDOT",
-      icon: DOGESymbol,
+      icon: XDOT,
       coinBalance: "999.0067",
       decimals: 1,
     },
@@ -153,7 +154,7 @@ export const TokenProvider: FC = ({ children }) => {
           item.icon = ETHSymbol;
           break;
         case "XDOT":
-          item.icon = DOGESymbol;
+          item.icon = XDOT;
           break;
         default:
           break;
