@@ -55,10 +55,6 @@ export const TokenProvider: FC = ({ children }) => {
   const { api, isApiReady } = useContext(ApiContext);
   const { currentAccount } = useContext(AccountsContext);
   const [accountBalance, setAccountBalance] = useState<AccountBalance | {}>({});
-  // // const [tokenList, setTokenList] = useState<TokenItem[] | []>([])
-  // const [tokenList, setTokenList] = useState<TokenItem[] | []>([]);
-  // console.log("tokenList", tokenList);
-  // console.log("accountBalance", accountBalance);
 
   // useEffect(() => {
   //   if (isApiReady && api) {
@@ -123,7 +119,7 @@ export const TokenProvider: FC = ({ children }) => {
   useEffect(() => {
     if (isApiReady && api) {
       //@ts-ignore
-      api.rpc.swap.getTokenList().then((list) =>
+      api.rpc.swap.getTokenList().then((list) => {
         setTokenList(
           list.map((i: any) => ({
             id: Number(i.assertId),
@@ -131,8 +127,8 @@ export const TokenProvider: FC = ({ children }) => {
             name: i.assertInfo.chain.toString(),
             decimals: Number(i.assertInfo.decimals),
           }))
-        )
-      );
+        );
+      });
     }
   }, [isApiReady, currentAccount.address]);
   function addCoinIcon(accountList: any) {
@@ -224,7 +220,7 @@ export const TokenProvider: FC = ({ children }) => {
           }
         }
       );
-      console.log(accountList, "accountList");
+      // console.log(accountList, "accountList");
     });
     return accountList;
   }

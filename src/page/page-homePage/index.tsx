@@ -77,11 +77,11 @@ const HomePage = (): React.ReactElement => {
   //   },
   // ]);
   const { coinList } = useContext(TokenContext);
-  console.log(coinList, "coinList");
+  // console.log(coinList, "coinList");
 
   //取前两项给card显示。即取coinList的前两项放到coinInfo中
   const [coinInfo, setCoinInfo] = useState([coinList[0], coinList[1]]);
-  console.log(coinInfo, "coinInfo");
+  // console.log(coinInfo, "coinInfo");
   const [coinInput, setCoinInput] = useState<CoinInput[]>([
     { coinIndex: 0, coinInput: inPrice, canSwap: true },
     { coinIndex: 1, coinInput: outPrice, canSwap: true },
@@ -186,7 +186,7 @@ const HomePage = (): React.ReactElement => {
     setCoinInfo([coinList[0], coinList[1]]);
   }, [coinList]);
 
-  console.log("isShowSwapInfo", isShowSwapInfo);
+  // console.log("isShowSwapInfo", isShowSwapInfo);
   return (
     <PriceContext.Provider
       value={{
@@ -209,7 +209,7 @@ const HomePage = (): React.ReactElement => {
             <CardItem
               index={0}
               currencyTitle="From"
-              currencyBalence={coinInfo[0].coinBalence}
+              currencyBalence={coinInfo[0].coinBalance}
               addCoin={addCoin}
               // canSwap={setCanSwap}
               showSwapInfo={setIsShowSwapInfo}
@@ -230,7 +230,7 @@ const HomePage = (): React.ReactElement => {
             <CardItem
               index={1}
               currencyTitle="To"
-              currencyBalence={coinInfo[1].coinBalence}
+              currencyBalence={coinInfo[1].coinBalance}
               addCoin={addCoin}
               // canSwap={setCanSwap}
               showSwapInfo={setIsShowSwapInfo}
