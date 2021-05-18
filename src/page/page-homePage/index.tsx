@@ -216,7 +216,7 @@ const HomePage = (): React.ReactElement => {
               inputCoinValue={{ coinInput, setCoinInput }}
               currencyName={coinInfo[0].unit}
             >
-              {coinInfo[0].coinIcon}
+              <img src={coinInfo[0].icon} alt="" />
             </CardItem>
             {/* 转换icon */}
             <ExchangeIconStyle>
@@ -237,7 +237,7 @@ const HomePage = (): React.ReactElement => {
               inputCoinValue={{ coinInput, setCoinInput }}
               currencyName={coinInfo[1].unit}
             >
-              {coinInfo[1].coinIcon}
+              <img src={coinInfo[1].icon} alt="" />
             </CardItem>
             {/* 底部按钮 */}
             {coinInput[0].canSwap && coinInput[1].canSwap && (
