@@ -1,16 +1,17 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import Header from "../../components/Header";
 import ContainerCard from "../../components/Card/ContainerCard";
 import styled from "styled-components";
 import CardItem from "./CardInfo/CardItem";
 import BottomItem from "./CardInfo/CardBottom";
 import SwapInfo from "./CardInfo/SwapInfo";
-import { TokenContext } from "../../hooks/TokenProvider";
 import DogIcon from "../../assets/symbols_DOGE.svg";
 import BtcIcon from "../../assets/symbols_BTC.svg";
 import { ReactComponent as ExchangeIcon } from "../../assets/icon_exchange.svg";
 import { AccountsContext } from "../../hooks/AccountsProvider";
-
+import { ApiContext } from "../../hooks/ApiProvider";
+import { web3FromAddress } from "@polkadot/extension-dapp";
+import { TokenContext } from "../../hooks/TokenProvider";
 const Container = styled.div`
   background-image: linear-gradient(180deg, #faf5e8 7%, #f7f8fa 100%);
 `;
@@ -42,8 +43,39 @@ interface CoinInput {
   coinInput: any;
   canSwap: Boolean;
 }
+interface PriceData {
+  inPrice: number;
+  outPrice: any;
+  number?: any;
+  number2?: any;
+  setInPrice?: any;
+  setOutPrice?: any;
+  setNumber?: any;
+  setNumber2?: any;
+}
+export const PriceContext = createContext<PriceData>({} as PriceData);
 
 const HomePage = (): React.ReactElement => {
+  const { api, isApiReady } = useContext(ApiContext);
+  const { currentAccount } = useContext(AccountsContext);
+  const [blockNumber, setBlockNumber] = useState<any>(null);
+  const [outPrice, setOutPrice] = useState<any>(null);
+  const [inPrice, setInPrice] = useState<any>(null);
+  let [number, setNumber] = useState(0);
+  let [number2, setNumber2] = useState(0);
+  const { tokenList, accountBalance } = useContext(TokenContext);
+  // const [coinInfo, setCoinInfo] = useState<CoinInfo[]>([
+  //   {
+  //     coinName: "XDOT",
+  //     coinIcon: <DogIcon />,
+  //     coinBalence: "999.0067",
+  //   },
+  //   {
+  //     coinName: "XDOGE",
+  //     coinIcon: <BtcIcon />,
+  //     coinBalence: "999.0067",
+  //   },
+  // ]);
   const { coinList } = useContext(TokenContext);
   console.log(coinList, "coinList");
 
@@ -51,26 +83,76 @@ const HomePage = (): React.ReactElement => {
   const [coinInfo, setCoinInfo] = useState([coinList[0], coinList[1]]);
   console.log(coinInfo, "coinInfo");
   const [coinInput, setCoinInput] = useState<CoinInput[]>([
-    { coinIndex: 0, coinInput: "", canSwap: true },
-    { coinIndex: 1, coinInput: "", canSwap: true },
+    { coinIndex: 0, coinInput: inPrice, canSwap: true },
+    { coinIndex: 1, coinInput: outPrice, canSwap: true },
   ]);
+
+  useEffect(() => {
+    if (isApiReady && api && tokenList[0]) {
+      //@ts-ignore
+      api.rpc.swap
+        .getAmountOutPrice(inPrice * Math.pow(10, tokenList[0].decimals), [
+          tokenList[0].id,
+          tokenList[1].id,
+        ])
+        .then((list: any) => {
+          // console.log(list)
+          setOutPrice(
+            //@ts-ignore
+            parseInt(Number(list)) / Math.pow(10, tokenList[0].decimals)
+          );
+        });
+      setCoinInput([
+        { coinIndex: 0, coinInput: inPrice, canSwap: true },
+        { coinIndex: 1, coinInput: outPrice, canSwap: true },
+      ]);
+    }
+  }, [number]);
+
+  useEffect(() => {
+    if (isApiReady && api && tokenList[1]) {
+      //@ts-ignore
+      api.rpc.swap
+        .getAmountInPrice(outPrice * Math.pow(10, tokenList[1].decimals), [
+          tokenList[0].id,
+          tokenList[1].id,
+        ])
+        .then((list: any) => {
+          setInPrice(
+            //@ts-ignore
+            parseInt(Number(list)) / Math.pow(10, tokenList[1].decimals)
+          );
+        });
+      setCoinInput([
+        { coinIndex: 0, coinInput: inPrice, canSwap: true },
+        { coinIndex: 1, coinInput: outPrice, canSwap: true },
+      ]);
+    }
+  }, [number2]);
+
   const [isShowSwapInfo, setIsShowSwapInfo] = useState(false);
   const { isExtensionInjected } = useContext(AccountsContext);
 
   const swapCoin = [
     {
+      coinName: coinInfo[0].coinName,
+      coinIcon: coinInfo[0].coinIcon,
+      coinNum: inPrice,
       id: coinInfo[0].id,
       unit: coinInfo[0].unit,
       icon: coinInfo[0].icon,
       decimals: coinInfo[0].decimals,
-      coinNum: coinInput[0].coinInput,
+      // coinNum: coinInput[0].coinInput,
     },
     {
+      coinName: coinInfo[1].coinName,
+      coinIcon: coinInfo[1].coinIcon,
+      coinNum: outPrice,
       id: coinInfo[1].id,
       unit: coinInfo[1].unit,
       icon: coinInfo[1].icon,
       decimals: coinInfo[1].decimals,
-      coinNum: coinInput[1].coinInput,
+      // coinNum: coinInput[1].coinInput,
     },
   ];
   const clearCoinInput = () => {
@@ -103,68 +185,87 @@ const HomePage = (): React.ReactElement => {
   useEffect(() => {
     setCoinInfo([coinList[0], coinList[1]]);
   }, [coinList]);
+
+  console.log("isShowSwapInfo", isShowSwapInfo);
   return (
-    <Container>
-      <Header />
-      <Content>
-        {/*<ConfirmModal confirmType={'waiting'}/>*/}
-        <ContainerCard title="Swap" className={"cardContent"}>
-          {/* 货币一 */}
-          {/* {coinList}12 */}
-          <CardItem
-            index={0}
-            currencyTitle="From"
-            currencyName={coinInfo[0].unit}
-            currencyBalence={coinInfo[0].coinBalance}
-            addCoin={addCoin}
-            showSwapInfo={setIsShowSwapInfo}
-            inputCoinValue={{ coinInput, setCoinInput }}
-          >
-            <img src={coinInfo[0].icon} alt="" />
-          </CardItem>
-          {/* 转换icon */}
-          <ExchangeIconStyle>
-            <div className="box" onClick={exChangeIcon}>
-              <div className="iconBox">
-                <ExchangeIcon />
+    <PriceContext.Provider
+      value={{
+        inPrice,
+        outPrice,
+        number,
+        number2,
+        setInPrice,
+        setOutPrice,
+        setNumber,
+        setNumber2,
+      }}
+    >
+      <Container>
+        <Header />
+        <Content>
+          {/*<ConfirmModal confirmType={'waiting'}/>*/}
+          <ContainerCard title="Swap" className={"cardContent"}>
+            {/* 货币一 */}
+            <CardItem
+              index={0}
+              currencyTitle="From"
+              currencyBalence={coinInfo[0].coinBalence}
+              addCoin={addCoin}
+              // canSwap={setCanSwap}
+              showSwapInfo={setIsShowSwapInfo}
+              inputCoinValue={{ coinInput, setCoinInput }}
+              currencyName={coinInfo[0].unit}
+            >
+              {coinInfo[0].coinIcon}
+            </CardItem>
+            {/* 转换icon */}
+            <ExchangeIconStyle>
+              <div className="box" onClick={exChangeIcon}>
+                <div className="iconBox">
+                  <ExchangeIcon />
+                </div>
               </div>
-            </div>
-          </ExchangeIconStyle>
-          {/* 货币二 */}
-          <CardItem
-            index={1}
-            currencyTitle="To"
-            currencyName={coinInfo[1].unit}
-            currencyBalence={coinInfo[1].coinBalance}
-            addCoin={addCoin}
-            showSwapInfo={setIsShowSwapInfo}
-            inputCoinValue={{ coinInput, setCoinInput }}
-          >
-            <img src={coinInfo[1].icon} alt="" />
-          </CardItem>
-          {/* 底部按钮 */}
-          {coinInput[0].canSwap && coinInput[1].canSwap && (
-            <BottomItem
-              name="Slippage Tolerance"
-              value="1%"
-              swapCoinInfo={swapCoin}
-              btnLabel={!isExtensionInjected ? "Connect Wallet" : "Swap"}
-              className="buttonDiv"
-            />
-          )}
-          {(!coinInput[0].canSwap || !coinInput[1].canSwap) && (
-            <BottomItem
-              name="Slippage Tolerance"
-              value="1%"
-              btnLabel={"Insufficient DOT Balance"}
-              className="cannot-swap"
-            />
-          )}
-          {/* Swap info */}
-        </ContainerCard>
-      </Content>
-      {isShowSwapInfo && <SwapInfo />}
-    </Container>
+            </ExchangeIconStyle>
+            {/* 货币二 */}
+            <CardItem
+              index={1}
+              currencyTitle="To"
+              currencyBalence={coinInfo[1].coinBalence}
+              addCoin={addCoin}
+              // canSwap={setCanSwap}
+              showSwapInfo={setIsShowSwapInfo}
+              inputCoinValue={{ coinInput, setCoinInput }}
+              currencyName={coinInfo[1].unit}
+            >
+              {coinInfo[1].coinIcon}
+            </CardItem>
+            {/* 底部按钮 */}
+            {coinInput[0].canSwap && coinInput[1].canSwap && (
+              <BottomItem
+                name="Slippage Tolerance"
+                value="1%"
+                swapCoinInfo={swapCoin}
+                btnLabel={!isExtensionInjected ? "Connect Wallet" : "Swap"}
+                className="buttonDiv"
+                setIsShowSwapInfo={setIsShowSwapInfo}
+              />
+            )}
+            {(!coinInput[0].canSwap || !coinInput[1].canSwap) && (
+              <BottomItem
+                name="Slippage Tolerance"
+                value="1%"
+                btnLabel={"Insufficient DOT Balance"}
+                className="cannot-swap"
+                setIsShowSwapInfo={setIsShowSwapInfo}
+              />
+            )}
+
+            {/* Swap info */}
+          </ContainerCard>
+        </Content>
+        {isShowSwapInfo && <SwapInfo />}
+      </Container>
+    </PriceContext.Provider>
   );
 };
 

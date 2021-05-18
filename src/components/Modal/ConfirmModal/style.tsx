@@ -27,8 +27,8 @@ export const CoinInfoWrapper = styled.div`
         display: flex;
         align-items: center;
         padding: 10px 89px 10px 10px;
-        > img{
-          width: 20px;
+        > span,img{
+          // width: 20px;
           height: 20px;
           padding-right: 6px;
         }

@@ -113,7 +113,13 @@ export const AccountsProvider: FC = ({ children }) => {
   //     ))
   //   }
   // }, [tokenList, currentAccount.address])
-
+  // console.log(
+  //   "aaa",
+  //   isExtensionInjected,
+  //   accountList,
+  //   currentAccount,
+  //   setCurrentAccount
+  // );
   return (
     <AccountsContext.Provider
       value={{

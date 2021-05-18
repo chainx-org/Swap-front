@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import DialogCard from "../Dialog/index";
 import { Input } from "antd";
 import { ReactComponent as ArrowIcon } from "../../../assets/ArrowIcon.svg";
 import { Tooltip, Card } from "antd";
 import styled from "styled-components";
+import { ApiContext } from "../../../hooks/ApiProvider";
+import { TokenContext } from "../../../hooks/TokenProvider";
+import { PriceContext } from "..";
 // import { useApiReady } from "../../../hooks/useApiReady";
 // import { useApi } from "../../../hooks/useApi";
 const Item = styled(Tooltip)`
@@ -172,6 +175,10 @@ interface currencyItemProps {
     coinInput: any;
     setCoinInput: any;
   };
+  // inPrice: number;
+  // outPrice: any;
+  // setInPrice?: any;
+  // setOutPrice?: any;
 }
 function CurrencyItem({
   index,
@@ -183,17 +190,38 @@ function CurrencyItem({
   addCoin,
   showSwapInfo,
   inputCoinValue,
-}: currencyItemProps): React.ReactElement<currencyItemProps> {
+}: // inPrice,
+// outPrice,
+// setInPrice,
+// setOutPrice,
+currencyItemProps): React.ReactElement<currencyItemProps> {
+  const {
+    inPrice,
+    outPrice,
+    number,
+    number2,
+    setInPrice,
+    setOutPrice,
+    setNumber,
+    setNumber2,
+  } = useContext(PriceContext);
   const [isOpenDialog, setisOpenDialog] = useState(false);
+  const { api, isApiReady } = useContext(ApiContext);
+  const { tokenList, accountBalance } = useContext(TokenContext);
+
   const inputNumberOnly = (item: string) => {
     item = item.replace(/[^\d.]/g, "");
     const i = item.indexOf(".");
     const str1 = item.slice(0, i + 1);
     let str2 = item.slice(i + 1);
     str2 = str2.replace(/[^\d]/g, "");
+    // .substr(0,8);
     const strAll = str1 + str2;
     // /控制底部灰框和按钮的/
-    strAll != "" ? showSwapInfo(true) : showSwapInfo(false);
+    (strAll != "" && inPrice && outPrice)
+      ?
+        showSwapInfo(true)
+      : showSwapInfo(false);
     // debugger;
     let canSwap = inputCoinValue.coinInput[index].canSwap;
     parseFloat(strAll) > parseFloat(currencyBalence)
@@ -209,7 +237,6 @@ function CurrencyItem({
     inputCoinValue.coinInput[index].canSwap = canSwap;
     inputCoinValue.setCoinInput([...inputCoinValue.coinInput]);
   };
-
   return (
     <Item>
       <div className="title-info">
@@ -239,8 +266,10 @@ function CurrencyItem({
               placeholder="0.0"
               onChange={(e) => {
                 e.target.value = inputNumberOnly(e.target.value);
+                setInPrice(e.target.value);
+                setNumber(number + 1);
               }}
-              value={inputCoinValue.coinInput[0].coinInput}
+              value={inPrice}
             />
           ) : (
             <Input
@@ -248,8 +277,10 @@ function CurrencyItem({
               placeholder="0.0"
               onChange={(e) => {
                 e.target.value = inputNumberOnly(e.target.value);
+                setOutPrice(e.target.value);
+                setNumber2(number2 + 1);
               }}
-              value={inputCoinValue.coinInput[1].coinInput}
+              value={outPrice}
             />
           )}
         </div>
