@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Header from "../../components/Header";
 import ContainerCard from "../../components/Card/ContainerCard";
 import styled from "styled-components";
@@ -37,14 +37,6 @@ const ExchangeIconStyle = styled.div`
   }
 `;
 
-// interface CoinInfo {
-//   id: number;
-//   unit: string;
-//   icon: string;
-//   coinBalance: string;
-//   decimals: Number;
-// }
-
 interface CoinInput {
   coinIndex: Number;
   coinInput: any;
@@ -54,7 +46,10 @@ interface CoinInput {
 const HomePage = (): React.ReactElement => {
   const { coinList } = useContext(TokenContext);
   console.log(coinList, "coinList");
-  const [coinInfo, setCoinInfo] = useState(coinList[0]);
+
+  //取前两项给card显示。即取coinList的前两项放到coinInfo中
+  const [coinInfo, setCoinInfo] = useState([coinList[0], coinList[1]]);
+  console.log(coinInfo, "coinInfo");
   const [coinInput, setCoinInput] = useState<CoinInput[]>([
     { coinIndex: 0, coinInput: "", canSwap: true },
     { coinIndex: 1, coinInput: "", canSwap: true },
@@ -106,7 +101,9 @@ const HomePage = (): React.ReactElement => {
     clearCoinInput();
     setIsShowSwapInfo(false);
   };
-
+  useEffect(() => {
+    setCoinInfo([coinList[0], coinList[1]]);
+  }, [coinList]);
   return (
     <Container>
       <Header />

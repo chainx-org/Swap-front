@@ -55,26 +55,25 @@ export const TokenProvider: FC = ({ children }) => {
   const [accountBalance, setAccountBalance] = useState<AccountBalance | {}>({});
   const [tokenList, setTokenList] = useState<TokenItem[] | []>([]);
   const [coinList, setCoinList] = useState([
-    [
-      {
-        id: 0,
-        unit: "XDOT",
-        icon: "DogIcon",
-        coinBalance: "999.0067",
-        decimals: 1,
-      },
-      {
-        id: 1,
-        unit: "XDOGE",
-        icon: "BtcIcon",
-        coinBalance: "999.0067",
-        decimals: 1,
-      },
-    ],
+    {
+      id: 0,
+      unit: "XDOT",
+      icon: DOGESymbol,
+      coinBalance: "999.0067",
+      decimals: 1,
+    },
+    {
+      id: 1,
+      unit: "XDOGE",
+      icon: DOGESymbol,
+      coinBalance: "999.0067",
+      decimals: 1,
+    },
+    ,
   ]);
 
-  console.log("tokenList", tokenList);
-  console.log("accountBalance", accountBalance);
+  // console.log("tokenList", tokenList);
+  // console.log("accountBalance", accountBalance);
   console.log("coinList", coinList);
   useEffect(() => {
     if (isApiReady && api) {
