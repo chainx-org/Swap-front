@@ -58,6 +58,10 @@ const Item = styled(Tooltip)`
         .icon {
           margin: 10px 0px 10px 0px;
           padding-left: 10px;
+          & > img {
+            width: 20px;
+            height: 20px;
+          }
           // border: 1px solid black;
         }
         & > span:nth-child(1) {
@@ -142,7 +146,9 @@ const Item = styled(Tooltip)`
     position: fixed;
     width: 356px;
     left: 540px;
-    top: 88px;
+    top: 50%;
+    margin-top: -100px;
+    transform: translateY(-50%);
     opacity: 1;
     background-color: #fff;
     background: rgba(255, 255, 255, 0.9);
@@ -218,9 +224,7 @@ function CurrencyItem({
           }}
         >
           <div className="divBtnIcon">
-            <div className="icon">
-              <span>{children}</span>
-            </div>
+            <div className="icon">{children}</div>
           </div>
 
           <span>{currencyName}</span>

@@ -34,7 +34,7 @@ function DialogCard({
     let divisionNumber = new BigNumber(Math.pow(10, decimalsInput));
     accuracyResult = accuracyResult.dividedBy(divisionNumber);
     let result = accuracyResult.toNumber();
-    accuracyResult.toFixed(4);
+    result.toFixed(4);
     console.log(result);
     return result;
   }

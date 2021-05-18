@@ -11,7 +11,7 @@ export const DivDialog = styled.div`
     background-color: #000;
     opacity: 0.4;
     color: #f00;
-    z-index: 4;
+    z-index: 400;
   }
   .content {
     position: fixed;
@@ -67,7 +67,7 @@ export const DialogItem = styled.div`
         width:20px;
         height:20px;
         margin-right: 7px;
-        & > svg {
+        & > img {
           width: 20px;
           height: 20px;
         }
