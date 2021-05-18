@@ -97,7 +97,6 @@ const HomePage = (): React.ReactElement => {
   };
   const exChangeIcon = () => {
     setCoinInfo([...coinInfo].reverse());
-    debugger;
     clearCoinInput();
     setIsShowSwapInfo(false);
   };

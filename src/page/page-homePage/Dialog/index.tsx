@@ -19,49 +19,16 @@ function DialogCard({
   onCancel,
   addCoinItem,
 }: DialogCardProps): React.ReactElement<DialogCardProps> {
-  const { accountBalance, tokenList } = useContext(TokenContext);
+  const { tokenList, coinList } = useContext(TokenContext);
   console.log(tokenList, "tokenList");
-  const [account, setAccount] = useState(tokenList);
+  const [account, setAccount] = useState(coinList);
   const clickItem = (item: any, index: any) => {
     addCoinItem(item, index);
     onCancel(false);
   };
-  function accuracy(decimalsInput: number, balance: number) {
-    let accuracyResult = new BigNumber(balance);
-    let divisionNumber = new BigNumber(Math.pow(10, decimalsInput));
-    accuracyResult = accuracyResult.dividedBy(divisionNumber);
-    let result = accuracyResult.toNumber();
-    let resultFix = result.toFixed(4);
-    console.log(resultFix);
-    return resultFix;
-  }
-  function addCoinBalance(accountList: any, Balance: any) {
-    Balance.map((item: any) => {
-      const keys = Object.keys(item);
-      accountList.map(
-        (child: { unit: string; coinBalance: any; decimals: any }) => {
-          if (child.unit === keys[0]) {
-            child.decimals = item[keys[0]]["decimals"];
-            child.coinBalance = accuracy(
-              item[keys[0]]["decimals"],
-              item[keys[0]]["assetNumber"]
-            );
-          }
-        }
-      );
-      console.log(accountList, "accountList");
-    });
-    return accountList;
-  }
-
   useEffect(() => {
-    if (accountBalance != "") {
-      let result: any = addCoinBalance(account, accountBalance);
-      setAccount([...result]);
-    } else {
-      alert("error");
-    }
-  }, []);
+    setAccount(coinList);
+  }, [coinList]);
   return (
     <div>
       <DivDialog>
