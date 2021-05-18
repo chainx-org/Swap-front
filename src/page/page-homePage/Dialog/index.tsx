@@ -1,11 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
 import { DialogItem, DivDialog } from "./style";
 import ContainerCard from "../../../components/Card/ContainerCard";
+import Mask from "../../../components/Mask";
+import BigNumber from "bignumber.js";
+import { TokenContext } from "../../../hooks/TokenProvider";
 import DogIcon from "../../../assets/symbols_DOGE.svg";
 import ETHSymbol from "../../../assets/symbols_ETH.svg";
 import DOGESymbol from "../../../assets/symbols_DOGE.svg";
-import Mask from "../../../components/Mask";
-import { TokenContext } from "../../../hooks/TokenProvider";
+import { Result } from "antd";
 
 interface DialogCardProps {
   index?: Number;
@@ -24,16 +26,30 @@ function DialogCard({
     addCoinItem(item, index);
     onCancel(false);
   };
-
+  function accuracy(decimalsInput: number, balance: number) {
+    decimalsInput = 1;
+    balance = 100.1123;
+    debugger;
+    let accuracyResult = new BigNumber(balance);
+    let divisionNumber = new BigNumber(Math.pow(10, decimalsInput));
+    accuracyResult = accuracyResult.dividedBy(divisionNumber);
+    let result = accuracyResult.toNumber();
+    accuracyResult.toFixed(4);
+    console.log(result);
+    return result;
+  }
   function addCoinBalance(accountList: any, Balance: any) {
     // addCoinIcon(accountList);
-    Balance.map((index: any) => {
-      const keys = Object.keys(index);
+    Balance.map((item: any) => {
+      const keys = Object.keys(item);
       accountList.map(
         (child: { unit: string; coinBalance: any; decimals: any }) => {
           if (child.unit === keys[0]) {
-            child.decimals = index[keys[0]]["decimals"];
-            child.coinBalance = index[keys[0]]["assetNumber"];
+            child.decimals = item[keys[0]]["decimals"];
+            child.coinBalance = accuracy(
+              item[keys[0]]["decimals"],
+              item[keys[0]]["assetNumber"]
+            );
           }
         }
       );
@@ -43,6 +59,7 @@ function DialogCard({
   }
 
   useEffect(() => {
+    // accuracy(8, 11111111111111111111111111);
     let result: any = addCoinBalance(account, accountBalance);
     setAccount([...result]);
   }, []);
