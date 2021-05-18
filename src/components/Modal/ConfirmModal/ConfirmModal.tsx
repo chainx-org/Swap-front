@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import ContainerCard from "../../Card/ContainerCard";
 import ETHSymbol from "../../../assets/symbols_ETH.svg";
 import DOGESymbol from "../../../assets/symbols_DOGE.svg";
@@ -7,6 +7,9 @@ import NormalButton from "../../Button";
 import Loading from "../../../assets/loading.png";
 import Error from "../../../assets/Feedback_failure.svg";
 import Success from "../../../assets/Feedback_successed.svg";
+import { ApiContext } from "../../../hooks/ApiProvider";
+import { web3FromAddress } from "@polkadot/extension-dapp";
+import { TokenContext } from "../../../hooks/TokenProvider";
 import {
   CoinInfoWrapper,
   ConfirmModalWrapper,
@@ -16,6 +19,7 @@ import {
 } from "./style";
 import PriceField from "./PriceField";
 import Mask from "../../Mask";
+import { AccountsContext } from "../../../hooks/AccountsProvider";
 
 interface CoinNumItem {
   coinIcon: string;
@@ -28,6 +32,9 @@ interface ConfirmCardProps {
   confirmType: "priceInfo" | "waiting" | "transactionStatus";
   onCancel: React.Dispatch<boolean>;
   swapCoinInfo: any;
+  setTransferStatus: React.Dispatch<any>;
+  setStatusValue: React.Dispatch<any>;
+  setIsShowSwapInfo?:any;
 }
 
 interface PriceFieldItem {
@@ -40,6 +47,9 @@ const ConfirmModal = ({
   statusValue,
   onCancel,
   swapCoinInfo,
+  setTransferStatus,
+  setStatusValue,
+  setIsShowSwapInfo,
 }: ConfirmCardProps): React.ReactElement<ConfirmCardProps> => {
   const coinNumList: CoinNumItem[] = swapCoinInfo;
 
@@ -61,7 +71,13 @@ const ConfirmModal = ({
       fieldContent: "0.03926 XETH",
     },
   ];
-
+  const Price = document && document.getElementsByClassName("num");
+  const { api, isApiReady } = useContext(ApiContext);
+  const { currentAccount } = useContext(AccountsContext);
+  const [blockNumber, setBlockNumber] = useState<any>(null);
+  api?.derive.chain.bestNumber().then((blockNumber) => {
+    setBlockNumber(Number(blockNumber));
+  });
   const backPriceContent: React.ReactNode = (
     <PriceWrapper>
       {PriceFieldList.map((item, index) => (
@@ -74,6 +90,7 @@ const ConfirmModal = ({
       <NormalButton
         className="confirmButton"
         label="Confirm Swap"
+        // onClick={() => confirmSwap()}
         onClick={() => confirmSwap()}
       />
     </PriceWrapper>
@@ -102,7 +119,12 @@ const ConfirmModal = ({
           <div className="statusValue">transaction submitted</div>
         </>
       )}
-      <NormalButton label="Close" />
+      <NormalButton
+        label="Close"
+        onClick={() => {
+          setIsShowSwapInfo(false);
+        }}
+      />
     </StatusWrapper>
   );
 
@@ -116,9 +138,62 @@ const ConfirmModal = ({
         return backStatusContent;
     }
   };
+  // const Price:any = useRef()
 
-  const confirmSwap = () => {};
-  console.log(confirmType, "confirmType");
+  const confirmTransfer = (amount: any) => {
+    async function transfer() {
+      if (api) {
+        try {
+          const injector = await web3FromAddress(
+            currentAccount.address.toString()
+          );
+          api.setSigner(injector.signer);
+          setTransferStatus("waiting");
+          api.tx.swap
+            .swapExactTokensForTokens(
+              amount * 10e8,
+              "1", // any
+              [0, 1],
+              currentAccount.address.toString(),
+              blockNumber + 100
+            )
+            .signAndSend(
+              currentAccount.address.toString(),
+              { signer: injector.signer },
+              (statusData) => {
+                const formatStatusData = JSON.parse(JSON.stringify(statusData));
+                console.log("formatStatusData", formatStatusData);
+                // setTransferStatus("waiting");
+                // if(formatStatusData.status.inBlock){
+                  setTransferStatus("transactionStatus");
+                  setStatusValue("success");
+                // }
+              }
+            )
+            .catch((error) => {
+              setTransferStatus("transactionStatus");
+              setStatusValue("fail");
+              console.log("error", error);
+              // (/Cancelled/g.exec(error))?.index === 7 && setTransferStatus("priceInfo")
+            });
+        } catch (err) {
+          console.log(err);
+          // err ===  && console.log('111')
+        }
+      }
+    }
+    transfer();
+  };
+
+  const confirmSwap = () => {
+    // console.log(Price.current.innerHTML)
+    // for (let i = 0; i < Price.length; i++) {
+    // console.log(Price[0].innerHTML)
+    confirmTransfer(Price[0].innerHTML);
+    // }
+  };
+  // console.log(confirmType, "confirmType");
+
   return (
     <>
       <Mask />
@@ -133,10 +208,13 @@ const ConfirmModal = ({
               {coinNumList.map((item: CoinNumItem, index) => (
                 <div className="numInfo" key={index}>
                   <div className="coinName">
-                    <img src={item.coinIcon} alt="" />
+                    <span>{item.coinIcon}</span>
+                    {/* <img src={item.coinIcon} alt="" /> */}
                     <div className="name">{item.coinName}</div>
                   </div>
-                  <div className="num">{item.coinNum}</div>
+                  <div className="num">
+                    {parseFloat(`${item.coinNum}`).toFixed(8)}
+                  </div>
                 </div>
               ))}
             </div>

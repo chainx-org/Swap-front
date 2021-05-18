@@ -1,8 +1,14 @@
-import React, { createContext, FC, useContext, useEffect, useState } from 'react';
-import { ApiContext } from './ApiProvider';
-import { web3AccountsSubscribe, web3Enable } from '@polkadot/extension-dapp';
+import React, {
+  createContext,
+  FC,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { ApiContext } from "./ApiProvider";
+import { web3AccountsSubscribe, web3Enable } from "@polkadot/extension-dapp";
 
-export interface AccountItem{
+export interface AccountItem {
   address: string;
   name: string;
 }
@@ -14,18 +20,18 @@ export interface AccountsData {
   setCurrentAccount: React.Dispatch<AccountItem>;
 }
 
-export interface TokenItem{
+export interface TokenItem {
   id: number;
   unit: string;
   name: string;
   decimals: number;
 }
 
-export interface TokenInfo extends TokenItem{
+export interface TokenInfo extends TokenItem {
   assetNumber: number;
 }
 
-export interface AccountBalance{
+export interface AccountBalance {
   XBTC: TokenInfo;
   XBCH: TokenInfo;
   XDOGE: TokenInfo;
@@ -35,42 +41,45 @@ export interface AccountBalance{
 
 export const AccountsContext = createContext<AccountsData>({} as AccountsData);
 
-const balanceType: string[] = ['PCX', 'XBTC', 'XBCH', 'XDOGE', 'XETH', 'XDOT']
+const balanceType: string[] = ["PCX", "XBTC", "XBCH", "XDOGE", "XETH", "XDOT"];
 
-export const AccountsProvider: FC = ({children}) => {
-  const {isApiReady} = useContext(ApiContext)
-  const [accountList, setAccountList] = useState<AccountItem[]>([])
-  const [isExtensionInjected, setIsExtensionInjected] = useState<boolean>(false)
+export const AccountsProvider: FC = ({ children }) => {
+  const { isApiReady } = useContext(ApiContext);
+  const [accountList, setAccountList] = useState<AccountItem[]>([]);
+  const [isExtensionInjected, setIsExtensionInjected] =
+    useState<boolean>(false);
   const [currentAccount, setCurrentAccount] = useState<AccountItem>({
-    address: '',
-    name: '',
-  })
+    address: "",
+    name: "",
+  });
 
   const getAccountList = async () => {
-    const extensions = await web3Enable('swap');
+    const extensions = await web3Enable("swap");
     if (extensions.length === 0) {
       return;
     }
-    setIsExtensionInjected(true)
-    const account$ = await web3AccountsSubscribe(accounts => {
-      const accountsList = accounts.map(acc => ({
+    setIsExtensionInjected(true);
+    const account$ = await web3AccountsSubscribe((accounts) => {
+      const accountsList = accounts.map((acc) => ({
         address: acc.address,
-        name: acc.meta.name
-      }))
-      setAccountList(accountsList as AccountItem[])
+        name: acc.meta.name,
+      }));
+      setAccountList(accountsList as AccountItem[]);
     });
-  }
+  };
 
   useEffect(() => {
-    getAccountList()
-  }, [isApiReady])
+    getAccountList();
+  }, [isApiReady]);
 
   useEffect(() => {
-    accountList.length >= 1? setCurrentAccount(accountList[0]) : setCurrentAccount({
-      address: '',
-      name: '',
-    })
-  }, [accountList])
+    accountList.length >= 1
+      ? setCurrentAccount(accountList[0])
+      : setCurrentAccount({
+          address: "",
+          name: "",
+        });
+  }, [accountList]);
 
   // useEffect(() => {
   //   if(isApiReady&& api){
@@ -104,14 +113,22 @@ export const AccountsProvider: FC = ({children}) => {
   //     ))
   //   }
   // }, [tokenList, currentAccount.address])
-
+  // console.log(
+  //   "aaa",
+  //   isExtensionInjected,
+  //   accountList,
+  //   currentAccount,
+  //   setCurrentAccount
+  // );
   return (
-    <AccountsContext.Provider value={{
-      isExtensionInjected,
-      accountList,
-      currentAccount,
-      setCurrentAccount,
-    }}>
+    <AccountsContext.Provider
+      value={{
+        isExtensionInjected,
+        accountList,
+        currentAccount,
+        setCurrentAccount,
+      }}
+    >
       {children}
     </AccountsContext.Provider>
   );

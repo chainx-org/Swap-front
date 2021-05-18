@@ -1,10 +1,10 @@
-import React  from 'react';
-import './App.css';
-import styled from 'styled-components';
-import ApiProvider from './hooks/ApiProvider';
-import HomePage from './page/page-homePage';
-import { AccountsProvider } from './hooks/AccountsProvider';
-import { TokenProvider } from './hooks/TokenProvider';
+import React from "react";
+import "./App.css";
+import styled from "styled-components";
+import ApiProvider from "./hooks/ApiProvider";
+import HomePage from "./page/page-homePage";
+import { AccountsProvider } from "./hooks/AccountsProvider";
+import { TokenProvider } from "./hooks/TokenProvider";
 
 const LayoutWrapper = styled.div`
   display: flex;
@@ -12,14 +12,13 @@ const LayoutWrapper = styled.div`
 `;
 
 export const App: React.FC = () => {
-
   return (
     <>
-      <LayoutWrapper id={'LayoutWrapper'}>
-        <ApiProvider url='ws://127.0.0.1:9977'>
+      <LayoutWrapper id={"LayoutWrapper"}>
+        <ApiProvider url="ws://127.0.0.1:9977">
           <AccountsProvider>
             <TokenProvider>
-              <HomePage/>
+              <HomePage />
             </TokenProvider>
           </AccountsProvider>
         </ApiProvider>
@@ -27,4 +26,4 @@ export const App: React.FC = () => {
     </>
   );
 };
-export const bridgeStatusContext = React.createContext('');
+export const bridgeStatusContext = React.createContext("");
