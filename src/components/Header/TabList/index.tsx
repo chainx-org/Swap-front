@@ -23,10 +23,10 @@ const LinkDiv = styled.div`
         border-bottom: 2px solid black;
       }
     }
-    .linkName:hover {
-      color: black;
-      border-bottom: 2px solid black;
-    }
+    // .linkName:hover {
+    //   color: black;
+    //   border-bottom: 2px solid black;
+    // }
   }
 `;
 
@@ -65,7 +65,8 @@ class TabList extends React.Component<MyState, any> {
               className={`linkName ${
                 this.state.currentActive === "Pool" ? "active" : ""
               }`}
-              onClick={this.changeFlag.bind(this, "Pool")}
+              // onClick={this.changeFlag.bind(this, "Pool")}
+              // dis
             >
               Pool
             </Link>

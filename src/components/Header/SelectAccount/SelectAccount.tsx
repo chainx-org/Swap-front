@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { ReactComponent as DogIcon } from "../../../assets/symbols_DOGE.svg";
-import { shortenString } from '../../../helper';
-import { AccountItem, AccountsContext } from '../../../hooks/AccountsProvider';
+import { shortenString } from "../../../helper";
+import { AccountItem, AccountsContext } from "../../../hooks/AccountsProvider";
 
 const MenuBox = {
   position: "absolute" as "absolute",
@@ -74,16 +74,17 @@ const DropListStyle = styled.div`
 
 const Wrapper = styled.div`
   cursor: pointer;
-`
+`;
 
 function SelectAccount() {
   const { accountList, setCurrentAccount } = useContext(AccountsContext);
+  console.log(accountList, "accountList");
   const changeAccount = (account: AccountItem) => {
     setCurrentAccount({
       address: account.address,
-      name: account.name
-    })
-  }
+      name: account.name,
+    });
+  };
 
   return (
     <div style={MenuBox}>
@@ -95,11 +96,14 @@ function SelectAccount() {
                 <li>
                   <div className={"assets-item"}>
                     <div className={"item-left"}>
+                      {/* <img src="" alt="" /> */}
                       <DogIcon style={IconBox} />
                     </div>
                     <div className={"item-right"}>
                       <div className={"item-name"}>{item.name}</div>
-                      <div className={"item-address"}>{shortenString(item.address)}</div>
+                      <div className={"item-address"}>
+                        {shortenString(item.address)}
+                      </div>
                     </div>
                   </div>
                 </li>
