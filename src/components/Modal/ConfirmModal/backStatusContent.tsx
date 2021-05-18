@@ -6,10 +6,15 @@ import Success from "../../../assets/Feedback_successed.svg";
 
 interface Props {
   statusValue?: String;
+  onCancel: React.Dispatch<any>
 }
 const BackStatusContent = ({
   statusValue,
+  onCancel
 }: Props): React.ReactElement<Props> => {
+  const HideConfirmSwap = () => {
+    onCancel(false)
+  }
   return (
     <StatusWrapper>
       {statusValue === "fail" ? (
@@ -23,7 +28,7 @@ const BackStatusContent = ({
           <div className="statusValue">transaction submitted</div>
         </>
       )}
-      <NormalButton label="Close" />
+      <NormalButton label="Close" onClick={HideConfirmSwap}/>
     </StatusWrapper>
   );
 };

@@ -237,7 +237,6 @@ currencyItemProps): React.ReactElement<currencyItemProps> {
     inputCoinValue.coinInput[index].canSwap = canSwap;
     inputCoinValue.setCoinInput([...inputCoinValue.coinInput]);
   };
-
   return (
     <Item>
       <div className="title-info">

@@ -133,7 +133,7 @@ const ConfirmModal = ({
     //     }}
     //   />
     // </StatusWrapper>
-    <BackStatusContent statusValue={statusValue} />
+    <BackStatusContent statusValue={statusValue} onCancel={onCancel}/>
   );
 
   const judgeConfirmType = (type: string): React.ReactNode => {

@@ -64,7 +64,7 @@ function BottomItem({
   const [transferStatus, setTransferStatus] =
     useState<"priceInfo" | "waiting" | "transactionStatus">("priceInfo");
   const [statusValue, setStatusValue] = useState<"success" | "fail">("success");
-  console.log('transferStatus',transferStatus)
+  console.log('isConfirmOpen',isConfirmOpen)
   return (
     <Item>
       <div className="title-info">
@@ -86,6 +86,7 @@ function BottomItem({
       )}
 
       {isConfirmOpen && (
+        <>
         <ConfirmModal
           onCancel={setIsConfirmOpen}
           // "priceInfo" | "waiting" | "transactionStatus"
@@ -97,6 +98,7 @@ function BottomItem({
           swapCoinInfo={swapCoinInfo}
           setIsShowSwapInfo={setIsShowSwapInfo}
         />
+        </>
       )}
     </Item>
   );
