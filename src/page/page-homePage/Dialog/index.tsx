@@ -27,19 +27,15 @@ function DialogCard({
     onCancel(false);
   };
   function accuracy(decimalsInput: number, balance: number) {
-    decimalsInput = 1;
-    balance = 100.1123;
-    debugger;
     let accuracyResult = new BigNumber(balance);
     let divisionNumber = new BigNumber(Math.pow(10, decimalsInput));
     accuracyResult = accuracyResult.dividedBy(divisionNumber);
     let result = accuracyResult.toNumber();
-    result.toFixed(4);
-    console.log(result);
-    return result;
+    let resultFix = result.toFixed(4);
+    console.log(resultFix);
+    return resultFix;
   }
   function addCoinBalance(accountList: any, Balance: any) {
-    // addCoinIcon(accountList);
     Balance.map((item: any) => {
       const keys = Object.keys(item);
       accountList.map(
@@ -59,7 +55,6 @@ function DialogCard({
   }
 
   useEffect(() => {
-    // accuracy(8, 11111111111111111111111111);
     let result: any = addCoinBalance(account, accountBalance);
     setAccount([...result]);
   }, []);
