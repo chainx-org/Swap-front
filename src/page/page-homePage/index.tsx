@@ -72,10 +72,6 @@ const HomePage = (): React.ReactElement => {
     coinList[firstItemId],
     coinList[secondItemId],
   ]);
-  console.log(firstItemId, "firstItemId");
-  console.log(secondItemId, "secondItemId");
-  console.log(coinList, "coinlist");
-  console.log(coinInfo, "coinInfo");
   const [coinInput, setCoinInput] = useState<CoinInput[]>([
     { coinIndex: 0, coinInput: inPrice, canSwap: true },
     { coinIndex: 1, coinInput: outPrice, canSwap: true },
@@ -183,7 +179,6 @@ const HomePage = (): React.ReactElement => {
   };
   const exChangeIcon = () => {
     // setCoinInfo([...coinInfo].reverse());
-    debugger;
     let a = firstItemId;
     let b = secondItemId;
     setFirstItemId(b);

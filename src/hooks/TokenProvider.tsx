@@ -62,14 +62,14 @@ export const TokenProvider: FC = ({ children }) => {
       id: 0,
       unit: "",
       icon: White,
-      coinBalance: "1",
+      coinBalance: "",
       decimals: null,
     },
     {
       id: 1,
       unit: "",
       icon: White,
-      coinBalance: "2",
+      coinBalance: "",
       decimals: null,
     },
   ]);
@@ -78,24 +78,22 @@ export const TokenProvider: FC = ({ children }) => {
     let a: any = localStorage.getItem("coinList");
     let localCoinList: any = JSON.parse(a);
     if (a == null) {
-      // console.log("初次使用");
     } else {
-      // console.log("有localStorage");
       setCoinList([...localCoinList]);
     }
   }, []);
 
-  // console.log("tokenList", tokenList);
+  console.log("tokenList", tokenList);
   // console.log("accountBalance", accountBalance);
   // console.log("coinList", coinList);
   useEffect(() => {
     if (isApiReady && api) {
       //@ts-ignore
       api.rpc.swap.getTokenList().then((list) => {
-        if (!list.length) {
-          console.log("tokenlist获取为空");
-          return;
-        }
+        // if (!list.length) {
+        //   console.log("tokenlist获取为空");
+        //   return;
+        // }
         list.length &&
           setTokenList(
             list.map((i: any) => ({
@@ -106,31 +104,34 @@ export const TokenProvider: FC = ({ children }) => {
             }))
           );
       });
-      if (!tokenList.length) {
-        const getListIfFailed = setInterval(() => {
-          //@ts-ignore
-          api.rpc.swap.getTokenList().then((list) => {
-            if (!list.length) {
-              console.log("tokenlist获取为空");
-              return;
-            }
-            list.length &&
-              setTokenList(
-                list.map((i: any) => ({
-                  id: Number(i.assertId),
-                  unit: i.assertInfo.token.toString(),
-                  name: i.assertInfo.chain.toString(),
-                  decimals: Number(i.assertInfo.decimals),
-                }))
-              );
-          });
-        }, 1000);
-        return () => {
-          clearInterval(getListIfFailed);
-        };
-      }
+      // if (!tokenList.length) {
+      //   const getListIfFailed = setInterval(() => {
+      //     //@ts-ignore
+      //     api.rpc.swap.getTokenList().then((list) => {
+      //       if (!list.length) {
+      //         console.log("tokenlist获取为空");
+      //         return;
+      //       }
+      //       list.length &&
+      //         setTokenList(
+      //           list.map((i: any) => ({
+      //             id: Number(i.assertId),
+      //             unit: i.assertInfo.token.toString(),
+      //             name: i.assertInfo.chain.toString(),
+      //             decimals: Number(i.assertInfo.decimals),
+      //           }))
+      //         );
+      //     });
+      //   }, 1000);
+      //   return () => {
+      //     clearInterval(getListIfFailed);
+      //   };
+      // }
     }
   }, [isApiReady, currentAccount.address]);
+  useEffect(() => {
+    console.log("token list console");
+  }, [tokenList]);
   function addCoinIcon(accountList: any) {
     accountList.map((item: any) => {
       switch (item.unit) {
@@ -158,10 +159,11 @@ export const TokenProvider: FC = ({ children }) => {
     });
     setTokenList(accountList);
   }
-  console.log("currentAccount.address", currentAccount.address);
   useEffect(() => {
     const timer: NodeJS.Timeout = setInterval(() => {
+      console.log(tokenList.length > 0, "tokenList.length ");
       if (tokenList.length > 0) {
+        console.log("wozoul", tokenList);
         addCoinIcon(tokenList);
         let result: any[] = [];
         const promiseList: Promise<void>[] = [];
@@ -195,21 +197,17 @@ export const TokenProvider: FC = ({ children }) => {
           setCoinList([...coinBalance]);
           //input into localStorage
           localStorage.setItem("coinList", JSON.stringify([...coinBalance]));
-          // console.log("success updata coin Balance");
+          console.log("success updata coin Balance");
         });
+      } else {
+        console.log("tokenList为空");
       }
-    }, 4000);
+    }, 1000);
     return () => {
       clearInterval(timer);
     };
-  }, [tokenList, currentAccount.address]);
+  }, [isApiReady, currentAccount.address, tokenList]);
 
-  // useEffect(() => {
-  //   let coinBalance: any = addCoinBalance(tokenList, result);
-  //   setCoinList([...coinBalance]);
-  //   console.log(coinBalance, "coinBalance");
-  //   localStorage.setItem("coinList", JSON.stringify([...coinBalance]));
-  // }, [tokenList, currentAccount.address, accountBalance]);
   function accuracy(decimalsInput: number, balance: number) {
     let accuracyResult = new BigNumber(balance);
     let divisionNumber = new BigNumber(Math.pow(10, decimalsInput));
