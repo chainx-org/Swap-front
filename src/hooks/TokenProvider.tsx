@@ -92,7 +92,6 @@ export const TokenProvider: FC = ({ children }) => {
 
   useEffect(() => {
     if (isApiReady && api) {
-      
       //@ts-ignore
       api.rpc.swap.getTokenList().then((list) => {
         if (!list.length) {
@@ -111,24 +110,7 @@ export const TokenProvider: FC = ({ children }) => {
       });
       console.log("!tokenList.length", !tokenList.length);
     }
-    if (!tokenList.length) {
-      const getListIfFailed = setInterval(() => {
-        api &&
-        //@ts-ignore
-        api.rpc.swap.getTokenList().then((list) => {
-            list.length && console.log("list", list);
-            setTokenList(
-              list.map((i: any) => ({
-                id: Number(i.assertId),
-                unit: i.assertInfo.token.toString(),
-                name: i.assertInfo.chain.toString(),
-                decimals: Number(i.assertInfo.decimals),
-              }))
-            );
-          });
-      }, 1000);
-    }
-    tokenList.length && clearInterval()
+    
   }, [isApiReady, currentAccount.address]);
   function addCoinIcon(accountList: any) {
     accountList.map((item: any) => {
@@ -201,11 +183,11 @@ export const TokenProvider: FC = ({ children }) => {
       clearInterval(timer);
     };
   }, [tokenList, currentAccount.address]);
-
+  console.log("accountBalance", accountBalance);
   // useEffect(() => {
   //   let coinBalance: any = addCoinBalance(tokenList, result);
   //   setCoinList([...coinBalance]);
-  //   console.log(coinBalance, "coinBalance");
+  // console.log(coinBalance, "coinBalance");
   //   localStorage.setItem("coinList", JSON.stringify([...coinBalance]));
   // }, [tokenList, currentAccount.address, accountBalance]);
   function accuracy(decimalsInput: number, balance: number) {
