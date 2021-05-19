@@ -57,7 +57,7 @@ export const PriceContext = createContext<PriceData>({} as PriceData);
 
 const HomePage = (): React.ReactElement => {
   const { api, isApiReady } = useContext(ApiContext);
-  const { currentAccount } = useContext(AccountsContext);
+  const { currentAccount, isExtensionInjected } = useContext(AccountsContext);
   const [blockNumber, setBlockNumber] = useState<any>(null);
   const [outPrice, setOutPrice] = useState<any>(null);
   const [inPrice, setInPrice] = useState<any>(null);
@@ -131,7 +131,6 @@ const HomePage = (): React.ReactElement => {
   }, [number2]);
 
   const [isShowSwapInfo, setIsShowSwapInfo] = useState(false);
-  const { isExtensionInjected } = useContext(AccountsContext);
 
   const swapCoin = [
     {
@@ -240,26 +239,46 @@ const HomePage = (): React.ReactElement => {
               <img src={coinInfo[1].icon} alt="" />
             </CardItem>
             {/* 底部按钮 */}
-            {coinInput[0].canSwap && coinInput[1].canSwap && (
-              <BottomItem
-                name="Slippage Tolerance"
-                value="1%"
-                swapCoinInfo={swapCoin}
-                btnLabel={!isExtensionInjected ? "Connect Wallet" : "Swap"}
-                className="buttonDiv"
-                setIsShowSwapInfo={setIsShowSwapInfo}
-              />
-            )}
-            {(!coinInput[0].canSwap || !coinInput[1].canSwap) && (
-              <BottomItem
-                name="Slippage Tolerance"
-                value="1%"
-                btnLabel={"Insufficient DOT Balance"}
-                className="cannot-swap"
-                setIsShowSwapInfo={setIsShowSwapInfo}
-              />
-            )}
 
+            {!isExtensionInjected && (
+              <a
+                href="https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd"
+                target="_blank"
+              >
+                {coinInput[0].canSwap && coinInput[1].canSwap && (
+                  <BottomItem
+                    name="Slippage Tolerance"
+                    value="1%"
+                    swapCoinInfo={swapCoin}
+                    btnLabel="Connect Wallet"
+                    className="ConnectWallet"
+                  ></BottomItem>
+                )}
+              </a>
+            )}
+            {isExtensionInjected && (
+              <div>
+                {coinInput[0].canSwap && coinInput[1].canSwap && (
+                  <BottomItem
+                    name="Slippage Tolerance"
+                    value="1%"
+                    swapCoinInfo={swapCoin}
+                    btnLabel="Swap"
+                    className="buttonDiv"
+                    setIsShowSwapInfo={setIsShowSwapInfo}
+                  />
+                )}
+                {(!coinInput[0].canSwap || !coinInput[1].canSwap) && (
+                  <BottomItem
+                    name="Slippage Tolerance"
+                    value="1%"
+                    btnLabel={"Insufficient DOT Balance"}
+                    className="cannot-swap"
+                    setIsShowSwapInfo={setIsShowSwapInfo}
+                  />
+                )}
+              </div>
+            )}
             {/* Swap info */}
           </ContainerCard>
         </Content>

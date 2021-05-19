@@ -15,6 +15,7 @@ import BhcIcon from "../assets/symbols_BHC.svg";
 import pcx from "../assets/chainx-pcx.svg";
 import XDOT from "../assets/symbols_DOT.svg";
 import { BigNumber } from "bignumber.js";
+import { Null } from "@polkadot/types";
 export interface TokenData {
   tokenList: TokenItem[] | [];
   accountBalance: AccountBalance | {};
@@ -50,72 +51,19 @@ export interface CoinItem {
 export const TokenContext = createContext<TokenData>({} as TokenData);
 
 const balanceType: string[] = ["PCX", "XBTC", "XBCH", "XDOGE", "XETH", "XDOT"];
-
 export const TokenProvider: FC = ({ children }) => {
   const { api, isApiReady } = useContext(ApiContext);
   const { currentAccount } = useContext(AccountsContext);
   const [accountBalance, setAccountBalance] = useState<AccountBalance | {}>({});
-
-  // useEffect(() => {
-  //   if (isApiReady && api) {
-  //     //@ts-ignore
-  //     api.rpc.swap.getTokenList().then((list) => {
-  //       console.log("list", list);
-  //       setTokenList(
-  //         list.map((i: any) => ({
-  //           id: Number(i.assertId), // id
-  //           unit: i.assertInfo.token.toString(), // 单位 token缩写
-  //           name: i.assertInfo.chain.toString(), // 币种 链来源
-  //           decimals: Number(i.assertInfo.decimals), // 精度
-  //         }))
-  //       );
-  //     });
-  //   }
-  // }, [api, isApiReady, currentAccount.address]);
-  // useEffect(() => {
-  //   if (tokenList.length > 0) {
-  //     tokenList.map((t: TokenItem) =>
-  //       //@ts-ignore
-  //       api.rpc.swap
-  //         .getBalance(t.id, "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY")
-  //         //@ts-ignore
-  //         .then((balance) => {
-  //           setAccountBalance({
-  //             ...accountBalance,
-  //             [balanceType[t.id]]: {
-  //               id: t.id, // 	资产id
-  //               unit: t.unit,
-  //               name: t.name,
-  //               decimals: t.decimals,
-  //               assetNumber: Number(balance),
-  //             },
-  //           });
-  //         })
-  //     );
-  //   }
-  // }, [tokenList, currentAccount.address]);
   const [tokenList, setTokenList] = useState<TokenItem[] | []>([]);
-  const [coinList, setCoinList] = useState([
-    {
-      id: 0,
-      unit: "XDOT",
-      icon: XDOT,
-      coinBalance: "999.0067",
-      decimals: 1,
-    },
-    {
-      id: 1,
-      unit: "XDOGE",
-      icon: DOGESymbol,
-      coinBalance: "999.0067",
-      decimals: 1,
-    },
-    ,
-  ]);
+
+  let a: any = localStorage.getItem("coinList");
+  let localCoinList: any = JSON.parse(a);
+  const [coinList, setCoinList] = useState([...localCoinList]);
 
   // console.log("tokenList", tokenList);
   // console.log("accountBalance", accountBalance);
-  console.log("coinList", coinList);
+  // console.log("coinList", coinList);
   useEffect(() => {
     if (isApiReady && api) {
       //@ts-ignore
@@ -194,6 +142,8 @@ export const TokenProvider: FC = ({ children }) => {
       Promise.all(promiseList).then(() => {
         let coinBalance: any = addCoinBalance(tokenList, result);
         setCoinList([...coinBalance]);
+        //input into localStorage
+        localStorage.setItem("coinList", JSON.stringify([...coinBalance]));
       });
     }
   }, [tokenList, currentAccount.address]);
