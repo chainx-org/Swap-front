@@ -151,7 +151,9 @@ const ConfirmModal = ({
   };
   // const Price:any = useRef()
 
-  const confirmTransfer = (amount: any) => {
+  const confirmTransfer = (swapCoinInfo: any) => {
+    console.log("swapCoinInfo[0]", swapCoinInfo[0], swapCoinInfo[0].coinNum);
+    console.log("swapCoinInfo[1]", swapCoinInfo[1]);
     async function transfer() {
       if (api) {
         try {
@@ -162,9 +164,9 @@ const ConfirmModal = ({
           setTransferStatus("waiting");
           api.tx.swap
             .swapExactTokensForTokens(
-              amount * 10e8,
+              swapCoinInfo[0].coinNum * Math.pow(10, swapCoinInfo[0].decimals),
               "1", // any
-              [0, 1],
+              [swapCoinInfo[0].id, swapCoinInfo[1].id],
               currentAccount.address.toString(),
               blockNumber + 100
             )
@@ -172,24 +174,19 @@ const ConfirmModal = ({
               currentAccount.address.toString(),
               { signer: injector.signer },
               (statusData) => {
-                const formatStatusData = JSON.parse(JSON.stringify(statusData));
-                // console.log("formatStatusData", formatStatusData);
-                // setTransferStatus("waiting");
-                // if(formatStatusData.status.inBlock){
                 setTransferStatus("transactionStatus");
                 setStatusValue("success");
-                // }
               }
             )
             .catch((error) => {
               setTransferStatus("transactionStatus");
               setStatusValue("fail");
               console.log("error", error);
-              // (/Cancelled/g.exec(error))?.index === 7 && setTransferStatus("priceInfo")
             });
         } catch (err) {
+          setTransferStatus("transactionStatus");
+          setStatusValue("fail");
           console.log(err);
-          // err ===  && console.log('111')
         }
       }
     }
@@ -206,29 +203,31 @@ const ConfirmModal = ({
   // // console.log(confirmType, "confirmType");
 
   function confirmSwap() {
-    confirmTransfer(Price[0].innerHTML);
-    // setStatusIcon("transactionStatus");
-    // console.log(confirmType, "confirmType");
-    console.log(coinNumList, "coinNumList");
-    // debugger;
-    //调用一下接口，
-    if (isApiReady && api) {
-      //@ts-ignore
-      let result = api.tx.swap.swapExactTokensForTokens(
-        100,
-        100,
-        [0, 1],
-        "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-        100
-      );
-      // .then((list: any) => {
-      //   console.log(list, "list");
-      // });
-      // console.log(result, "result");
-    }
-    // debugger;
-    //成功就关闭这个弹框，显示成功的弹框，失败就显示失败信息的弹框
-    return;
+    // console.log('swapCoinInfo',swapCoinInfo)
+    // ~
+    confirmTransfer(swapCoinInfo);
+    // // setStatusIcon("transactionStatus");
+    // // console.log(confirmType, "confirmType");
+    // console.log(coinNumList, "coinNumList");
+    // // debugger;
+    // //调用一下接口，
+    // if (isApiReady && api) {
+    //   //@ts-ignore
+    //   let result = api.tx.swap.swapExactTokensForTokens(
+    //     100,
+    //     100,
+    //     [0, 1],
+    //     "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+    //     100
+    //   );
+    //   // .then((list: any) => {
+    //   //   console.log(list, "list");
+    //   // });
+    //   // console.log(result, "result");
+    // }
+    // // debugger;
+    // //成功就关闭这个弹框，显示成功的弹框，失败就显示失败信息的弹框
+    // return;
   }
 
   return (

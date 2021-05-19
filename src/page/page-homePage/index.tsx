@@ -66,29 +66,35 @@ const HomePage = (): React.ReactElement => {
   let [number2, setNumber2] = useState(0);
   let [firstItemId, setFirstItemId] = useState(0);
   let [secondItemId, setSecondItemId] = useState(1);
-  const { tokenList, accountBalance } = useContext(TokenContext);
+
+  const { tokenList, setTokenList, accountBalance } = useContext(TokenContext);
   const { coinList } = useContext(TokenContext);
   const [coinInfo, setCoinInfo] = useState([
     coinList[firstItemId],
     coinList[secondItemId],
   ]);
+  // console.log(firstItemId, "firstItemId");
+  // console.log(secondItemId, "secondItemId");
+  // console.log(coinList, "coinlist");
+  console.log(coinInfo, "coinInfo");
+  // @ts-ignore
   const [coinInput, setCoinInput] = useState<CoinInput[]>([
     { coinIndex: 0, coinInput: inPrice, canSwap: true },
     { coinIndex: 1, coinInput: outPrice, canSwap: true },
   ]);
-
+  console.log("tokenList", tokenList);
   useEffect(() => {
-    if (isApiReady && api && tokenList[0]) {
+    if (isApiReady && api && coinInfo[0]) {
       //@ts-ignore
       api.rpc.swap
-        .getAmountOutPrice(inPrice * Math.pow(10, tokenList[0].decimals), [
-          tokenList[0].id,
-          tokenList[1].id,
+        .getAmountOutPrice(inPrice * Math.pow(10, coinInfo[0].decimals), [
+          coinInfo[0].id,
+          coinInfo[1].id,
         ])
         .then((list: any) => {
           setOutPrice(
             //@ts-ignore
-            parseInt(Number(list)) / Math.pow(10, tokenList[0].decimals)
+            parseInt(Number(list)) / Math.pow(10, coinInfo[0].decimals)
           );
         });
       setCoinInput([
@@ -99,17 +105,17 @@ const HomePage = (): React.ReactElement => {
   }, [number]);
 
   useEffect(() => {
-    if (isApiReady && api && tokenList[1]) {
+    if (isApiReady && api && coinInfo[1]) {
       //@ts-ignore
       api.rpc.swap
-        .getAmountInPrice(outPrice * Math.pow(10, tokenList[1].decimals), [
-          tokenList[0].id,
-          tokenList[1].id,
+        .getAmountInPrice(outPrice * Math.pow(10, coinInfo[1].decimals), [
+          coinInfo[0].id,
+          coinInfo[1].id,
         ])
         .then((list: any) => {
           setInPrice(
             //@ts-ignore
-            parseInt(Number(list)) / Math.pow(10, tokenList[1].decimals)
+            parseInt(Number(list)) / Math.pow(10, coinInfo[1].decimals)
           );
         });
       setCoinInput([
@@ -187,6 +193,7 @@ const HomePage = (): React.ReactElement => {
     setInPrice(null);
     setOutPrice(null);
     setCoinInfo([coinList[firstItemId], coinList[secondItemId]]);
+    setTokenList([...tokenList]);
   };
 
   useEffect(() => {
@@ -227,8 +234,8 @@ const HomePage = (): React.ReactElement => {
             {/* 转换icon */}
             <ExchangeIconStyle>
               <div className="box">
-                <div className="iconBox" onClick={exChangeIcon}>
-                  <ExchangeIcon />
+                <div className="iconBox">
+                  <ExchangeIcon onClick={exChangeIcon} />
                 </div>
               </div>
             </ExchangeIconStyle>
