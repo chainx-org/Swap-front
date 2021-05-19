@@ -158,6 +158,7 @@ export const TokenProvider: FC = ({ children }) => {
     });
     setTokenList(accountList);
   }
+  console.log('currentAccount.address',currentAccount.address)
   useEffect(() => {
     const timer: NodeJS.Timeout = setInterval(() => {
       if (tokenList.length > 0) {
@@ -170,7 +171,7 @@ export const TokenProvider: FC = ({ children }) => {
             api.rpc.swap
               .getBalance(
                 t.id,
-                "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
+                currentAccount.address
               )
               .then((balance: any) => {
                 result.push({
