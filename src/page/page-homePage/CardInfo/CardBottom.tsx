@@ -58,12 +58,13 @@ function BottomItem({
   value,
   className,
   swapCoinInfo,
-  setIsShowSwapInfo
+  setIsShowSwapInfo,
 }: BottomItemProps): React.ReactElement<BottomItemProps> {
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
   const [transferStatus, setTransferStatus] =
     useState<"priceInfo" | "waiting" | "transactionStatus">("priceInfo");
   const [statusValue, setStatusValue] = useState<"success" | "fail">("success");
+  // console.log('isConfirmOpen',isConfirmOpen)
   return (
     <Item>
       <div className="title-info">
@@ -84,19 +85,23 @@ function BottomItem({
         <NormalButton label={btnLabel} className={className} />
       )}
 
+      {className === "ConnectWallet" && (
+        <NormalButton label={btnLabel} className="buttonDiv" />
+      )}
+
       {isConfirmOpen && (
         <>
-        <ConfirmModal
-          onCancel={setIsConfirmOpen}
-          // "priceInfo" | "waiting" | "transactionStatus"
-          statusValue={statusValue}
-          setStatusValue={setStatusValue}
-          transferStatus={transferStatus}
-          setTransferStatus={setTransferStatus}
-          confirmType={transferStatus}
-          swapCoinInfo={swapCoinInfo}
-          setIsShowSwapInfo={setIsShowSwapInfo}
-        />
+          <ConfirmModal
+            onCancel={setIsConfirmOpen}
+            // "priceInfo" | "waiting" | "transactionStatus"
+            statusValue={statusValue}
+            setStatusValue={setStatusValue}
+            transferStatus={transferStatus}
+            setTransferStatus={setTransferStatus}
+            confirmType={transferStatus}
+            swapCoinInfo={swapCoinInfo}
+            setIsShowSwapInfo={setIsShowSwapInfo}
+          />
         </>
       )}
     </Item>

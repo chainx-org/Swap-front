@@ -49,15 +49,16 @@ function AccountCard() {
                 <img src={Wallet} alt="" />
               </IconStyle>
             </div>
+
             <div className={"current-info"}>Connect to a wallet</div>
           </div>
         )}
         {hasAccount && (
           <div className={"account-info"}>
             <div className={"current-icon"}>
-              <IconStyle>
+              {/* <IconStyle>
                 <img src={DogIcon} alt="" />
-              </IconStyle>
+              </IconStyle> */}
             </div>
             <div className={"current-name"}>{name}</div>
             <div className={"current-address"}>{address}</div>

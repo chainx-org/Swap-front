@@ -79,7 +79,7 @@ const HomePage = (): React.ReactElement => {
   // console.log(coinInfo, "coinInfo");
   // @ts-ignore
   const [coinInput, setCoinInput] = useState<CoinInput[]>([
-    { coinIndex: 0, coinInput: inPrice, canSwap: false },
+    { coinIndex: 0, coinInput: inPrice, canSwap: true },
     { coinIndex: 1, coinInput: outPrice, canSwap: true },
   ]);
   // console.log("tokenList", tokenList);
@@ -269,24 +269,57 @@ const HomePage = (): React.ReactElement => {
               <img src={coinInfo[1].icon} alt="" />
             </CardItem>
             {/* 底部按钮 */}
-            {coinInput[0].canSwap && coinInput[1].canSwap && (
-              <BottomItem
-                name="Slippage Tolerance"
-                value="1%"
-                swapCoinInfo={swapCoin}
-                btnLabel={!isExtensionInjected ? "Connect Wallet" : "Swap"}
-                className="buttonDiv"
-                setIsShowSwapInfo={setIsShowSwapInfo}
-              />
+            {!isExtensionInjected && (
+              <a
+                href="https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd"
+                target="_blank"
+              >
+                {coinInput[0].canSwap && coinInput[1].canSwap && (
+                  <BottomItem
+                    name="Slippage Tolerance"
+                    value="1%"
+                    swapCoinInfo={swapCoin}
+                    btnLabel="Connect Wallet"
+                    className="ConnectWallet"
+                  ></BottomItem>
+                )}
+              </a>
             )}
-            {(!coinInput[0].canSwap || !coinInput[1].canSwap) && (
-              <BottomItem
-                name="Slippage Tolerance"
-                value="1%"
-                btnLabel={"Insufficient DOT Balance"}
-                className="cannot-swap"
-                setIsShowSwapInfo={setIsShowSwapInfo}
-              />
+            {!isExtensionInjected && (
+              <div>
+                {(!coinInput[0].canSwap || !coinInput[1].canSwap) && (
+                  <BottomItem
+                    name="Slippage Tolerance"
+                    value="1%"
+                    btnLabel={"Insufficient DOT Balance"}
+                    className="cannot-swap"
+                    setIsShowSwapInfo={setIsShowSwapInfo}
+                  />
+                )}
+              </div>
+            )}
+            {isExtensionInjected && (
+              <div>
+                {coinInput[0].canSwap && coinInput[1].canSwap && (
+                  <BottomItem
+                    name="Slippage Tolerance"
+                    value="1%"
+                    swapCoinInfo={swapCoin}
+                    btnLabel="Swap"
+                    className="buttonDiv"
+                    setIsShowSwapInfo={setIsShowSwapInfo}
+                  />
+                )}
+                {(!coinInput[0].canSwap || !coinInput[1].canSwap) && (
+                  <BottomItem
+                    name="Slippage Tolerance"
+                    value="1%"
+                    btnLabel={"Insufficient DOT Balance"}
+                    className="cannot-swap"
+                    setIsShowSwapInfo={setIsShowSwapInfo}
+                  />
+                )}
+              </div>
             )}
 
             {/* Swap info */}
