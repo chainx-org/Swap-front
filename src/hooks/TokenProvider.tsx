@@ -89,8 +89,10 @@ export const TokenProvider: FC = ({ children }) => {
   // console.log("tokenList", tokenList);
   // console.log("accountBalance", accountBalance);
   // console.log("coinList", coinList);
+
   useEffect(() => {
     if (isApiReady && api) {
+      
       //@ts-ignore
       api.rpc.swap.getTokenList().then((list) => {
         if (!list.length) {
@@ -107,30 +109,26 @@ export const TokenProvider: FC = ({ children }) => {
             }))
           );
       });
-      if(!tokenList.length){
-        const getListIfFailed = setInterval(() => {
-          //@ts-ignore
-          api.rpc.swap.getTokenList().then((list) => {
-            if (!list.length) {
-              console.log("tokenlist获取为空");
-              return;
-            }
-            list.length &&
-              setTokenList(
-                list.map((i: any) => ({
-                  id: Number(i.assertId),
-                  unit: i.assertInfo.token.toString(),
-                  name: i.assertInfo.chain.toString(),
-                  decimals: Number(i.assertInfo.decimals),
-                }))
-              );
-          });
-        },1000);
-        return(()=>{
-          clearInterval(getListIfFailed)
-        })
-      }
+      console.log("!tokenList.length", !tokenList.length);
     }
+    if (!tokenList.length) {
+      const getListIfFailed = setInterval(() => {
+        api &&
+        //@ts-ignore
+        api.rpc.swap.getTokenList().then((list) => {
+            list.length && console.log("list", list);
+            setTokenList(
+              list.map((i: any) => ({
+                id: Number(i.assertId),
+                unit: i.assertInfo.token.toString(),
+                name: i.assertInfo.chain.toString(),
+                decimals: Number(i.assertInfo.decimals),
+              }))
+            );
+          });
+      }, 1000);
+    }
+    tokenList.length && clearInterval()
   }, [isApiReady, currentAccount.address]);
   function addCoinIcon(accountList: any) {
     accountList.map((item: any) => {
@@ -243,7 +241,7 @@ export const TokenProvider: FC = ({ children }) => {
         tokenList,
         accountBalance,
         coinList,
-        setTokenList
+        setTokenList,
       }}
     >
       {children}
