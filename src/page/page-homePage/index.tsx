@@ -63,13 +63,18 @@ const HomePage = (): React.ReactElement => {
   const [inPrice, setInPrice] = useState<any>(null);
   let [number, setNumber] = useState(0);
   let [number2, setNumber2] = useState(0);
+  let [firstItemId, setFirstItemId] = useState(0);
+  let [secondItemId, setSecondItemId] = useState(1);
   const { tokenList, accountBalance } = useContext(TokenContext);
 
   const { coinList } = useContext(TokenContext);
   // console.log(coinList, "coinList");
 
   //取前两项给card显示。即取coinList的前两项放到coinInfo中
-  const [coinInfo, setCoinInfo] = useState([coinList[0], coinList[1]]);
+  const [coinInfo, setCoinInfo] = useState([
+    coinList[firstItemId],
+    coinList[secondItemId],
+  ]);
   // console.log(coinInfo, "coinInfo");
   const [coinInput, setCoinInput] = useState<CoinInput[]>([
     { coinIndex: 0, coinInput: inPrice, canSwap: true },
@@ -162,16 +167,28 @@ const HomePage = (): React.ReactElement => {
     }
     coinInfo[index.index] = item;
     let list = coinInfo;
+    if (index.index === 0) {
+      setFirstItemId = item.id;
+    } else {
+      setSecondItemId = item.id;
+    }
     setCoinInfo([...list]);
     clearCoinInput();
   };
   const exChangeIcon = () => {
-    setCoinInfo([...coinInfo].reverse());
+    // setCoinInfo([...coinInfo].reverse());
+    let a = 0;
+    a = firstItemId;
+    firstItemId = secondItemId;
+    secondItemId = a;
+    setFirstItemId(firstItemId);
+    setSecondItemId(secondItemId);
     clearCoinInput();
     setIsShowSwapInfo(false);
   };
   useEffect(() => {
-    setCoinInfo([coinList[0], coinList[1]]);
+    // console.log(coinList[firstItemId], "coinList[firstItemId]");
+    // setCoinInfo([coinList[firstItemId], coinList[secondItemId]]);
   }, [coinList]);
 
   // console.log("isShowSwapInfo", isShowSwapInfo);
@@ -197,14 +214,14 @@ const HomePage = (): React.ReactElement => {
             <CardItem
               index={0}
               currencyTitle="From"
-              currencyBalence={coinInfo[0].coinBalance}
+              currencyBalence={coinInfo[firstItemId].coinBalance}
               addCoin={addCoin}
               // canSwap={setCanSwap}
               showSwapInfo={setIsShowSwapInfo}
               inputCoinValue={{ coinInput, setCoinInput }}
-              currencyName={coinInfo[0].unit}
+              currencyName={coinInfo[firstItemId].unit}
             >
-              <img src={coinInfo[0].icon} alt="" />
+              <img src={coinInfo[firstItemId].icon} alt="" />
             </CardItem>
             {/* 转换icon */}
             <ExchangeIconStyle>
@@ -218,14 +235,14 @@ const HomePage = (): React.ReactElement => {
             <CardItem
               index={1}
               currencyTitle="To"
-              currencyBalence={coinInfo[1].coinBalance}
+              currencyBalence={coinInfo[secondItemId].coinBalance}
               addCoin={addCoin}
               // canSwap={setCanSwap}
               showSwapInfo={setIsShowSwapInfo}
               inputCoinValue={{ coinInput, setCoinInput }}
-              currencyName={coinInfo[1].unit}
+              currencyName={coinInfo[secondItemId].unit}
             >
-              <img src={coinInfo[1].icon} alt="" />
+              <img src={coinInfo[secondItemId].icon} alt="" />
             </CardItem>
             {/* 底部按钮 */}
 

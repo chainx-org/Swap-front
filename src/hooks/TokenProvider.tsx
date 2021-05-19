@@ -78,15 +78,15 @@ export const TokenProvider: FC = ({ children }) => {
     let a: any = localStorage.getItem("coinList");
     let localCoinList: any = JSON.parse(a);
     if (a == null) {
-      console.log("初次使用");
+      // console.log("初次使用");
     } else {
-      console.log("有localStorage");
+      // console.log("有localStorage");
       setCoinList([...localCoinList]);
     }
   }, []);
 
   // console.log("tokenList", tokenList);
-  // console.log("accountBalance", accountBalance);
+  console.log("accountBalance", accountBalance);
   // console.log("coinList", coinList);
   useEffect(() => {
     if (isApiReady && api) {
@@ -169,14 +169,21 @@ export const TokenProvider: FC = ({ children }) => {
           setCoinList([...coinBalance]);
           //input into localStorage
           localStorage.setItem("coinList", JSON.stringify([...coinBalance]));
+          console.log("success updata coin Balance");
         });
       }
-    }, 1000);
+    }, 3000);
     return () => {
       clearInterval(timer);
     };
   }, [tokenList, currentAccount.address]);
 
+  // useEffect(() => {
+  //   let coinBalance: any = addCoinBalance(tokenList, result);
+  //   setCoinList([...coinBalance]);
+  //   console.log(coinBalance, "coinBalance");
+  //   localStorage.setItem("coinList", JSON.stringify([...coinBalance]));
+  // }, [tokenList, currentAccount.address, accountBalance]);
   function accuracy(decimalsInput: number, balance: number) {
     let accuracyResult = new BigNumber(balance);
     let divisionNumber = new BigNumber(Math.pow(10, decimalsInput));
