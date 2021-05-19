@@ -222,14 +222,26 @@ currencyItemProps): React.ReactElement<currencyItemProps> {
     strAll != "" && inPrice && outPrice
       ? showSwapInfo(true)
       : showSwapInfo(false);
-    // debugger;
-    let canSwap = inputCoinValue.coinInput[index].canSwap;
-    parseFloat(strAll) > parseFloat(currencyBalence)
-      ? (canSwap = false)
-      : (canSwap = true);
-    coinValue(strAll, canSwap);
-    // coinChangeTo(strAll);
-    return strAll;
+
+    //如果是from 那就让他大于0 但小于balance值
+    if (index === 0) {
+      debugger;
+      let canSwap = inputCoinValue.coinInput[index].canSwap;
+      parseFloat(strAll) > parseFloat(currencyBalence) ||
+      parseInt(strAll) === 0 ||
+      Object.is(parseFloat(strAll), NaN)
+        ? (canSwap = false)
+        : (canSwap = true);
+      coinValue(strAll, canSwap);
+      return strAll;
+    } else {
+      let canSwap = inputCoinValue.coinInput[index].canSwap;
+      parseFloat(strAll) >= 0 || Object.is(parseFloat(strAll), NaN)
+        ? (canSwap = false)
+        : (canSwap = true);
+      coinValue(strAll, canSwap);
+      return strAll;
+    }
   };
 
   const coinValue = (value: string, canSwap: Boolean) => {

@@ -84,7 +84,7 @@ export const TokenProvider: FC = ({ children }) => {
     }
   }, []);
 
-  console.log("tokenList", tokenList);
+  // console.log("tokenList", tokenList);
   // console.log("accountBalance", accountBalance);
   // console.log("coinList", coinList);
 
@@ -106,25 +106,25 @@ export const TokenProvider: FC = ({ children }) => {
             }))
           );
       });
-      console.log("!tokenList.length", !tokenList.length);
+      // console.log("!tokenList.length", !tokenList.length);
     }
-    if (!tokenList.length) {
-      const getListIfFailed = setInterval(() => {
-        api &&
-          //@ts-ignore
-          api.rpc.swap.getTokenList().then((list) => {
-            list.length && console.log("list", list);
-            setTokenList(
-              list.map((i: any) => ({
-                id: Number(i.assertId),
-                unit: i.assertInfo.token.toString(),
-                name: i.assertInfo.chain.toString(),
-                decimals: Number(i.assertInfo.decimals),
-              }))
-            );
-          });
-      }, 1000);
-    }
+    // if (!tokenList.length) {
+    //   const getListIfFailed = setInterval(() => {
+    //     api &&
+    //       //@ts-ignore
+    //       api.rpc.swap.getTokenList().then((list) => {
+    //         list.length && console.log("list", list);
+    //         setTokenList(
+    //           list.map((i: any) => ({
+    //             id: Number(i.assertId),
+    //             unit: i.assertInfo.token.toString(),
+    //             name: i.assertInfo.chain.toString(),
+    //             decimals: Number(i.assertInfo.decimals),
+    //           }))
+    //         );
+    //       });
+    //   }, 1000);
+    // }
     tokenList.length && clearInterval();
   }, [isApiReady, currentAccount.address]);
   useEffect(() => {
@@ -159,9 +159,7 @@ export const TokenProvider: FC = ({ children }) => {
   }
   useEffect(() => {
     const timer: NodeJS.Timeout = setInterval(() => {
-      console.log(tokenList.length > 0, "tokenList.length ");
       if (tokenList.length > 0) {
-        console.log("wozoul", tokenList);
         addCoinIcon(tokenList);
         let result: any[] = [];
         const promiseList: Promise<void>[] = [];
@@ -182,6 +180,7 @@ export const TokenProvider: FC = ({ children }) => {
                   },
                 });
                 setAccountBalance(result);
+
                 resolve();
               })
               .catch(() => {
@@ -206,6 +205,7 @@ export const TokenProvider: FC = ({ children }) => {
     };
   }, [isApiReady, currentAccount.address, tokenList]);
 
+  // console.log(accountBalance, "accountBalance");
   function accuracy(decimalsInput: number, balance: number) {
     let accuracyResult = new BigNumber(balance);
     let divisionNumber = new BigNumber(Math.pow(10, decimalsInput));

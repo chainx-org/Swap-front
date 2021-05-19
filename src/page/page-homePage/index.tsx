@@ -76,13 +76,13 @@ const HomePage = (): React.ReactElement => {
   // console.log(firstItemId, "firstItemId");
   // console.log(secondItemId, "secondItemId");
   // console.log(coinList, "coinlist");
-  console.log(coinInfo, "coinInfo");
+  // console.log(coinInfo, "coinInfo");
   // @ts-ignore
   const [coinInput, setCoinInput] = useState<CoinInput[]>([
-    { coinIndex: 0, coinInput: inPrice, canSwap: true },
+    { coinIndex: 0, coinInput: inPrice, canSwap: false },
     { coinIndex: 1, coinInput: outPrice, canSwap: true },
   ]);
-  console.log("tokenList", tokenList);
+  // console.log("tokenList", tokenList);
   useEffect(() => {
     if (isApiReady && api && coinInfo[0]) {
       //@ts-ignore
@@ -92,15 +92,20 @@ const HomePage = (): React.ReactElement => {
           coinInfo[1].id,
         ])
         .then((list: any) => {
-          setOutPrice(
-            //@ts-ignore
-            parseInt(Number(list)) / Math.pow(10, coinInfo[0].decimals)
-          );
+          //@ts-ignore
+          let a = Number(list) / Math.pow(10, coinInfo[0].decimals);
+          //@ts-ignore
+          if (parseInt(a) != 0) {
+            setOutPrice(
+              //@ts-ignore
+              parseInt(Number(list)) / Math.pow(10, coinInfo[0].decimals)
+            );
+          }
         });
-      setCoinInput([
-        { coinIndex: 0, coinInput: inPrice, canSwap: true },
-        { coinIndex: 1, coinInput: outPrice, canSwap: true },
-      ]);
+      // setCoinInput([
+      //   { coinIndex: 0, coinInput: inPrice, canSwap: true },
+      //   { coinIndex: 1, coinInput: outPrice, canSwap: true },
+      // ]);
     }
   }, [number]);
 
@@ -112,19 +117,32 @@ const HomePage = (): React.ReactElement => {
           coinInfo[0].id,
           coinInfo[1].id,
         ])
+        // .then((list: any) => {
+        //   setInPrice(
+        //     //@ts-ignore
+        //     parseInt(Number(list)) / Math.pow(10, coinInfo[1].decimals)
+        //   );
+        // });
         .then((list: any) => {
-          setInPrice(
-            //@ts-ignore
-            parseInt(Number(list)) / Math.pow(10, coinInfo[1].decimals)
-          );
+          //@ts-ignore
+          let a = Number(list) / Math.pow(10, coinInfo[1].decimals);
+          //@ts-ignore
+          if (parseInt(a) != 0) {
+            setOutPrice(
+              //@ts-ignore
+              parseInt(Number(list)) / Math.pow(10, coinInfo[1].decimals)
+            );
+          }
         });
-      setCoinInput([
-        { coinIndex: 0, coinInput: inPrice, canSwap: true },
-        { coinIndex: 1, coinInput: outPrice, canSwap: true },
-      ]);
+
+      // setCoinInput([
+      //   { coinIndex: 0, coinInput: inPrice, canSwap: true },
+      //   { coinIndex: 1, coinInput: outPrice, canSwap: true },
+      // ]);
     }
   }, [number2]);
 
+  useEffect(() => {}, [coinInput]);
   const [isShowSwapInfo, setIsShowSwapInfo] = useState(false);
   const { isExtensionInjected } = useContext(AccountsContext);
   useEffect(() => {
@@ -199,7 +217,6 @@ const HomePage = (): React.ReactElement => {
   useEffect(() => {
     setCoinInfo([coinList[firstItemId], coinList[secondItemId]]);
   }, [coinList, firstItemId, secondItemId]);
-
   return (
     <PriceContext.Provider
       value={{
