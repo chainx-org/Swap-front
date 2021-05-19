@@ -64,18 +64,7 @@ const HomePage = (): React.ReactElement => {
   let [number, setNumber] = useState(0);
   let [number2, setNumber2] = useState(0);
   const { tokenList, accountBalance } = useContext(TokenContext);
-  // const [coinInfo, setCoinInfo] = useState<CoinInfo[]>([
-  //   {
-  //     coinName: "XDOT",
-  //     coinIcon: <DogIcon />,
-  //     coinBalence: "999.0067",
-  //   },
-  //   {
-  //     coinName: "XDOGE",
-  //     coinIcon: <BtcIcon />,
-  //     coinBalence: "999.0067",
-  //   },
-  // ]);
+
   const { coinList } = useContext(TokenContext);
   // console.log(coinList, "coinList");
 

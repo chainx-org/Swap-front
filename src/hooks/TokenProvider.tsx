@@ -14,6 +14,7 @@ import BtcIcon from "../assets/symbols_BTC.svg";
 import BhcIcon from "../assets/symbols_BHC.svg";
 import pcx from "../assets/chainx-pcx.svg";
 import XDOT from "../assets/symbols_DOT.svg";
+import White from "../assets/white.png";
 import { BigNumber } from "bignumber.js";
 import { Null } from "@polkadot/types";
 export interface TokenData {
@@ -56,11 +57,34 @@ export const TokenProvider: FC = ({ children }) => {
   const { currentAccount } = useContext(AccountsContext);
   const [accountBalance, setAccountBalance] = useState<AccountBalance | {}>({});
   const [tokenList, setTokenList] = useState<TokenItem[] | []>([]);
+  const [coinList, setCoinList] = useState([
+    {
+      id: 0,
+      unit: "",
+      icon: White,
+      coinBalance: "",
+      decimals: null,
+    },
+    {
+      id: 1,
+      unit: "",
+      icon: White,
+      coinBalance: "",
+      decimals: null,
+    },
+  ]);
 
-  let a: any = localStorage.getItem("coinList");
-  let localCoinList: any = JSON.parse(a);
-  const [coinList, setCoinList] = useState([...localCoinList]);
-  debugger;
+  useEffect(() => {
+    let a: any = localStorage.getItem("coinList");
+    let localCoinList: any = JSON.parse(a);
+    if (a == null) {
+      console.log("初次使用");
+    } else {
+      console.log("有localStorage");
+      setCoinList([...localCoinList]);
+    }
+  }, []);
+
   // console.log("tokenList", tokenList);
   // console.log("accountBalance", accountBalance);
   // console.log("coinList", coinList);
