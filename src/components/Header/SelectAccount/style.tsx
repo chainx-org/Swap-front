@@ -85,4 +85,31 @@ export const SelectAccountStyle = styled.div`
       // white-space: nowrap;
     }
   }
+  .current-name {
+    width: 82px;
+    height: 17px;
+    line-height: 17px;
+    margin-right: 16px;
+    box-sizing: content-box;
+    font-family: PingFangSC-Medium;
+    font-size: 12px;
+    color: #282828;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .current-address {
+    width: 82px;
+    height: 20px;
+    line-height: 20px;
+    margin-right: 16px;
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #282828;
+    font-weight: 400;
+    // overflow: hidden;
+    // text-overflow: ellipsis;
+    // white-space: nowrap;
+  }
 `;

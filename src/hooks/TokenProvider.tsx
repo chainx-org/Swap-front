@@ -16,7 +16,6 @@ import pcx from "../assets/chainx-pcx.svg";
 import XDOT from "../assets/symbols_DOT.svg";
 import White from "../assets/white.png";
 import { BigNumber } from "bignumber.js";
-import { Null } from "@polkadot/types";
 export interface TokenData {
   tokenList: TokenItem[] | [];
   accountBalance: AccountBalance | {};
@@ -52,6 +51,7 @@ export interface CoinItem {
 export const TokenContext = createContext<TokenData>({} as TokenData);
 
 const balanceType: string[] = ["PCX", "XBTC", "XBCH", "XDOGE", "XETH", "XDOT"];
+
 export const TokenProvider: FC = ({ children }) => {
   const { api, isApiReady } = useContext(ApiContext);
   const { currentAccount } = useContext(AccountsContext);
@@ -92,15 +92,43 @@ export const TokenProvider: FC = ({ children }) => {
     if (isApiReady && api) {
       //@ts-ignore
       api.rpc.swap.getTokenList().then((list) => {
-        setTokenList(
-          list.map((i: any) => ({
-            id: Number(i.assertId),
-            unit: i.assertInfo.token.toString(),
-            name: i.assertInfo.chain.toString(),
-            decimals: Number(i.assertInfo.decimals),
-          }))
-        );
+        if (!list.length) {
+          console.log("tokenlist获取为空");
+          return;
+        }
+        list.length &&
+          setTokenList(
+            list.map((i: any) => ({
+              id: Number(i.assertId),
+              unit: i.assertInfo.token.toString(),
+              name: i.assertInfo.chain.toString(),
+              decimals: Number(i.assertInfo.decimals),
+            }))
+          );
       });
+      if(!tokenList.length){
+        const getListIfFailed = setInterval(() => {
+          //@ts-ignore
+          api.rpc.swap.getTokenList().then((list) => {
+            if (!list.length) {
+              console.log("tokenlist获取为空");
+              return;
+            }
+            list.length &&
+              setTokenList(
+                list.map((i: any) => ({
+                  id: Number(i.assertId),
+                  unit: i.assertInfo.token.toString(),
+                  name: i.assertInfo.chain.toString(),
+                  decimals: Number(i.assertInfo.decimals),
+                }))
+              );
+          });
+        },1000);
+        return(()=>{
+          clearInterval(getListIfFailed)
+        })
+      }
     }
   }, [isApiReady, currentAccount.address]);
   function addCoinIcon(accountList: any) {

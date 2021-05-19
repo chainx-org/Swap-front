@@ -57,16 +57,17 @@ export const PriceContext = createContext<PriceData>({} as PriceData);
 
 const HomePage = (): React.ReactElement => {
   const { api, isApiReady } = useContext(ApiContext);
-  const { currentAccount, isExtensionInjected } = useContext(AccountsContext);
+  const { currentAccount } = useContext(AccountsContext);
   const [blockNumber, setBlockNumber] = useState<any>(null);
   const [outPrice, setOutPrice] = useState<any>(null);
   const [inPrice, setInPrice] = useState<any>(null);
+  // const[[inPrice,outPrice],setPrice] = useState<any>([])
   let [number, setNumber] = useState(0);
   let [number2, setNumber2] = useState(0);
   let [firstItemId, setFirstItemId] = useState(0);
   let [secondItemId, setSecondItemId] = useState(1);
   const { tokenList, accountBalance } = useContext(TokenContext);
-
+  console.log("tokenList", tokenList);
   const { coinList } = useContext(TokenContext);
   // console.log(coinList, "coinList");
 
@@ -125,7 +126,14 @@ const HomePage = (): React.ReactElement => {
   }, [number2]);
 
   const [isShowSwapInfo, setIsShowSwapInfo] = useState(false);
-
+  const { isExtensionInjected } = useContext(AccountsContext);
+  useEffect(() => {
+    if (inPrice && outPrice) {
+      setIsShowSwapInfo(true);
+    } else {
+      setIsShowSwapInfo(false);
+    }
+  }, [inPrice, outPrice]);
   const swapCoin = [
     {
       coinName: coinInfo[0].coinName,
@@ -184,14 +192,15 @@ const HomePage = (): React.ReactElement => {
     setFirstItemId(firstItemId);
     setSecondItemId(secondItemId);
     clearCoinInput();
-    setIsShowSwapInfo(false);
+    setInPrice(null);
+    setOutPrice(null);
+    // setIsShowSwapInfo(false);
   };
   useEffect(() => {
     // console.log(coinList[firstItemId], "coinList[firstItemId]");
     // setCoinInfo([coinList[firstItemId], coinList[secondItemId]]);
   }, [coinList]);
-
-  // console.log("isShowSwapInfo", isShowSwapInfo);
+  console.log("isShowSwapInfo", isShowSwapInfo);
   return (
     <PriceContext.Provider
       value={{
@@ -245,46 +254,26 @@ const HomePage = (): React.ReactElement => {
               <img src={coinInfo[secondItemId].icon} alt="" />
             </CardItem>
             {/* 底部按钮 */}
+            {coinInput[0].canSwap && coinInput[1].canSwap && (
+              <BottomItem
+                name="Slippage Tolerance"
+                value="1%"
+                swapCoinInfo={swapCoin}
+                btnLabel={!isExtensionInjected ? "Connect Wallet" : "Swap"}
+                className="buttonDiv"
+                setIsShowSwapInfo={setIsShowSwapInfo}
+              />
+            )}
+            {(!coinInput[0].canSwap || !coinInput[1].canSwap) && (
+              <BottomItem
+                name="Slippage Tolerance"
+                value="1%"
+                btnLabel={"Insufficient DOT Balance"}
+                className="cannot-swap"
+                setIsShowSwapInfo={setIsShowSwapInfo}
+              />
+            )}
 
-            {!isExtensionInjected && (
-              <a
-                href="https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd"
-                target="_blank"
-              >
-                {coinInput[0].canSwap && coinInput[1].canSwap && (
-                  <BottomItem
-                    name="Slippage Tolerance"
-                    value="1%"
-                    swapCoinInfo={swapCoin}
-                    btnLabel="Connect Wallet"
-                    className="ConnectWallet"
-                  ></BottomItem>
-                )}
-              </a>
-            )}
-            {isExtensionInjected && (
-              <div>
-                {coinInput[0].canSwap && coinInput[1].canSwap && (
-                  <BottomItem
-                    name="Slippage Tolerance"
-                    value="1%"
-                    swapCoinInfo={swapCoin}
-                    btnLabel="Swap"
-                    className="buttonDiv"
-                    setIsShowSwapInfo={setIsShowSwapInfo}
-                  />
-                )}
-                {(!coinInput[0].canSwap || !coinInput[1].canSwap) && (
-                  <BottomItem
-                    name="Slippage Tolerance"
-                    value="1%"
-                    btnLabel={"Insufficient DOT Balance"}
-                    className="cannot-swap"
-                    setIsShowSwapInfo={setIsShowSwapInfo}
-                  />
-                )}
-              </div>
-            )}
             {/* Swap info */}
           </ContainerCard>
         </Content>

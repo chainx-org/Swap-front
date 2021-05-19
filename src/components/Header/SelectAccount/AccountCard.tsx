@@ -2,11 +2,10 @@ import React, { useContext, useState, useEffect } from "react";
 import { SelectAccountStyle } from "./style";
 import SelectAccount from "./SelectAccount";
 import DogIcon from "../../../assets/symbols_DOGE.svg";
-import Wallet from "../../../assets/wallet_yellower.svg";
 import { AccountsContext } from "../../../hooks/AccountsProvider";
 import { shortenString } from "../../../helper";
 import styled from "styled-components";
-
+import Wallet from "../../../assets/wallet_yellower.svg";
 const IconStyle = styled.div`
   width: 16px;
   height: 16px;

@@ -20,7 +20,7 @@ function DialogCard({
   addCoinItem,
 }: DialogCardProps): React.ReactElement<DialogCardProps> {
   const { tokenList, coinList } = useContext(TokenContext);
-  // console.log(tokenList, "tokenList");
+  console.log(tokenList, "tokenList");
   const [account, setAccount] = useState(coinList);
   const clickItem = (item: any, index: any) => {
     debugger;
