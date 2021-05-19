@@ -158,7 +158,7 @@ export const TokenProvider: FC = ({ children }) => {
     });
     setTokenList(accountList);
   }
-  console.log('currentAccount.address',currentAccount.address)
+  console.log("currentAccount.address", currentAccount.address);
   useEffect(() => {
     const timer: NodeJS.Timeout = setInterval(() => {
       if (tokenList.length > 0) {
@@ -169,10 +169,7 @@ export const TokenProvider: FC = ({ children }) => {
           const promise = new Promise<void>((resolve, reject) => {
             //@ts-ignore
             api.rpc.swap
-              .getBalance(
-                t.id,
-                currentAccount.address
-              )
+              .getBalance(t.id, currentAccount.address)
               .then((balance: any) => {
                 result.push({
                   ...accountBalance,
@@ -201,7 +198,7 @@ export const TokenProvider: FC = ({ children }) => {
           // console.log("success updata coin Balance");
         });
       }
-    }, 1000);
+    }, 4000);
     return () => {
       clearInterval(timer);
     };

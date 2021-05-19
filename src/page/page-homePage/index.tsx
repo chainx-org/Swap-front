@@ -72,6 +72,10 @@ const HomePage = (): React.ReactElement => {
     coinList[firstItemId],
     coinList[secondItemId],
   ]);
+  console.log(firstItemId, "firstItemId");
+  console.log(secondItemId, "secondItemId");
+  console.log(coinList, "coinlist");
+  console.log(coinInfo, "coinInfo");
   const [coinInput, setCoinInput] = useState<CoinInput[]>([
     { coinIndex: 0, coinInput: inPrice, canSwap: true },
     { coinIndex: 1, coinInput: outPrice, canSwap: true },
@@ -130,23 +134,23 @@ const HomePage = (): React.ReactElement => {
   }, [inPrice, outPrice]);
   const swapCoin = [
     {
-      coinName: coinInfo[firstItemId].coinName,
-      coinIcon: coinInfo[firstItemId].coinIcon,
+      coinName: coinInfo[0].coinName,
+      coinIcon: coinInfo[0].coinIcon,
       coinNum: inPrice,
-      id: coinInfo[firstItemId].id,
-      unit: coinInfo[firstItemId].unit,
-      icon: coinInfo[firstItemId].icon,
-      decimals: coinInfo[firstItemId].decimals,
+      id: coinInfo[0].id,
+      unit: coinInfo[0].unit,
+      icon: coinInfo[0].icon,
+      decimals: coinInfo[0].decimals,
       // coinNum: coinInput[0].coinInput,
     },
     {
-      coinName: coinInfo[secondItemId].coinName,
-      coinIcon: coinInfo[secondItemId].coinIcon,
+      coinName: coinInfo[1].coinName,
+      coinIcon: coinInfo[1].coinIcon,
       coinNum: outPrice,
-      id: coinInfo[secondItemId].id,
-      unit: coinInfo[secondItemId].unit,
-      icon: coinInfo[secondItemId].icon,
-      decimals: coinInfo[secondItemId].decimals,
+      id: coinInfo[1].id,
+      unit: coinInfo[1].unit,
+      icon: coinInfo[1].icon,
+      decimals: coinInfo[1].decimals,
       // coinNum: coinInput[1].coinInput,
     },
   ];
@@ -170,15 +174,16 @@ const HomePage = (): React.ReactElement => {
     coinInfo[index.index] = item;
     let list = coinInfo;
     if (index.index === 0) {
-      setFirstItemId = item.id;
+      setFirstItemId(item.id);
     } else {
-      setSecondItemId = item.id;
+      setSecondItemId(item.id);
     }
     setCoinInfo([...list]);
     clearCoinInput();
   };
   const exChangeIcon = () => {
     // setCoinInfo([...coinInfo].reverse());
+    debugger;
     let a = firstItemId;
     let b = secondItemId;
     setFirstItemId(b);
@@ -186,12 +191,12 @@ const HomePage = (): React.ReactElement => {
     clearCoinInput();
     setInPrice(null);
     setOutPrice(null);
-    // setIsShowSwapInfo(false);
+    setCoinInfo([coinList[firstItemId], coinList[secondItemId]]);
   };
 
   useEffect(() => {
     setCoinInfo([coinList[firstItemId], coinList[secondItemId]]);
-  }, [coinList]);
+  }, [coinList, firstItemId, secondItemId]);
 
   return (
     <PriceContext.Provider
@@ -215,14 +220,14 @@ const HomePage = (): React.ReactElement => {
             <CardItem
               index={0}
               currencyTitle="From"
-              currencyBalence={coinInfo[firstItemId].coinBalance}
+              currencyBalence={coinInfo[0].coinBalance}
               addCoin={addCoin}
               // canSwap={setCanSwap}
               showSwapInfo={setIsShowSwapInfo}
               inputCoinValue={{ coinInput, setCoinInput }}
-              currencyName={coinInfo[firstItemId].unit}
+              currencyName={coinInfo[0].unit}
             >
-              <img src={coinInfo[firstItemId].icon} alt="" />
+              <img src={coinInfo[0].icon} alt="" />
             </CardItem>
             {/* 转换icon */}
             <ExchangeIconStyle>
@@ -236,14 +241,14 @@ const HomePage = (): React.ReactElement => {
             <CardItem
               index={1}
               currencyTitle="To"
-              currencyBalence={coinInfo[secondItemId].coinBalance}
+              currencyBalence={coinInfo[1].coinBalance}
               addCoin={addCoin}
               // canSwap={setCanSwap}
               showSwapInfo={setIsShowSwapInfo}
               inputCoinValue={{ coinInput, setCoinInput }}
-              currencyName={coinInfo[secondItemId].unit}
+              currencyName={coinInfo[1].unit}
             >
-              <img src={coinInfo[secondItemId].icon} alt="" />
+              <img src={coinInfo[1].icon} alt="" />
             </CardItem>
             {/* 底部按钮 */}
             {coinInput[0].canSwap && coinInput[1].canSwap && (

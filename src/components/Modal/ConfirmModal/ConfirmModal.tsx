@@ -38,7 +38,7 @@ interface ConfirmCardProps {
   setTransferStatus: React.Dispatch<any>;
   setStatusValue: React.Dispatch<any>;
   setIsShowSwapInfo?: any;
-  transferStatus?:any;
+  transferStatus?: any;
 }
 
 interface PriceFieldItem {
@@ -54,12 +54,12 @@ const ConfirmModal = ({
   setTransferStatus,
   setStatusValue,
   setIsShowSwapInfo,
-  transferStatus
+  transferStatus,
 }: ConfirmCardProps): React.ReactElement<ConfirmCardProps> => {
   const { api, isApiReady } = useContext(ApiContext);
   const [statusIcon, setStatusIcon] = useState(confirmType);
   const coinNumList: CoinNumItem[] = swapCoinInfo;
-
+  console.log(swapCoinInfo, "swapCoinInfo");
   const PriceFieldList: PriceFieldItem[] = [
     {
       fieldName: "Price",
@@ -133,7 +133,7 @@ const ConfirmModal = ({
     //     }}
     //   />
     // </StatusWrapper>
-    <BackStatusContent statusValue={statusValue} onCancel={onCancel}/>
+    <BackStatusContent statusValue={statusValue} onCancel={onCancel} />
   );
 
   const judgeConfirmType = (type: string): React.ReactNode => {
@@ -146,7 +146,7 @@ const ConfirmModal = ({
         break;
       case "transactionStatus":
         return backStatusContent;
-        break
+        break;
     }
   };
   // const Price:any = useRef()
