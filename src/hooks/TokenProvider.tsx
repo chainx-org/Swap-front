@@ -62,14 +62,14 @@ export const TokenProvider: FC = ({ children }) => {
       id: 0,
       unit: "",
       icon: White,
-      coinBalance: "",
+      coinBalance: "1",
       decimals: null,
     },
     {
       id: 1,
       unit: "",
       icon: White,
-      coinBalance: "",
+      coinBalance: "2",
       decimals: null,
     },
   ]);
@@ -86,7 +86,7 @@ export const TokenProvider: FC = ({ children }) => {
   }, []);
 
   // console.log("tokenList", tokenList);
-  console.log("accountBalance", accountBalance);
+  // console.log("accountBalance", accountBalance);
   // console.log("coinList", coinList);
   useEffect(() => {
     if (isApiReady && api) {
@@ -106,7 +106,7 @@ export const TokenProvider: FC = ({ children }) => {
             }))
           );
       });
-      if(!tokenList.length){
+      if (!tokenList.length) {
         const getListIfFailed = setInterval(() => {
           //@ts-ignore
           api.rpc.swap.getTokenList().then((list) => {
@@ -124,10 +124,10 @@ export const TokenProvider: FC = ({ children }) => {
                 }))
               );
           });
-        },1000);
-        return(()=>{
-          clearInterval(getListIfFailed)
-        })
+        }, 1000);
+        return () => {
+          clearInterval(getListIfFailed);
+        };
       }
     }
   }, [isApiReady, currentAccount.address]);
@@ -197,10 +197,10 @@ export const TokenProvider: FC = ({ children }) => {
           setCoinList([...coinBalance]);
           //input into localStorage
           localStorage.setItem("coinList", JSON.stringify([...coinBalance]));
-          console.log("success updata coin Balance");
+          // console.log("success updata coin Balance");
         });
       }
-    }, 3000);
+    }, 1000);
     return () => {
       clearInterval(timer);
     };

@@ -67,16 +67,11 @@ const HomePage = (): React.ReactElement => {
   let [firstItemId, setFirstItemId] = useState(0);
   let [secondItemId, setSecondItemId] = useState(1);
   const { tokenList, accountBalance } = useContext(TokenContext);
-  console.log("tokenList", tokenList);
   const { coinList } = useContext(TokenContext);
-  // console.log(coinList, "coinList");
-
-  //取前两项给card显示。即取coinList的前两项放到coinInfo中
   const [coinInfo, setCoinInfo] = useState([
     coinList[firstItemId],
     coinList[secondItemId],
   ]);
-  // console.log(coinInfo, "coinInfo");
   const [coinInput, setCoinInput] = useState<CoinInput[]>([
     { coinIndex: 0, coinInput: inPrice, canSwap: true },
     { coinIndex: 1, coinInput: outPrice, canSwap: true },
@@ -91,7 +86,6 @@ const HomePage = (): React.ReactElement => {
           tokenList[1].id,
         ])
         .then((list: any) => {
-          // console.log(list)
           setOutPrice(
             //@ts-ignore
             parseInt(Number(list)) / Math.pow(10, tokenList[0].decimals)
@@ -136,23 +130,23 @@ const HomePage = (): React.ReactElement => {
   }, [inPrice, outPrice]);
   const swapCoin = [
     {
-      coinName: coinInfo[0].coinName,
-      coinIcon: coinInfo[0].coinIcon,
+      coinName: coinInfo[firstItemId].coinName,
+      coinIcon: coinInfo[firstItemId].coinIcon,
       coinNum: inPrice,
-      id: coinInfo[0].id,
-      unit: coinInfo[0].unit,
-      icon: coinInfo[0].icon,
-      decimals: coinInfo[0].decimals,
+      id: coinInfo[firstItemId].id,
+      unit: coinInfo[firstItemId].unit,
+      icon: coinInfo[firstItemId].icon,
+      decimals: coinInfo[firstItemId].decimals,
       // coinNum: coinInput[0].coinInput,
     },
     {
-      coinName: coinInfo[1].coinName,
-      coinIcon: coinInfo[1].coinIcon,
+      coinName: coinInfo[secondItemId].coinName,
+      coinIcon: coinInfo[secondItemId].coinIcon,
       coinNum: outPrice,
-      id: coinInfo[1].id,
-      unit: coinInfo[1].unit,
-      icon: coinInfo[1].icon,
-      decimals: coinInfo[1].decimals,
+      id: coinInfo[secondItemId].id,
+      unit: coinInfo[secondItemId].unit,
+      icon: coinInfo[secondItemId].icon,
+      decimals: coinInfo[secondItemId].decimals,
       // coinNum: coinInput[1].coinInput,
     },
   ];
@@ -185,22 +179,20 @@ const HomePage = (): React.ReactElement => {
   };
   const exChangeIcon = () => {
     // setCoinInfo([...coinInfo].reverse());
-    let a = 0;
-    a = firstItemId;
-    firstItemId = secondItemId;
-    secondItemId = a;
-    setFirstItemId(firstItemId);
-    setSecondItemId(secondItemId);
+    let a = firstItemId;
+    let b = secondItemId;
+    setFirstItemId(b);
+    setSecondItemId(a);
     clearCoinInput();
     setInPrice(null);
     setOutPrice(null);
     // setIsShowSwapInfo(false);
   };
+
   useEffect(() => {
-    // console.log(coinList[firstItemId], "coinList[firstItemId]");
-    // setCoinInfo([coinList[firstItemId], coinList[secondItemId]]);
+    setCoinInfo([coinList[firstItemId], coinList[secondItemId]]);
   }, [coinList]);
-  console.log("isShowSwapInfo", isShowSwapInfo);
+
   return (
     <PriceContext.Provider
       value={{
@@ -234,8 +226,8 @@ const HomePage = (): React.ReactElement => {
             </CardItem>
             {/* 转换icon */}
             <ExchangeIconStyle>
-              <div className="box" onClick={exChangeIcon}>
-                <div className="iconBox">
+              <div className="box">
+                <div className="iconBox" onClick={exChangeIcon}>
                   <ExchangeIcon />
                 </div>
               </div>
