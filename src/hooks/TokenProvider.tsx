@@ -106,26 +106,8 @@ export const TokenProvider: FC = ({ children }) => {
             }))
           );
       });
-      // console.log("!tokenList.length", !tokenList.length);
+      console.log("!tokenList.length", !tokenList.length);
     }
-    // if (!tokenList.length) {
-    //   const getListIfFailed = setInterval(() => {
-    //     api &&
-    //       //@ts-ignore
-    //       api.rpc.swap.getTokenList().then((list) => {
-    //         list.length && console.log("list", list);
-    //         setTokenList(
-    //           list.map((i: any) => ({
-    //             id: Number(i.assertId),
-    //             unit: i.assertInfo.token.toString(),
-    //             name: i.assertInfo.chain.toString(),
-    //             decimals: Number(i.assertInfo.decimals),
-    //           }))
-    //         );
-    //       });
-    //   }, 1000);
-    // }
-    tokenList.length && clearInterval();
   }, [isApiReady, currentAccount.address]);
   useEffect(() => {
     console.log("token list console");

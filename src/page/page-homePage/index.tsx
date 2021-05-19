@@ -134,7 +134,6 @@ const HomePage = (): React.ReactElement => {
             );
           }
         });
-
       // setCoinInput([
       //   { coinIndex: 0, coinInput: inPrice, canSwap: true },
       //   { coinIndex: 1, coinInput: outPrice, canSwap: true },
