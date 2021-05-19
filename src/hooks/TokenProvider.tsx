@@ -14,6 +14,7 @@ import BtcIcon from "../assets/symbols_BTC.svg";
 import BhcIcon from "../assets/symbols_BHC.svg";
 import pcx from "../assets/chainx-pcx.svg";
 import XDOT from "../assets/symbols_DOT.svg";
+import White from "../assets/white.png";
 import { BigNumber } from "bignumber.js";
 export interface TokenData {
   tokenList: TokenItem[] | [];
@@ -55,67 +56,34 @@ export const TokenProvider: FC = ({ children }) => {
   const { api, isApiReady } = useContext(ApiContext);
   const { currentAccount } = useContext(AccountsContext);
   const [accountBalance, setAccountBalance] = useState<AccountBalance | {}>({});
-  // // const [tokenList, setTokenList] = useState<TokenItem[] | []>([])
-  // const [tokenList, setTokenList] = useState<TokenItem[] | []>([]);
-  // console.log("tokenList", tokenList);
-  // console.log("accountBalance", accountBalance);
-
-  // useEffect(() => {
-  //   if (isApiReady && api) {
-  //     //@ts-ignore
-  //     api.rpc.swap.getTokenList().then((list) => {
-  //       console.log("list", list);
-  //       setTokenList(
-  //         list.map((i: any) => ({
-  //           id: Number(i.assertId), // id
-  //           unit: i.assertInfo.token.toString(), // 单位 token缩写
-  //           name: i.assertInfo.chain.toString(), // 币种 链来源
-  //           decimals: Number(i.assertInfo.decimals), // 精度
-  //         }))
-  //       );
-  //     });
-  //   }
-  // }, [api, isApiReady, currentAccount.address]);
-  // useEffect(() => {
-  //   if (tokenList.length > 0) {
-  //     tokenList.map((t: TokenItem) =>
-  //       //@ts-ignore
-  //       api.rpc.swap
-  //         .getBalance(t.id, "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY")
-  //         //@ts-ignore
-  //         .then((balance) => {
-  //           setAccountBalance({
-  //             ...accountBalance,
-  //             [balanceType[t.id]]: {
-  //               id: t.id, // 	资产id
-  //               unit: t.unit,
-  //               name: t.name,
-  //               decimals: t.decimals,
-  //               assetNumber: Number(balance),
-  //             },
-  //           });
-  //         })
-  //     );
-  //   }
-  // }, [tokenList, currentAccount.address]);
   const [tokenList, setTokenList] = useState<TokenItem[] | []>([]);
   const [coinList, setCoinList] = useState([
     {
       id: 0,
-      unit: "XDOT",
-      icon: XDOT,
-      coinBalance: "999.0067",
-      decimals: 1,
+      unit: "",
+      icon: White,
+      coinBalance: "",
+      decimals: null,
     },
     {
       id: 1,
-      unit: "XDOGE",
-      icon: DOGESymbol,
-      coinBalance: "999.0067",
-      decimals: 1,
+      unit: "",
+      icon: White,
+      coinBalance: "",
+      decimals: null,
     },
-    ,
   ]);
+
+  useEffect(() => {
+    let a: any = localStorage.getItem("coinList");
+    let localCoinList: any = JSON.parse(a);
+    if (a == null) {
+      console.log("初次使用");
+    } else {
+      console.log("有localStorage");
+      setCoinList([...localCoinList]);
+    }
+  }, []);
 
   // console.log("tokenList", tokenList);
   // console.log("accountBalance", accountBalance);
