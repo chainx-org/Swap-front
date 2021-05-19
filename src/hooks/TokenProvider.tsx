@@ -201,7 +201,7 @@ export const TokenProvider: FC = ({ children }) => {
           console.log("success updata coin Balance");
         });
       }
-    }, 3000);
+    }, 5000);
     return () => {
       clearInterval(timer);
     };
