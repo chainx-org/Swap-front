@@ -92,20 +92,11 @@ const HomePage = (): React.ReactElement => {
           coinInfo[1].id,
         ])
         .then((list: any) => {
-          //@ts-ignore
-          let a = Number(list) / Math.pow(10, coinInfo[0].decimals);
-          //@ts-ignore
-          if (parseInt(a) != 0) {
-            setOutPrice(
-              //@ts-ignore
-              parseInt(Number(list)) / Math.pow(10, coinInfo[0].decimals)
-            );
-          }
+          setOutPrice(
+            //@ts-ignore
+            parseInt(Number(list)) / Math.pow(10, coinInfo[0].decimals)
+          );
         });
-      // setCoinInput([
-      //   { coinIndex: 0, coinInput: inPrice, canSwap: true },
-      //   { coinIndex: 1, coinInput: outPrice, canSwap: true },
-      // ]);
     }
   }, [number]);
 
@@ -117,27 +108,12 @@ const HomePage = (): React.ReactElement => {
           coinInfo[0].id,
           coinInfo[1].id,
         ])
-        // .then((list: any) => {
-        //   setInPrice(
-        //     //@ts-ignore
-        //     parseInt(Number(list)) / Math.pow(10, coinInfo[1].decimals)
-        //   );
-        // });
         .then((list: any) => {
-          //@ts-ignore
-          let a = Number(list) / Math.pow(10, coinInfo[1].decimals);
-          //@ts-ignore
-          if (parseInt(a) != 0) {
-            setOutPrice(
-              //@ts-ignore
-              parseInt(Number(list)) / Math.pow(10, coinInfo[1].decimals)
-            );
-          }
+          setInPrice(
+            //@ts-ignore
+            parseInt(Number(list)) / Math.pow(10, coinInfo[1].decimals)
+          );
         });
-      // setCoinInput([
-      //   { coinIndex: 0, coinInput: inPrice, canSwap: true },
-      //   { coinIndex: 1, coinInput: outPrice, canSwap: true },
-      // ]);
     }
   }, [number2]);
 

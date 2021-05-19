@@ -225,7 +225,7 @@ currencyItemProps): React.ReactElement<currencyItemProps> {
 
     //如果是from 那就让他大于0 但小于balance值
     if (index === 0) {
-      debugger;
+      // debugger;
       let canSwap = inputCoinValue.coinInput[index].canSwap;
       parseFloat(strAll) > parseFloat(currencyBalence) ||
       parseInt(strAll) === 0 ||
