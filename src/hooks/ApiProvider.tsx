@@ -19,8 +19,8 @@ interface Props {
 function ApiProvider({children, url}: Props): React.ReactElement<Props> {
   const [isApiReady, setApiReady] = useState(false);
   const [api, setApi ] = useState<ApiPromise | null>(null)
-  console.log("api",api)
-  console.log("isApiReady",isApiReady)
+  // console.log("api",api)
+  // console.log("isApiReady",isApiReady)
   const apiInit = (): void => {
     const types = Object.values(definitions).reduce(
       (res, {types}) => ({...res, ...types}),

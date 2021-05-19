@@ -87,27 +87,48 @@ export const TokenProvider: FC = ({ children }) => {
 
   // console.log("tokenList", tokenList);
   // console.log("accountBalance", accountBalance);
-  console.log("coinList", coinList);
+  // console.log("coinList", coinList);
   useEffect(() => {
     if (isApiReady && api) {
       //@ts-ignore
-      api.rpc.swap.getTokenList().then((list) =>
-      {
-        if(!list.length) {
-          console.log('tokenlist获取为空')
-          return
+      api.rpc.swap.getTokenList().then((list) => {
+        if (!list.length) {
+          console.log("tokenlist获取为空");
+          return;
         }
         list.length &&
-        setTokenList(
-          list.map((i: any) => ({
-            id: Number(i.assertId),
-            unit: i.assertInfo.token.toString(),
-            name: i.assertInfo.chain.toString(),
-            decimals: Number(i.assertInfo.decimals),
-          }))
-        )
+          setTokenList(
+            list.map((i: any) => ({
+              id: Number(i.assertId),
+              unit: i.assertInfo.token.toString(),
+              name: i.assertInfo.chain.toString(),
+              decimals: Number(i.assertInfo.decimals),
+            }))
+          );
+      });
+      if(!tokenList.length){
+        const getListIfFailed = setInterval(() => {
+          //@ts-ignore
+          api.rpc.swap.getTokenList().then((list) => {
+            if (!list.length) {
+              console.log("tokenlist获取为空");
+              return;
+            }
+            list.length &&
+              setTokenList(
+                list.map((i: any) => ({
+                  id: Number(i.assertId),
+                  unit: i.assertInfo.token.toString(),
+                  name: i.assertInfo.chain.toString(),
+                  decimals: Number(i.assertInfo.decimals),
+                }))
+              );
+          });
+        },1000);
+        return(()=>{
+          clearInterval(getListIfFailed)
+        })
       }
-      )
     }
   }, [isApiReady, currentAccount.address]);
   function addCoinIcon(accountList: any) {
@@ -138,43 +159,50 @@ export const TokenProvider: FC = ({ children }) => {
     setTokenList(accountList);
   }
   useEffect(() => {
-    if (tokenList.length > 0) {
-      addCoinIcon(tokenList);
-      let result: any[] = [];
-      const promiseList: Promise<void>[] = [];
-      tokenList.map((t: TokenItem) => {
-        const promise = new Promise<void>((resolve, reject) => {
-          //@ts-ignore
-          api.rpc.swap
-            .getBalance(
-              t.id,
-              "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
-            )
-            .then((balance: any) => {
-              result.push({
-                ...accountBalance,
-                [balanceType[t.id]]: {
-                  id: t.id,
-                  unit: t.unit,
-                  name: t.name,
-                  decimals: t.decimals,
-                  assetNumber: Number(balance),
-                },
+    const timer: NodeJS.Timeout = setInterval(() => {
+      if (tokenList.length > 0) {
+        addCoinIcon(tokenList);
+        let result: any[] = [];
+        const promiseList: Promise<void>[] = [];
+        tokenList.map((t: TokenItem) => {
+          const promise = new Promise<void>((resolve, reject) => {
+            //@ts-ignore
+            api.rpc.swap
+              .getBalance(
+                t.id,
+                "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
+              )
+              .then((balance: any) => {
+                result.push({
+                  ...accountBalance,
+                  [balanceType[t.id]]: {
+                    id: t.id,
+                    unit: t.unit,
+                    name: t.name,
+                    decimals: t.decimals,
+                    assetNumber: Number(balance),
+                  },
+                });
+                setAccountBalance(result);
+                resolve();
+              })
+              .catch(() => {
+                reject();
               });
-              setAccountBalance(result);
-              resolve();
-            })
-            .catch(() => {
-              reject();
-            });
+          });
+          promiseList.push(promise);
         });
-        promiseList.push(promise);
-      });
-      Promise.all(promiseList).then(() => {
-        let coinBalance: any = addCoinBalance(tokenList, result);
-        setCoinList([...coinBalance]);
-      });
-    }
+        Promise.all(promiseList).then(() => {
+          let coinBalance: any = addCoinBalance(tokenList, result);
+          setCoinList([...coinBalance]);
+          //input into localStorage
+          localStorage.setItem("coinList", JSON.stringify([...coinBalance]));
+        });
+      }
+    }, 1000);
+    return () => {
+      clearInterval(timer);
+    };
   }, [tokenList, currentAccount.address]);
 
   function accuracy(decimalsInput: number, balance: number) {
@@ -199,7 +227,7 @@ export const TokenProvider: FC = ({ children }) => {
           }
         }
       );
-      console.log(accountList, "accountList");
+      // console.log(accountList, "accountList");
     });
     return accountList;
   }

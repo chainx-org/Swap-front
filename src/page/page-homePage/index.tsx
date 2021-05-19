@@ -65,13 +65,13 @@ const HomePage = (): React.ReactElement => {
   let [number, setNumber] = useState(0);
   let [number2, setNumber2] = useState(0);
   const { tokenList, accountBalance } = useContext(TokenContext);
-
+  console.log("tokenList", tokenList);
   const { coinList } = useContext(TokenContext);
-  console.log(coinList, "coinList");
+  // console.log(coinList, "coinList");
 
   //取前两项给card显示。即取coinList的前两项放到coinInfo中
   const [coinInfo, setCoinInfo] = useState([coinList[0], coinList[1]]);
-  console.log(coinInfo, "coinInfo");
+  // console.log(coinInfo, "coinInfo");
   const [coinInput, setCoinInput] = useState<CoinInput[]>([
     { coinIndex: 0, coinInput: inPrice, canSwap: true },
     { coinIndex: 1, coinInput: outPrice, canSwap: true },
@@ -122,7 +122,13 @@ const HomePage = (): React.ReactElement => {
 
   const [isShowSwapInfo, setIsShowSwapInfo] = useState(false);
   const { isExtensionInjected } = useContext(AccountsContext);
-
+  useEffect(()=>{
+    if(inPrice&&outPrice){
+      setIsShowSwapInfo(true)
+    }else{
+      setIsShowSwapInfo(false)
+    }
+  },[inPrice,outPrice])
   const swapCoin = [
     {
       coinName: coinInfo[0].coinName,
@@ -170,13 +176,14 @@ const HomePage = (): React.ReactElement => {
   const exChangeIcon = () => {
     setCoinInfo([...coinInfo].reverse());
     clearCoinInput();
-    setIsShowSwapInfo(false);
+    setInPrice(null)
+    setOutPrice(null)
+    // setIsShowSwapInfo(false);
   };
   useEffect(() => {
     setCoinInfo([coinList[0], coinList[1]]);
   }, [coinList]);
-
-  console.log("isShowSwapInfo", isShowSwapInfo);
+  console.log('isShowSwapInfo',isShowSwapInfo)
   return (
     <PriceContext.Provider
       value={{

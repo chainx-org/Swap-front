@@ -64,7 +64,6 @@ function BottomItem({
   const [transferStatus, setTransferStatus] =
     useState<"priceInfo" | "waiting" | "transactionStatus">("priceInfo");
   const [statusValue, setStatusValue] = useState<"success" | "fail">("success");
-  console.log('isConfirmOpen',isConfirmOpen)
   return (
     <Item>
       <div className="title-info">
