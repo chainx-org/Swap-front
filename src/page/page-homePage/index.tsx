@@ -72,10 +72,10 @@ const HomePage = (): React.ReactElement => {
     coinList[firstItemId],
     coinList[secondItemId],
   ]);
-  console.log('firstItemId',firstItemId)
-  console.log('secondItemId',secondItemId)
-  console.log('coinList',coinList)
-  console.log('coinInfo',coinInfo)
+  console.log(firstItemId, "firstItemId");
+  console.log(secondItemId, "secondItemId");
+  console.log(coinList, "coinlist");
+  console.log(coinInfo, "coinInfo");
   const [coinInput, setCoinInput] = useState<CoinInput[]>([
     { coinIndex: 0, coinInput: inPrice, canSwap: true },
     { coinIndex: 1, coinInput: outPrice, canSwap: true },
@@ -134,23 +134,23 @@ const HomePage = (): React.ReactElement => {
   }, [inPrice, outPrice]);
   const swapCoin = [
     {
-      coinName: coinInfo[firstItemId].coinName,
-      coinIcon: coinInfo[firstItemId].coinIcon,
+      coinName: coinInfo[0].coinName,
+      coinIcon: coinInfo[0].coinIcon,
       coinNum: inPrice,
-      id: coinInfo[firstItemId].id,
-      unit: coinInfo[firstItemId].unit,
-      icon: coinInfo[firstItemId].icon,
-      decimals: coinInfo[firstItemId].decimals,
+      id: coinInfo[0].id,
+      unit: coinInfo[0].unit,
+      icon: coinInfo[0].icon,
+      decimals: coinInfo[0].decimals,
       // coinNum: coinInput[0].coinInput,
     },
     {
-      coinName: coinInfo[secondItemId].coinName,
-      coinIcon: coinInfo[secondItemId].coinIcon,
+      coinName: coinInfo[1].coinName,
+      coinIcon: coinInfo[1].coinIcon,
       coinNum: outPrice,
-      id: coinInfo[secondItemId].id,
-      unit: coinInfo[secondItemId].unit,
-      icon: coinInfo[secondItemId].icon,
-      decimals: coinInfo[secondItemId].decimals,
+      id: coinInfo[1].id,
+      unit: coinInfo[1].unit,
+      icon: coinInfo[1].icon,
+      decimals: coinInfo[1].decimals,
       // coinNum: coinInput[1].coinInput,
     },
   ];
@@ -174,15 +174,16 @@ const HomePage = (): React.ReactElement => {
     coinInfo[index.index] = item;
     let list = coinInfo;
     if (index.index === 0) {
-      setFirstItemId = item.id;
+      setFirstItemId(item.id);
     } else {
-      setSecondItemId = item.id;
+      setSecondItemId(item.id);
     }
     setCoinInfo([...list]);
     clearCoinInput();
   };
   const exChangeIcon = () => {
     // setCoinInfo([...coinInfo].reverse());
+    debugger;
     let a = firstItemId;
     let b = secondItemId;
     setFirstItemId(b);
@@ -190,13 +191,12 @@ const HomePage = (): React.ReactElement => {
     clearCoinInput();
     setInPrice(null);
     setOutPrice(null);
-    setCoinInfo([[coinList[firstItemId], coinList[secondItemId]]])
-    // setIsShowSwapInfo(false);
+    setCoinInfo([coinList[firstItemId], coinList[secondItemId]]);
   };
 
   useEffect(() => {
     setCoinInfo([coinList[firstItemId], coinList[secondItemId]]);
-  }, [coinList]);
+  }, [coinList, firstItemId, secondItemId]);
 
   return (
     <PriceContext.Provider

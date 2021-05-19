@@ -23,7 +23,6 @@ function DialogCard({
   console.log(tokenList, "tokenList");
   const [account, setAccount] = useState(coinList);
   const clickItem = (item: any, index: any) => {
-    debugger;
     addCoinItem(item, index);
     onCancel(false);
   };

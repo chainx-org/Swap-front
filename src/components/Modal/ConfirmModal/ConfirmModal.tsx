@@ -38,7 +38,7 @@ interface ConfirmCardProps {
   setTransferStatus: React.Dispatch<any>;
   setStatusValue: React.Dispatch<any>;
   setIsShowSwapInfo?: any;
-  transferStatus?:any;
+  transferStatus?: any;
 }
 
 interface PriceFieldItem {
@@ -54,12 +54,12 @@ const ConfirmModal = ({
   setTransferStatus,
   setStatusValue,
   setIsShowSwapInfo,
-  transferStatus
+  transferStatus,
 }: ConfirmCardProps): React.ReactElement<ConfirmCardProps> => {
   const { api, isApiReady } = useContext(ApiContext);
   const [statusIcon, setStatusIcon] = useState(confirmType);
   const coinNumList: CoinNumItem[] = swapCoinInfo;
-
+  console.log(swapCoinInfo, "swapCoinInfo");
   const PriceFieldList: PriceFieldItem[] = [
     {
       fieldName: "Price",
@@ -133,7 +133,7 @@ const ConfirmModal = ({
     //     }}
     //   />
     // </StatusWrapper>
-    <BackStatusContent statusValue={statusValue} onCancel={onCancel}/>
+    <BackStatusContent statusValue={statusValue} onCancel={onCancel} />
   );
 
   const judgeConfirmType = (type: string): React.ReactNode => {
@@ -146,14 +146,14 @@ const ConfirmModal = ({
         break;
       case "transactionStatus":
         return backStatusContent;
-        break
+        break;
     }
   };
   // const Price:any = useRef()
 
   const confirmTransfer = (swapCoinInfo: any) => {
-    console.log('swapCoinInfo[0]',swapCoinInfo[0],swapCoinInfo[0].coinNum)
-    console.log('swapCoinInfo[1]',swapCoinInfo[1])
+    console.log("swapCoinInfo[0]", swapCoinInfo[0], swapCoinInfo[0].coinNum);
+    console.log("swapCoinInfo[1]", swapCoinInfo[1]);
     async function transfer() {
       if (api) {
         try {
@@ -164,7 +164,7 @@ const ConfirmModal = ({
           setTransferStatus("waiting");
           api.tx.swap
             .swapExactTokensForTokens(
-              swapCoinInfo[1].coinNum * Math.pow(10,swapCoinInfo[1].decimals),
+              swapCoinInfo[0].coinNum * Math.pow(10, swapCoinInfo[0].decimals),
               "1", // any
               [swapCoinInfo[0].id, swapCoinInfo[1].id],
               currentAccount.address.toString(),
@@ -184,6 +184,8 @@ const ConfirmModal = ({
               console.log("error", error);
             });
         } catch (err) {
+          setTransferStatus("transactionStatus");
+          setStatusValue("fail");
           console.log(err);
         }
       }
