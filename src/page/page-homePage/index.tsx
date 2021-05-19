@@ -97,10 +97,10 @@ const HomePage = (): React.ReactElement => {
             parseInt(Number(list)) / Math.pow(10, coinInfo[0].decimals)
           );
         });
-      setCoinInput([
-        { coinIndex: 0, coinInput: inPrice, canSwap: true },
-        { coinIndex: 1, coinInput: outPrice, canSwap: true },
-      ]);
+      // setCoinInput([
+      //   { coinIndex: 0, coinInput: inPrice, canSwap: true },
+      //   { coinIndex: 1, coinInput: outPrice, canSwap: true },
+      // ]);
     }
   }, [number]);
 
@@ -118,10 +118,10 @@ const HomePage = (): React.ReactElement => {
             parseInt(Number(list)) / Math.pow(10, coinInfo[1].decimals)
           );
         });
-      setCoinInput([
-        { coinIndex: 0, coinInput: inPrice, canSwap: true },
-        { coinIndex: 1, coinInput: outPrice, canSwap: true },
-      ]);
+      // setCoinInput([
+      //   { coinIndex: 0, coinInput: inPrice, canSwap: true },
+      //   { coinIndex: 1, coinInput: outPrice, canSwap: true },
+      // ]);
     }
   }, [number2]);
 
@@ -185,7 +185,6 @@ const HomePage = (): React.ReactElement => {
   };
   const exChangeIcon = () => {
     // setCoinInfo([...coinInfo].reverse());
-    debugger;
     let a = firstItemId;
     let b = secondItemId;
     setFirstItemId(b);
@@ -194,7 +193,7 @@ const HomePage = (): React.ReactElement => {
     setInPrice(null);
     setOutPrice(null);
     setCoinInfo([coinList[firstItemId], coinList[secondItemId]]);
-    setTokenList([...tokenList])
+    setTokenList([...tokenList]);
   };
 
   useEffect(() => {

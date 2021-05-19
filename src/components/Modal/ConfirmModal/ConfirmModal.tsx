@@ -59,7 +59,7 @@ const ConfirmModal = ({
   const { api, isApiReady } = useContext(ApiContext);
   const [statusIcon, setStatusIcon] = useState(confirmType);
   const coinNumList: CoinNumItem[] = swapCoinInfo;
-  console.log(swapCoinInfo, "swapCoinInfo");
+  // console.log(swapCoinInfo, "swapCoinInfo");
   const PriceFieldList: PriceFieldItem[] = [
     {
       fieldName: "Price",

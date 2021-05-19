@@ -8,7 +8,7 @@ const LinkDiv = styled.div`
     justify-content: space-between;
     width: 120px;
     height: 32px;
-    margin: 0 7px;
+    margin: 0 37px 0 7px;
     .linkName {
       display: inline-block;
       width: 40px;

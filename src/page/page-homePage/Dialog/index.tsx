@@ -20,7 +20,6 @@ function DialogCard({
   addCoinItem,
 }: DialogCardProps): React.ReactElement<DialogCardProps> {
   const { tokenList, coinList } = useContext(TokenContext);
-  console.log(tokenList, "tokenList");
   const [account, setAccount] = useState(coinList);
   const clickItem = (item: any, index: any) => {
     addCoinItem(item, index);
@@ -41,10 +40,9 @@ function DialogCard({
           >
             {account.map((item: any, i: any) => {
               return (
-                <DialogItem>
+                <DialogItem key={i}>
                   <div
                     className="item"
-                    key={i}
                     onClick={() => clickItem(item, { index })}
                   >
                     <div className="left-item">
