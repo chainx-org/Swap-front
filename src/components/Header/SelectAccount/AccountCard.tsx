@@ -43,14 +43,14 @@ function AccountCard() {
     <div>
       <SelectAccountStyle onClick={selectAccountList}>
         {!hasAccount && (
-          <div>
+          <div className={"watting-connect"}>
             <div className={"current-icon"}>
               {/* < style={IconStyle} /> */}
               <IconStyle>
                 <img src={Wallet} alt="" />
               </IconStyle>
             </div>
-            <div className={"current-name"}>Connect to a wallet</div>
+            <div className={"current-info"}>Connect to a wallet</div>
           </div>
         )}
         {hasAccount && (

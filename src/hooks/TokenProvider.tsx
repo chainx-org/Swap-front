@@ -60,7 +60,7 @@ export const TokenProvider: FC = ({ children }) => {
   let a: any = localStorage.getItem("coinList");
   let localCoinList: any = JSON.parse(a);
   const [coinList, setCoinList] = useState([...localCoinList]);
-
+  debugger;
   // console.log("tokenList", tokenList);
   // console.log("accountBalance", accountBalance);
   // console.log("coinList", coinList);
