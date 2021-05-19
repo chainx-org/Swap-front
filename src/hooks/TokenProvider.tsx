@@ -18,6 +18,7 @@ import White from "../assets/white.png";
 import { BigNumber } from "bignumber.js";
 export interface TokenData {
   tokenList: TokenItem[] | [];
+  setTokenList: React.Dispatch<any>;
   accountBalance: AccountBalance | {};
   coinList: any;
 }
@@ -86,7 +87,7 @@ export const TokenProvider: FC = ({ children }) => {
   }, []);
 
   // console.log("tokenList", tokenList);
-  console.log("accountBalance", accountBalance);
+  // console.log("accountBalance", accountBalance);
   // console.log("coinList", coinList);
   useEffect(() => {
     if (isApiReady && api) {
@@ -158,7 +159,6 @@ export const TokenProvider: FC = ({ children }) => {
     });
     setTokenList(accountList);
   }
-  console.log("currentAccount.address", currentAccount.address);
   useEffect(() => {
     const timer: NodeJS.Timeout = setInterval(() => {
       if (tokenList.length > 0) {
@@ -243,6 +243,7 @@ export const TokenProvider: FC = ({ children }) => {
         tokenList,
         accountBalance,
         coinList,
+        setTokenList
       }}
     >
       {children}
