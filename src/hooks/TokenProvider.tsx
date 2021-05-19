@@ -124,6 +124,12 @@ export const TokenProvider: FC = ({ children }) => {
     if (isApiReady && api) {
       //@ts-ignore
       api.rpc.swap.getTokenList().then((list) =>
+      {
+        if(!list.length) {
+          console.log('tokenlist获取为空')
+          return
+        }
+        list.length &&
         setTokenList(
           list.map((i: any) => ({
             id: Number(i.assertId),
@@ -132,7 +138,8 @@ export const TokenProvider: FC = ({ children }) => {
             decimals: Number(i.assertInfo.decimals),
           }))
         )
-      );
+      }
+      )
     }
   }, [isApiReady, currentAccount.address]);
   function addCoinIcon(accountList: any) {
