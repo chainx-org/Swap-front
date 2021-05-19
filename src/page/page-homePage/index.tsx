@@ -234,9 +234,9 @@ const HomePage = (): React.ReactElement => {
             </CardItem>
             {/* 转换icon */}
             <ExchangeIconStyle>
-              <div className="box" onClick={exChangeIcon}>
+              <div className="box">
                 <div className="iconBox">
-                  <ExchangeIcon />
+                  <ExchangeIcon onClick={exChangeIcon}/>
                 </div>
               </div>
             </ExchangeIconStyle>
