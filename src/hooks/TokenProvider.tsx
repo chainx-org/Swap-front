@@ -131,45 +131,50 @@ export const TokenProvider: FC = ({ children }) => {
     setTokenList(accountList);
   }
   useEffect(() => {
-    if (tokenList.length > 0) {
-      addCoinIcon(tokenList);
-      let result: any[] = [];
-      const promiseList: Promise<void>[] = [];
-      tokenList.map((t: TokenItem) => {
-        const promise = new Promise<void>((resolve, reject) => {
-          //@ts-ignore
-          api.rpc.swap
-            .getBalance(
-              t.id,
-              "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
-            )
-            .then((balance: any) => {
-              result.push({
-                ...accountBalance,
-                [balanceType[t.id]]: {
-                  id: t.id,
-                  unit: t.unit,
-                  name: t.name,
-                  decimals: t.decimals,
-                  assetNumber: Number(balance),
-                },
+    const timer: NodeJS.Timeout = setInterval(() => {
+      if (tokenList.length > 0) {
+        addCoinIcon(tokenList);
+        let result: any[] = [];
+        const promiseList: Promise<void>[] = [];
+        tokenList.map((t: TokenItem) => {
+          const promise = new Promise<void>((resolve, reject) => {
+            //@ts-ignore
+            api.rpc.swap
+              .getBalance(
+                t.id,
+                "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
+              )
+              .then((balance: any) => {
+                result.push({
+                  ...accountBalance,
+                  [balanceType[t.id]]: {
+                    id: t.id,
+                    unit: t.unit,
+                    name: t.name,
+                    decimals: t.decimals,
+                    assetNumber: Number(balance),
+                  },
+                });
+                setAccountBalance(result);
+                resolve();
+              })
+              .catch(() => {
+                reject();
               });
-              setAccountBalance(result);
-              resolve();
-            })
-            .catch(() => {
-              reject();
-            });
+          });
+          promiseList.push(promise);
         });
-        promiseList.push(promise);
-      });
-      Promise.all(promiseList).then(() => {
-        let coinBalance: any = addCoinBalance(tokenList, result);
-        setCoinList([...coinBalance]);
-        //input into localStorage
-        localStorage.setItem("coinList", JSON.stringify([...coinBalance]));
-      });
-    }
+        Promise.all(promiseList).then(() => {
+          let coinBalance: any = addCoinBalance(tokenList, result);
+          setCoinList([...coinBalance]);
+          //input into localStorage
+          localStorage.setItem("coinList", JSON.stringify([...coinBalance]));
+        });
+      }
+    }, 1000);
+    return () => {
+      clearInterval(timer);
+    };
   }, [tokenList, currentAccount.address]);
 
   function accuracy(decimalsInput: number, balance: number) {
