@@ -153,26 +153,26 @@ const ConfirmModal = ({
   // const Price:any = useRef()
   const { errorMessage, setErrorMessage } = useContext(TransferContext);
   const confirmTransfer = (swapCoinInfo: any) => {
-    console.log("swapCoinInfo[0]", swapCoinInfo[0], swapCoinInfo[0].coinNum);
+    console.log("swapCoinInfo[0]", swapCoinInfo[0]);
     console.log("swapCoinInfo[1]", swapCoinInfo[1]);
     async function transfer() {
       if (api) {
         try {
           const injector = await web3FromAddress(
-            currentAccount.address.toString()
+            currentAccount.address
           );
           api.setSigner(injector.signer);
           setTransferStatus("waiting");
           api.tx.swap
             .swapExactTokensForTokens(
               swapCoinInfo[0].coinNum * Math.pow(10, swapCoinInfo[0].decimals),
-              "1", // any
+              0.0001, // 最小交易量
               [swapCoinInfo[0].id, swapCoinInfo[1].id],
-              currentAccount.address.toString(),
+              currentAccount.address,
               blockNumber + 100
             )
             .signAndSend(
-              currentAccount.address.toString(),
+              currentAccount.address,
               { signer: injector.signer },
               (statusData) => {
                 setTransferStatus("transactionStatus");
@@ -201,41 +201,8 @@ const ConfirmModal = ({
     transfer();
   };
 
-  // const confirmSwap = () => {
-  //   // console.log(Price.current.innerHTML)
-  //   // for (let i = 0; i < Price.length; i++) {
-  //   // console.log(Price[0].innerHTML)
-
-  //   // }
-  // };
-  // // console.log(confirmType, "confirmType");
-
   function confirmSwap() {
-    // console.log('swapCoinInfo',swapCoinInfo)
-    // ~
     confirmTransfer(swapCoinInfo);
-    // // setStatusIcon("transactionStatus");
-    // // console.log(confirmType, "confirmType");
-    // console.log(coinNumList, "coinNumList");
-    // // debugger;
-    // //调用一下接口，
-    // if (isApiReady && api) {
-    //   //@ts-ignore
-    //   let result = api.tx.swap.swapExactTokensForTokens(
-    //     100,
-    //     100,
-    //     [0, 1],
-    //     "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-    //     100
-    //   );
-    //   // .then((list: any) => {
-    //   //   console.log(list, "list");
-    //   // });
-    //   // console.log(result, "result");
-    // }
-    // // debugger;
-    // //成功就关闭这个弹框，显示成功的弹框，失败就显示失败信息的弹框
-    // return;
   }
 
   return (
@@ -270,7 +237,7 @@ const ConfirmModal = ({
                       <div className="name">{coinNumList[0].coinName}</div>
                     </div>
                     <div className="num">
-                      {parseFloat(`${coinNumList[0].coinNum}`).toFixed(8)}
+                      {Number(coinNumList[0].coinNum).toFixed(8)}
                     </div>
                   </div>
                   <div className="numInfo">
@@ -280,7 +247,7 @@ const ConfirmModal = ({
                       <div className="name">{coinNumList[1].coinName}</div>
                     </div>
                     <div className="num">
-                      {parseFloat(`${coinNumList[1].coinNum}`).toFixed(4)}
+                      {Number(coinNumList[1].coinNum).toFixed(4)}
                     </div>
                   </div>
                 </>

@@ -82,9 +82,14 @@ const HomePage = (): React.ReactElement => {
     { coinIndex: 0, coinInput: inPrice, canSwap: true },
     { coinIndex: 1, coinInput: outPrice, canSwap: true },
   ]);
+      
   // console.log("tokenList", tokenList);
   useEffect(() => {
     if (isApiReady && api && coinInfo[0]) {
+      //@ts-ignore
+      console.log('bala',api.rpc.swap.getAmountOutPrice(100000000,[1,2]))
+      //@ts-ignore
+      console.log('bala2',api.rpc.swap.getAmountOutPrice(100000000,[0,1]))
       //@ts-ignore
       api.rpc.swap
         .getAmountOutPrice(inPrice * Math.pow(10, coinInfo[0].decimals), [
