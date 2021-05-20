@@ -8,8 +8,6 @@ import { ApiContext } from "../../../hooks/ApiProvider";
 import { TokenContext } from "../../../hooks/TokenProvider";
 import { PriceContext } from "..";
 import { canFirstSwap, canSecondSwap } from "../../../helper/canSwap";
-// import { useApiReady } from "../../../hooks/useApiReady";
-// import { useApi } from "../../../hooks/useApi";
 const Item = styled(Tooltip)`
   .title-info {
     display: flex;
@@ -46,7 +44,7 @@ const Item = styled(Tooltip)`
     padding-left: 16px;
     padding-right: 16px;
     .divBtn {
-      cursor:pointer;
+      cursor: pointer;
       display: flex;
       flex-direction: row;
       width: 120px;
@@ -178,10 +176,6 @@ interface currencyItemProps {
     coinInput: any;
     setCoinInput: any;
   };
-  // inPrice: number;
-  // outPrice: any;
-  // setInPrice?: any;
-  // setOutPrice?: any;
 }
 function CurrencyItem({
   index,
@@ -193,11 +187,7 @@ function CurrencyItem({
   addCoin,
   showSwapInfo,
   inputCoinValue,
-}: // inPrice,
-// outPrice,
-// setInPrice,
-// setOutPrice,
-currencyItemProps): React.ReactElement<currencyItemProps> {
+}: currencyItemProps): React.ReactElement<currencyItemProps> {
   const {
     inPrice,
     outPrice,
@@ -218,7 +208,6 @@ currencyItemProps): React.ReactElement<currencyItemProps> {
     const str1 = item.slice(0, i + 1);
     let str2 = item.slice(i + 1);
     str2 = str2.replace(/[^\d]/g, "");
-    // .substr(0,8);
     const strAll = str1 + str2;
     // /控制底部灰框和按钮的/
     strAll != "" && inPrice && outPrice
@@ -227,22 +216,9 @@ currencyItemProps): React.ReactElement<currencyItemProps> {
 
     //如果是from 那就让他大于0 但小于balance值
     if (index === 0) {
-      // debugger;
-      // let canSwap = inputCoinValue.coinInput[index].canSwap;
-
-      // parseFloat(strAll) > parseFloat(currencyBalence) ||
-      // parseFloat(strAll) === 0 ||
-      // Object.is(parseFloat(strAll), NaN)
-      //   ? (canSwap = false)
-      //   : (canSwap = true);
       coinValue(strAll, canFirstSwap(strAll, currencyBalence));
       return strAll;
     } else {
-      // let canSwap = inputCoinValue.coinInput[index].canSwap;
-      // parseFloat(strAll) <= 0 || Object.is(parseFloat(strAll), NaN)
-      //   ? (canSwap = false)
-      //   : (canSwap = true);
-      // coinValue(strAll, canSwap);
       coinValue(strAll, canSecondSwap(strAll, currencyBalence));
       return strAll;
     }

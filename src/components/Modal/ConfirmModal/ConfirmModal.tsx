@@ -23,6 +23,7 @@ import PriceField from "./PriceField";
 import Mask from "../../Mask";
 import { AccountsContext } from "../../../hooks/AccountsProvider";
 import { TransferContext } from "../../../hooks/TransferProvider";
+import BigNumber from "bignumber.js";
 
 interface CoinNumItem {
   icon: string | undefined;
@@ -153,8 +154,10 @@ const ConfirmModal = ({
   // const Price:any = useRef()
   const { errorMessage, setErrorMessage } = useContext(TransferContext);
   const confirmTransfer = (swapCoinInfo: any) => {
-    console.log("swapCoinInfo[0]", swapCoinInfo[0]);
-    console.log("swapCoinInfo[1]", swapCoinInfo[1]);
+    // console.log("swapCoinInfo[0]", swapCoinInfo[0]);
+    // console.log("swapCoinInfo[1]", swapCoinInfo[1]);
+    let amount = new BigNumber(swapCoinInfo[0].coinNum)
+    let decimal = new BigNumber(Math.pow(10, swapCoinInfo[0].decimals))
     async function transfer() {
       if (api) {
         try {
@@ -165,7 +168,8 @@ const ConfirmModal = ({
           setTransferStatus("waiting");
           api.tx.swap
             .swapExactTokensForTokens(
-              swapCoinInfo[0].coinNum * Math.pow(10, swapCoinInfo[0].decimals),
+              // swapCoinInfo[0].coinNum * Math.pow(10, swapCoinInfo[0].decimals),
+              Number(amount.multipliedBy(decimal)),
               0.0001, // 最小交易量
               [swapCoinInfo[0].id, swapCoinInfo[1].id],
               currentAccount.address,

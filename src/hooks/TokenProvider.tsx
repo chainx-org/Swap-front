@@ -51,7 +51,7 @@ export interface CoinItem {
 
 export const TokenContext = createContext<TokenData>({} as TokenData);
 
-const balanceType: string[] = ["PCX", "XBTC", "XBCH", "XDOGE", "XETH", "XDOT"];
+const balanceType: string[] = ["PCX", "XBTC", "XETH", "XDOGE", "XBCH", "XDOT"];
 
 export const TokenProvider: FC = ({ children }) => {
   const { api, isApiReady } = useContext(ApiContext);
@@ -83,10 +83,6 @@ export const TokenProvider: FC = ({ children }) => {
       setCoinList([...localCoinList]);
     }
   }, []);
-
-  // console.log("tokenList", tokenList);
-  // console.log("accountBalance", accountBalance);
-  // console.log("coinList", coinList);
 
   useEffect(() => {
     if (isApiReady && api) {
@@ -166,9 +162,8 @@ export const TokenProvider: FC = ({ children }) => {
                     assetNumber: Number(balance),
                   },
                 });
-                console.log(accountBalance, "accountBalance123");
+                console.log(result, "result");
                 setAccountBalance(result);
-                console.log(accountBalance, "accountBalance456");
                 resolve();
               })
               .catch(() => {
@@ -180,6 +175,7 @@ export const TokenProvider: FC = ({ children }) => {
         Promise.all(promiseList).then(() => {
           let coinBalance: any = addCoinBalance(tokenList, result);
           setCoinList([...coinBalance]);
+          console.log(coinBalance, "coinBalance");
           //input into localStorage
           localStorage.setItem("coinList", JSON.stringify([...coinBalance]));
           console.log("success updata coin Balance");
@@ -190,7 +186,7 @@ export const TokenProvider: FC = ({ children }) => {
       } else {
         console.log("tokenList为空");
       }
-    }, 3000);
+    }, 1000);
     return () => {
       clearInterval(timer);
     };
@@ -206,10 +202,15 @@ export const TokenProvider: FC = ({ children }) => {
     return resultFix;
   }
   function addCoinBalance(accountList: any, Balance: any) {
+    // debugger;
+    console.log(accountList, "accountList");
+    console.log(Balance, "Balance");
     Balance.map((item: any) => {
       const keys = Object.keys(item);
+      console.log(keys, "keys");
       accountList.map(
         (child: { unit: string; coinBalance: any; decimals: any }) => {
+          // debugger;
           if (child.unit === keys[0]) {
             child.decimals = item[keys[0]]["decimals"];
             child.coinBalance = accuracy(
