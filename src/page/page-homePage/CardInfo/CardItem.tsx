@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { ApiContext } from "../../../hooks/ApiProvider";
 import { TokenContext } from "../../../hooks/TokenProvider";
 import { PriceContext } from "..";
+import { canFirstSwap, canSecondSwap } from "../../../helper/canSwap";
 // import { useApiReady } from "../../../hooks/useApiReady";
 // import { useApi } from "../../../hooks/useApi";
 const Item = styled(Tooltip)`
@@ -226,20 +227,22 @@ currencyItemProps): React.ReactElement<currencyItemProps> {
     //如果是from 那就让他大于0 但小于balance值
     if (index === 0) {
       // debugger;
-      let canSwap = inputCoinValue.coinInput[index].canSwap;
-      parseFloat(strAll) > parseFloat(currencyBalence) ||
-      parseInt(strAll) === 0 ||
-      Object.is(parseFloat(strAll), NaN)
-        ? (canSwap = false)
-        : (canSwap = true);
-      coinValue(strAll, canSwap);
+      // let canSwap = inputCoinValue.coinInput[index].canSwap;
+
+      // parseFloat(strAll) > parseFloat(currencyBalence) ||
+      // parseFloat(strAll) === 0 ||
+      // Object.is(parseFloat(strAll), NaN)
+      //   ? (canSwap = false)
+      //   : (canSwap = true);
+      coinValue(strAll, canFirstSwap(strAll, currencyBalence));
       return strAll;
     } else {
-      let canSwap = inputCoinValue.coinInput[index].canSwap;
-      parseFloat(strAll) >= 0 || Object.is(parseFloat(strAll), NaN)
-        ? (canSwap = false)
-        : (canSwap = true);
-      coinValue(strAll, canSwap);
+      // let canSwap = inputCoinValue.coinInput[index].canSwap;
+      // parseFloat(strAll) <= 0 || Object.is(parseFloat(strAll), NaN)
+      //   ? (canSwap = false)
+      //   : (canSwap = true);
+      // coinValue(strAll, canSwap);
+      coinValue(strAll, canSecondSwap(strAll, currencyBalence));
       return strAll;
     }
   };
