@@ -105,6 +105,7 @@ export const TokenProvider: FC = ({ children }) => {
               decimals: Number(i.assertInfo.decimals),
             }))
           );
+        console.log(JSON.stringify(list), "list");
       });
       console.log("!tokenList.length", !tokenList.length);
     }
@@ -112,6 +113,10 @@ export const TokenProvider: FC = ({ children }) => {
   useEffect(() => {
     console.log("token list console");
   }, [tokenList]);
+  useEffect(() => {
+    console.log("currentAccount.address list console");
+  }, [currentAccount.address]);
+
   function addCoinIcon(accountList: any) {
     accountList.map((item: any) => {
       switch (item.unit) {
@@ -161,8 +166,9 @@ export const TokenProvider: FC = ({ children }) => {
                     assetNumber: Number(balance),
                   },
                 });
+                console.log(accountBalance, "accountBalance123");
                 setAccountBalance(result);
-
+                console.log(accountBalance, "accountBalance456");
                 resolve();
               })
               .catch(() => {
@@ -177,11 +183,14 @@ export const TokenProvider: FC = ({ children }) => {
           //input into localStorage
           localStorage.setItem("coinList", JSON.stringify([...coinBalance]));
           console.log("success updata coin Balance");
+          console.log(JSON.stringify(result), "list");
+          result = [];
+          setAccountBalance({});
         });
       } else {
         console.log("tokenList为空");
       }
-    }, 1000);
+    }, 3000);
     return () => {
       clearInterval(timer);
     };
