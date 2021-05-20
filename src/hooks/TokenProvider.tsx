@@ -84,10 +84,6 @@ export const TokenProvider: FC = ({ children }) => {
     }
   }, []);
 
-  // console.log("tokenList", tokenList);
-  // console.log("accountBalance", accountBalance);
-  // console.log("coinList", coinList);
-
   useEffect(() => {
     if (isApiReady && api) {
       //@ts-ignore
@@ -166,9 +162,8 @@ export const TokenProvider: FC = ({ children }) => {
                     assetNumber: Number(balance),
                   },
                 });
-                console.log(accountBalance, "accountBalance123");
+                console.log(result, "result");
                 setAccountBalance(result);
-                console.log(accountBalance, "accountBalance456");
                 resolve();
               })
               .catch(() => {
@@ -180,6 +175,7 @@ export const TokenProvider: FC = ({ children }) => {
         Promise.all(promiseList).then(() => {
           let coinBalance: any = addCoinBalance(tokenList, result);
           setCoinList([...coinBalance]);
+          console.log(coinBalance, "coinBalance");
           //input into localStorage
           localStorage.setItem("coinList", JSON.stringify([...coinBalance]));
           console.log("success updata coin Balance");
@@ -206,6 +202,7 @@ export const TokenProvider: FC = ({ children }) => {
     return resultFix;
   }
   function addCoinBalance(accountList: any, Balance: any) {
+    debugger;
     Balance.map((item: any) => {
       const keys = Object.keys(item);
       accountList.map(

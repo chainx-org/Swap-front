@@ -10,8 +10,10 @@ import BtcIcon from "../../assets/symbols_BTC.svg";
 import { ReactComponent as ExchangeIcon } from "../../assets/icon_exchange.svg";
 import { AccountsContext } from "../../hooks/AccountsProvider";
 import { ApiContext } from "../../hooks/ApiProvider";
-import { web3FromAddress } from "@polkadot/extension-dapp";
+import { web3FromAddress, isWeb3Injected } from "@polkadot/extension-dapp";
 import { TokenContext } from "../../hooks/TokenProvider";
+import { canFirstSwap, canSecondSwap } from "../../helper/canSwap";
+
 const Container = styled.div`
   background-image: linear-gradient(180deg, #faf5e8 7%, #f7f8fa 100%);
 `;
@@ -69,64 +71,17 @@ const HomePage = (): React.ReactElement => {
 
   const { tokenList, setTokenList, accountBalance } = useContext(TokenContext);
   const { coinList } = useContext(TokenContext);
+  console.log(coinList, "coinList");
   const [coinInfo, setCoinInfo] = useState([
     coinList[firstItemId],
     coinList[secondItemId],
   ]);
-  // console.log(firstItemId, "firstItemId");
-  // console.log(secondItemId, "secondItemId");
-  // console.log(coinList, "coinlist");
-  // console.log(coinInfo, "coinInfo");
+
   // @ts-ignore
   const [coinInput, setCoinInput] = useState<CoinInput[]>([
     { coinIndex: 0, coinInput: inPrice, canSwap: true },
     { coinIndex: 1, coinInput: outPrice, canSwap: true },
   ]);
-  // console.log("tokenList", tokenList);
-  useEffect(() => {
-    if (isApiReady && api && coinInfo[0]) {
-      //@ts-ignore
-      api.rpc.swap
-        .getAmountOutPrice(inPrice * Math.pow(10, coinInfo[0].decimals), [
-          coinInfo[0].id,
-          coinInfo[1].id,
-        ])
-        .then((list: any) => {
-          setOutPrice(
-            //@ts-ignore
-            parseInt(Number(list)) / Math.pow(10, coinInfo[0].decimals)
-          );
-        });
-    }
-  }, [number]);
-
-  useEffect(() => {
-    if (isApiReady && api && coinInfo[1]) {
-      //@ts-ignore
-      api.rpc.swap
-        .getAmountInPrice(outPrice * Math.pow(10, coinInfo[1].decimals), [
-          coinInfo[0].id,
-          coinInfo[1].id,
-        ])
-        .then((list: any) => {
-          setInPrice(
-            //@ts-ignore
-            parseInt(Number(list)) / Math.pow(10, coinInfo[1].decimals)
-          );
-        });
-    }
-  }, [number2]);
-
-  useEffect(() => {}, [coinInput]);
-  const [isShowSwapInfo, setIsShowSwapInfo] = useState(false);
-  const { isExtensionInjected } = useContext(AccountsContext);
-  useEffect(() => {
-    if (inPrice && outPrice) {
-      setIsShowSwapInfo(true);
-    } else {
-      setIsShowSwapInfo(false);
-    }
-  }, [inPrice, outPrice]);
   const swapCoin = [
     {
       coinName: coinInfo[0].coinName,
@@ -136,7 +91,6 @@ const HomePage = (): React.ReactElement => {
       unit: coinInfo[0].unit,
       icon: coinInfo[0].icon,
       decimals: coinInfo[0].decimals,
-      // coinNum: coinInput[0].coinInput,
     },
     {
       coinName: coinInfo[1].coinName,
@@ -146,9 +100,74 @@ const HomePage = (): React.ReactElement => {
       unit: coinInfo[1].unit,
       icon: coinInfo[1].icon,
       decimals: coinInfo[1].decimals,
-      // coinNum: coinInput[1].coinInput,
     },
   ];
+  const [isShowSwapInfo, setIsShowSwapInfo] = useState(false);
+  const { isExtensionInjected } = useContext(AccountsContext);
+
+  useEffect(() => {
+    if (isApiReady && api && coinInfo[0]) {
+      let result = 0;
+      //@ts-ignore
+      api.rpc.swap
+        .getAmountOutPrice(inPrice * Math.pow(10, coinInfo[0].decimals), [
+          coinInfo[0].id,
+          coinInfo[1].id,
+        ])
+        .then((list: any) => {
+          result =
+            //@ts-ignore
+            parseInt(Number(list)) / Math.pow(10, coinInfo[0].decimals);
+          setOutPrice(result);
+        });
+    }
+  }, [number]);
+
+  useEffect(() => {
+    if (isApiReady && api && coinInfo[1]) {
+      let result = 0;
+      //@ts-ignore
+      api.rpc.swap
+        .getAmountInPrice(outPrice * Math.pow(10, coinInfo[1].decimals), [
+          coinInfo[0].id,
+          coinInfo[1].id,
+        ])
+        .then((list: any) => {
+          result =
+            //@ts-ignore
+            parseInt(Number(list)) / Math.pow(10, coinInfo[0].decimals);
+          setInPrice(
+            //@ts-ignore
+            parseInt(Number(list)) / Math.pow(10, coinInfo[1].decimals)
+          );
+        });
+      // debugger;
+      //@ts-ignore
+      // let a = canFirstSwap(JSON.stringify(result), coinInfo[0].assetNumber);
+      // setCoinInput([
+      //   { coinIndex: 0, coinInput: inPrice, canSwap: a },
+      //   { coinIndex: 1, coinInput: outPrice, canSwap: true },
+      // ]);
+    }
+  }, [number2]);
+
+  useEffect(() => {
+    let a = canFirstSwap(swapCoin[0].coinNum, coinInfo[0].coinBalance);
+    let b = canSecondSwap(swapCoin[1].coinNum, coinInfo[1].coinBalance);
+    setCoinInput([
+      { coinIndex: 0, coinInput: inPrice, canSwap: a },
+      { coinIndex: 1, coinInput: outPrice, canSwap: b },
+    ]);
+  }, [coinList, number, number2]);
+
+  useEffect(() => {
+    if (inPrice && outPrice) {
+      setIsShowSwapInfo(true);
+    } else {
+      setIsShowSwapInfo(false);
+    }
+  }, [inPrice, outPrice]);
+
   const clearCoinInput = () => {
     setCoinInput([
       ...[
@@ -189,6 +208,8 @@ const HomePage = (): React.ReactElement => {
     setTokenList([...tokenList]);
   };
 
+  const ConnectWallet = () => {};
+
   useEffect(() => {
     setCoinInfo([coinList[firstItemId], coinList[secondItemId]]);
   }, [coinList, firstItemId, secondItemId]);
@@ -216,7 +237,6 @@ const HomePage = (): React.ReactElement => {
               currencyTitle="From"
               currencyBalence={coinInfo[0].coinBalance}
               addCoin={addCoin}
-              // canSwap={setCanSwap}
               showSwapInfo={setIsShowSwapInfo}
               inputCoinValue={{ coinInput, setCoinInput }}
               currencyName={coinInfo[0].unit}
@@ -237,7 +257,6 @@ const HomePage = (): React.ReactElement => {
               currencyTitle="To"
               currencyBalence={coinInfo[1].coinBalance}
               addCoin={addCoin}
-              // canSwap={setCanSwap}
               showSwapInfo={setIsShowSwapInfo}
               inputCoinValue={{ coinInput, setCoinInput }}
               currencyName={coinInfo[1].unit}
@@ -246,10 +265,11 @@ const HomePage = (): React.ReactElement => {
             </CardItem>
             {/* 底部按钮 */}
             {!isExtensionInjected && (
-              <a
-                href="https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd"
-                target="_blank"
-              >
+              // <a
+              //   href="https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd"
+              //   target="_blank"
+              // >
+              <div onClick={ConnectWallet}>
                 {coinInput[0].canSwap && coinInput[1].canSwap && (
                   <BottomItem
                     name="Slippage Tolerance"
@@ -259,7 +279,8 @@ const HomePage = (): React.ReactElement => {
                     className="ConnectWallet"
                   ></BottomItem>
                 )}
-              </a>
+                {/* </a> */}
+              </div>
             )}
             {!isExtensionInjected && (
               <div>
