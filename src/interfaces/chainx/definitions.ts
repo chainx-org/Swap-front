@@ -6,7 +6,7 @@ export default {
         "params": [
           {
             "name": "amount_out",
-            "type": "u128"
+            "type": "Balance"
           },
           {
             "name": "path",
@@ -25,7 +25,7 @@ export default {
         "params": [
           {
             "name": "amount_in",
-            "type": "u128"
+            "type": "Balance"
           },
           {
             "name": "path",

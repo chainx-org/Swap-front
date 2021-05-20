@@ -5,6 +5,7 @@ import ApiProvider from "./hooks/ApiProvider";
 import HomePage from "./page/page-homePage";
 import { AccountsProvider } from "./hooks/AccountsProvider";
 import { TokenProvider } from "./hooks/TokenProvider";
+import TransferProvider from "./hooks/TransferProvider";
 
 const LayoutWrapper = styled.div`
   display: flex;
@@ -16,9 +17,12 @@ export const App: React.FC = () => {
     <>
       <LayoutWrapper id={"LayoutWrapper"}>
         <ApiProvider url="ws://127.0.0.1:9977">
+        {/* <ApiProvider url="ws://127.0.0.1:8087"> */}
           <AccountsProvider>
             <TokenProvider>
+              <TransferProvider>
               <HomePage />
+              </TransferProvider>
             </TokenProvider>
           </AccountsProvider>
         </ApiProvider>

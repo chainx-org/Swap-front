@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import NormalButton from "../../Button";
 import { StatusWrapper } from "./style";
 import Error from "../../../assets/Feedback_failure.svg";
 import Success from "../../../assets/Feedback_successed.svg";
+import { TransferContext } from "../../../hooks/TransferProvider";
 
 interface Props {
   statusValue?: String;
@@ -15,11 +16,14 @@ const BackStatusContent = ({
   const HideConfirmSwap = () => {
     onCancel(false)
   }
+  const { errorMessage, setErrorMessage } = useContext(TransferContext);
   return (
     <StatusWrapper>
       {statusValue === "fail" ? (
         <>
           <img src={Error} className="status" alt="status" />
+          {/* //～ 需要添加后端返回的错误信息 需要确认 */}
+          {/* <div className="statusValue">cause {errorMessage}</div> */}
           <div className="statusValue">cause</div>
         </>
       ) : (
