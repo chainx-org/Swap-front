@@ -73,7 +73,7 @@ export const SelectAccountStyle = styled.div`
       white-space: nowrap;
     }
     .current-address {
-      width: 82px;
+      // width: 82px;
       height: 20px;
       line-height: 20px;
       margin-right: 16px;
@@ -101,7 +101,7 @@ export const SelectAccountStyle = styled.div`
     white-space: nowrap;
   }
   .current-address {
-    width: 82px;
+    // width: 82px;
     height: 20px;
     line-height: 20px;
     margin-right: 16px;
