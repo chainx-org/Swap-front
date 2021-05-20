@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import NormalButton from "../../Button";
 import ContainerCard from "../../Card/ContainerCard";
 import BackStatusContent from "./backStatusContent";
@@ -84,9 +84,11 @@ const ConfirmModal = ({
   // const { api, isApiReady } = useContext(ApiContext);
   const { currentAccount } = useContext(AccountsContext);
   const [blockNumber, setBlockNumber] = useState<any>(null);
-  api?.derive.chain.bestNumber().then((blockNumber) => {
-    setBlockNumber(Number(blockNumber));
-  });
+  useEffect(()=>{
+    api?.derive.chain.bestNumber().then((blockNumber) => {
+      setBlockNumber(Number(blockNumber));
+    });
+  },[])
   const backPriceContent: React.ReactNode = (
     <PriceWrapper>
       {PriceFieldList.map((item, index) => (
