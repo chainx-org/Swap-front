@@ -182,9 +182,12 @@ const ConfirmModal = ({
             .catch((error) => {
               setTransferStatus("transactionStatus");
               setStatusValue("fail");
-              let errorMessage = error.toString()
+              let errorMessage = error.toString();
               var index = errorMessage.lastIndexOf("e.g.");
-              errorMessage = errorMessage.substring(index + 4, errorMessage.length);
+              errorMessage =
+                index > 0
+                  ? errorMessage.substring(index + 4, errorMessage.length)
+                  : errorMessage;
               setErrorMessage(errorMessage);
               console.log("error", error);
             });

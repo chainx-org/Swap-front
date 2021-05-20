@@ -23,8 +23,8 @@ const BackStatusContent = ({
         <>
           <img src={Error} className="status" alt="status" />
           {/* //～ 需要添加后端返回的错误信息 需要确认 */}
-          {/* <div className="statusValue">cause {errorMessage}</div> */}
-          <div className="statusValue">cause</div>
+          <div className="statusValue">{errorMessage}</div>
+          {/* <div className="statusValue">cause</div> */}
         </>
       ) : (
         <>
