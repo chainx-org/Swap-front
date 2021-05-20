@@ -51,7 +51,7 @@ export interface CoinItem {
 
 export const TokenContext = createContext<TokenData>({} as TokenData);
 
-const balanceType: string[] = ["PCX", "XBTC", "XBCH", "XDOGE", "XETH", "XDOT"];
+const balanceType: string[] = ["PCX", "XBTC", "XETH", "XDOGE", "XBCH", "XDOT"];
 
 export const TokenProvider: FC = ({ children }) => {
   const { api, isApiReady } = useContext(ApiContext);
@@ -186,7 +186,7 @@ export const TokenProvider: FC = ({ children }) => {
       } else {
         console.log("tokenList为空");
       }
-    }, 3000);
+    }, 1000);
     return () => {
       clearInterval(timer);
     };
@@ -202,11 +202,15 @@ export const TokenProvider: FC = ({ children }) => {
     return resultFix;
   }
   function addCoinBalance(accountList: any, Balance: any) {
-    debugger;
+    // debugger;
+    console.log(accountList, "accountList");
+    console.log(Balance, "Balance");
     Balance.map((item: any) => {
       const keys = Object.keys(item);
+      console.log(keys, "keys");
       accountList.map(
         (child: { unit: string; coinBalance: any; decimals: any }) => {
+          // debugger;
           if (child.unit === keys[0]) {
             child.decimals = item[keys[0]]["decimals"];
             child.coinBalance = accuracy(
