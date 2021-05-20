@@ -18,6 +18,7 @@ import {
 } from "@polkadot/extension-dapp";
 import { TokenContext } from "../../hooks/TokenProvider";
 import { canFirstSwap, canSecondSwap } from "../../helper/canSwap";
+import BigNumber from "bignumber.js";
 
 const Container = styled.div`
   background-image: linear-gradient(180deg, #faf5e8 7%, #f7f8fa 100%);
@@ -111,40 +112,43 @@ const HomePage = (): React.ReactElement => {
   const { isExtensionInjected } = useContext(AccountsContext);
 
   useEffect(() => {
+    let inPriceAccount = new BigNumber(inPrice);
+    let inPriceDecimal = new BigNumber(Math.pow(10, coinInfo[0].decimals));
     if (isApiReady && api && coinInfo[0]) {
       let result = 0;
       //@ts-ignore
       api.rpc.swap
-        .getAmountOutPrice(inPrice * Math.pow(10, coinInfo[0].decimals), [
-          coinInfo[0].id,
-          coinInfo[1].id,
-        ])
+        .getAmountOutPrice(
+          Number(inPriceAccount.multipliedBy(inPriceDecimal)),
+          [coinInfo[0].id, coinInfo[1].id]
+        )
         .then((list: any) => {
+          let outPriceAccount = new BigNumber(parseInt(list));
           result =
             //@ts-ignore
-            parseInt(Number(list)) / Math.pow(10, coinInfo[0].decimals);
+            Number(outPriceAccount.dividedBy(inPriceDecimal));
           setOutPrice(result);
         });
     }
   }, [number]);
 
   useEffect(() => {
+    let outPriceAccount = new BigNumber(outPrice);
+    let outPriceDecimal = new BigNumber(Math.pow(10, coinInfo[1].decimals));
     if (isApiReady && api && coinInfo[1]) {
       let result = 0;
       //@ts-ignore
       api.rpc.swap
-        .getAmountInPrice(outPrice * Math.pow(10, coinInfo[1].decimals), [
-          coinInfo[0].id,
-          coinInfo[1].id,
-        ])
+        .getAmountInPrice(
+          Number(outPriceAccount.multipliedBy(outPriceDecimal)),
+          [coinInfo[0].id, coinInfo[1].id]
+        )
         .then((list: any) => {
+          let inPriceAccount = new BigNumber(parseInt(list));
           result =
             //@ts-ignore
-            parseInt(Number(list)) / Math.pow(10, coinInfo[0].decimals);
-          setInPrice(
-            //@ts-ignore
-            parseInt(Number(list)) / Math.pow(10, coinInfo[1].decimals)
-          );
+            Number(inPriceAccount.dividedBy(outPriceDecimal));
+          setInPrice(result);
         });
     }
   }, [number2]);
