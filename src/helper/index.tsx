@@ -1,9 +1,9 @@
-const length = 7;
+const length = 5;
 const longLength = 10;
 
 export const shortenString = (str: string): string => {
   if (str.length > 2 * length) {
-    return str.substring(0, 7) + "..." + str.substring(str.length - 7);
+    return str.substring(0, 5) + "..." + str.substring(str.length - 5);
   } else {
     return str;
   }
