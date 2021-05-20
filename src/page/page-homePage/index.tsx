@@ -121,7 +121,7 @@ const HomePage = (): React.ReactElement => {
     let inPriceDecimal = new BigNumber(Math.pow(10, coinInfo[0].decimals));
     if (isApiReady && api && coinInfo[0]) {
       let result = 0;
-      
+      inPrice&&
         //@ts-ignore
         api.rpc.swap
           .getAmountOutPrice(
@@ -147,6 +147,7 @@ const HomePage = (): React.ReactElement => {
     let outPriceDecimal = new BigNumber(Math.pow(10, coinInfo[1].decimals));
     if (isApiReady && api && coinInfo[1]) {
       let result = 0;
+      outPrice&&
       //@ts-ignore
       api.rpc.swap
         .getAmountInPrice(
