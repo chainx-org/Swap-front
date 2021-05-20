@@ -103,15 +103,8 @@ export const TokenProvider: FC = ({ children }) => {
           );
         console.log(JSON.stringify(list), "list");
       });
-      console.log("!tokenList.length", !tokenList.length);
     }
   }, [isApiReady, currentAccount.address]);
-  useEffect(() => {
-    console.log("token list console");
-  }, [tokenList]);
-  useEffect(() => {
-    console.log("currentAccount.address list console");
-  }, [currentAccount.address]);
 
   function addCoinIcon(accountList: any) {
     accountList.map((item: any) => {
@@ -192,7 +185,6 @@ export const TokenProvider: FC = ({ children }) => {
     };
   }, [isApiReady, currentAccount.address, tokenList]);
 
-  // console.log(accountBalance, "accountBalance");
   function accuracy(decimalsInput: number, balance: number) {
     let accuracyResult = new BigNumber(balance);
     let divisionNumber = new BigNumber(Math.pow(10, decimalsInput));
@@ -202,9 +194,6 @@ export const TokenProvider: FC = ({ children }) => {
     return resultFix;
   }
   function addCoinBalance(accountList: any, Balance: any) {
-    // debugger;
-    console.log(accountList, "accountList");
-    console.log(Balance, "Balance");
     Balance.map((item: any) => {
       const keys = Object.keys(item);
       console.log(keys, "keys");
@@ -220,7 +209,6 @@ export const TokenProvider: FC = ({ children }) => {
           }
         }
       );
-      // console.log(accountList, "accountList");
     });
     return accountList;
   }

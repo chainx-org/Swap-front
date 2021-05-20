@@ -7,10 +7,12 @@ import React, {
 } from "react";
 import { ApiContext } from "./ApiProvider";
 import { web3AccountsSubscribe, web3Enable } from "@polkadot/extension-dapp";
+import Identicon from "@polkadot/react-identicon";
 
 export interface AccountItem {
   address: string;
   name: string;
+  theme: string;
 }
 
 export interface AccountsData {
@@ -51,6 +53,7 @@ export const AccountsProvider: FC = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState<AccountItem>({
     address: "",
     name: "",
+    theme: "polkadot",
   });
 
   const getAccountList = async () => {
@@ -78,6 +81,7 @@ export const AccountsProvider: FC = ({ children }) => {
       : setCurrentAccount({
           address: "",
           name: "",
+          theme: "polkadot",
         });
   }, [accountList]);
 

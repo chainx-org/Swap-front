@@ -6,10 +6,15 @@ import { AccountsContext } from "../../../hooks/AccountsProvider";
 import { shortenString } from "../../../helper";
 import styled from "styled-components";
 import Wallet from "../../../assets/wallet_yellower.svg";
+import Identicon from "@polkadot/react-identicon";
 const IconStyle = styled.div`
   width: 16px;
   height: 16px;
   margin: "0px 0px 0px 0px";
+  & > svg {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 function AccountCard() {
@@ -17,6 +22,7 @@ function AccountCard() {
   const { currentAccount, isExtensionInjected } = useContext(AccountsContext);
   const [name, setName] = useState(currentAccount.name);
   const [address, setAddress] = useState(currentAccount.address);
+  const [theme, setTheme] = useState(currentAccount.theme);
   const [hasAccount, setHasAccount] = useState(isExtensionInjected);
   const selectAccountList = (e: any) => {
     e.nativeEvent.stopImmediatePropagation();
@@ -56,9 +62,13 @@ function AccountCard() {
         {hasAccount && (
           <div className={"account-info"}>
             <div className={"current-icon"}>
-              {/* <IconStyle>
-                <img src={DogIcon} alt="" />
-              </IconStyle> */}
+              <IconStyle>
+                <Identicon
+                  value={currentAccount.address}
+                  size={32}
+                  theme="polkadot"
+                />
+              </IconStyle>
             </div>
             <div className={"current-name"}>{name}</div>
             <div className={"current-address"}>{address}</div>

@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { ReactComponent as DogIcon } from "../../../assets/symbols_DOGE.svg";
-import { longString } from "../../../helper";
+import { shortenString } from "../../../helper";
 import { AccountItem, AccountsContext } from "../../../hooks/AccountsProvider";
-
+import Identicon from "@polkadot/react-identicon";
 const MenuBox = {
   position: "absolute" as "absolute",
 };
@@ -83,6 +83,7 @@ function SelectAccount() {
     setCurrentAccount({
       address: account.address,
       name: account.name,
+      theme: account.theme,
     });
   };
 
@@ -95,15 +96,17 @@ function SelectAccount() {
               <Wrapper key={index} onClick={() => changeAccount(item)}>
                 <li>
                   <div className={"assets-item"}>
-                    {/* <div className={"item-left"}> */}
-                    {/* <img src="" alt="" /> */}
-                    {/* <DogIcon style={IconBox} /> */}
-                    {/* </div> */}
-
+                    <div className={"item-left"}>
+                      <Identicon
+                        value={item.address}
+                        size={32}
+                        theme="polkadot"
+                      />
+                    </div>
                     <div className={"item-right"}>
                       <div className={"item-name"}>{item.name}</div>
                       <div className={"item-address"}>
-                        {longString(item.address)}
+                        {shortenString(item.address)}
                         {/* {item.address} */}
                       </div>
                     </div>
