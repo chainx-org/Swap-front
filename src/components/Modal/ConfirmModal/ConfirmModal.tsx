@@ -241,18 +241,42 @@ const ConfirmModal = ({
         >
           <CoinInfoWrapper>
             <div className="numWrapper">
-              {coinNumList.map((item: CoinNumItem, index) => (
-                <div className="numInfo" key={index}>
+              {
+              // coinNumList.map((item: CoinNumItem, index) => (
+              //   <div className="numInfo" key={index}>
+              //     <div className="coinName">
+              //       {/* <span>{item.coinIcon}</span> */}
+              //       <img src={item.icon} alt="" />
+              //       <div className="name">{item.coinName}</div>
+              //     </div>
+              //     <div className="num">
+              //       {parseFloat(`${item.coinNum}`).toFixed(8)}
+              //     </div>
+              //   </div>
+              // ))
+              <>
+                <div className="numInfo">
                   <div className="coinName">
                     {/* <span>{item.coinIcon}</span> */}
-                    <img src={item.icon} alt="" />
-                    <div className="name">{item.coinName}</div>
+                    <img src={coinNumList[0].icon} alt="" />
+                    <div className="name">{coinNumList[0].coinName}</div>
                   </div>
                   <div className="num">
-                    {parseFloat(`${item.coinNum}`).toFixed(8)}
+                    {parseFloat(`${coinNumList[0].coinNum}`).toFixed(8)}
                   </div>
                 </div>
-              ))}
+                <div className="numInfo">
+                <div className="coinName">
+                  {/* <span>{item.coinIcon}</span> */}
+                  <img src={coinNumList[1].icon} alt="" />
+                  <div className="name">{coinNumList[1].coinName}</div>
+                </div>
+                <div className="num">
+                  {parseFloat(`${coinNumList[1].coinNum}`).toFixed(4)}
+                </div>
+              </div>
+              </>
+              }
             </div>
             <img className="arrowDown" src={ArrowBlack} alt="" />
           </CoinInfoWrapper>

@@ -45,6 +45,7 @@ const Item = styled(Tooltip)`
     padding-left: 16px;
     padding-right: 16px;
     .divBtn {
+      cursor:pointer;
       display: flex;
       flex-direction: row;
       width: 120px;
