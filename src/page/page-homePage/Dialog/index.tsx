@@ -8,6 +8,7 @@ import DogIcon from "../../../assets/symbols_DOGE.svg";
 import ETHSymbol from "../../../assets/symbols_ETH.svg";
 import DOGESymbol from "../../../assets/symbols_DOGE.svg";
 import { Result } from "antd";
+import { PriceContext } from "..";
 
 interface DialogCardProps {
   index?: Number;
@@ -21,9 +22,15 @@ function DialogCard({
 }: DialogCardProps): React.ReactElement<DialogCardProps> {
   const { tokenList, coinList } = useContext(TokenContext);
   const [account, setAccount] = useState(coinList);
+  const {
+    setInPrice,
+    setOutPrice,
+  } = useContext(PriceContext)
   const clickItem = (item: any, index: any) => {
     addCoinItem(item, index);
     onCancel(false);
+    setInPrice(null)
+    setOutPrice(null)
   };
   useEffect(() => {
     setAccount(coinList);

@@ -22,6 +22,7 @@ import {
 import PriceField from "./PriceField";
 import Mask from "../../Mask";
 import { AccountsContext } from "../../../hooks/AccountsProvider";
+import { TransferContext } from "../../../hooks/TransferProvider";
 
 interface CoinNumItem {
   icon: string | undefined;
@@ -150,7 +151,7 @@ const ConfirmModal = ({
     }
   };
   // const Price:any = useRef()
-
+  const { errorMessage, setErrorMessage } = useContext(TransferContext);
   const confirmTransfer = (swapCoinInfo: any) => {
     console.log("swapCoinInfo[0]", swapCoinInfo[0], swapCoinInfo[0].coinNum);
     console.log("swapCoinInfo[1]", swapCoinInfo[1]);
@@ -181,6 +182,13 @@ const ConfirmModal = ({
             .catch((error) => {
               setTransferStatus("transactionStatus");
               setStatusValue("fail");
+              let errorMessage = error.toString();
+              var index = errorMessage.lastIndexOf("e.g.");
+              errorMessage =
+                index > 0
+                  ? errorMessage.substring(index + 4, errorMessage.length)
+                  : errorMessage;
+              setErrorMessage(errorMessage);
               console.log("error", error);
             });
         } catch (err) {
@@ -242,40 +250,40 @@ const ConfirmModal = ({
           <CoinInfoWrapper>
             <div className="numWrapper">
               {
-              // coinNumList.map((item: CoinNumItem, index) => (
-              //   <div className="numInfo" key={index}>
-              //     <div className="coinName">
-              //       {/* <span>{item.coinIcon}</span> */}
-              //       <img src={item.icon} alt="" />
-              //       <div className="name">{item.coinName}</div>
-              //     </div>
-              //     <div className="num">
-              //       {parseFloat(`${item.coinNum}`).toFixed(8)}
-              //     </div>
-              //   </div>
-              // ))
-              <>
-                <div className="numInfo">
-                  <div className="coinName">
-                    {/* <span>{item.coinIcon}</span> */}
-                    <img src={coinNumList[0].icon} alt="" />
-                    <div className="name">{coinNumList[0].coinName}</div>
+                // coinNumList.map((item: CoinNumItem, index) => (
+                //   <div className="numInfo" key={index}>
+                //     <div className="coinName">
+                //       {/* <span>{item.coinIcon}</span> */}
+                //       <img src={item.icon} alt="" />
+                //       <div className="name">{item.coinName}</div>
+                //     </div>
+                //     <div className="num">
+                //       {parseFloat(`${item.coinNum}`).toFixed(8)}
+                //     </div>
+                //   </div>
+                // ))
+                <>
+                  <div className="numInfo">
+                    <div className="coinName">
+                      {/* <span>{item.coinIcon}</span> */}
+                      <img src={coinNumList[0].icon} alt="" />
+                      <div className="name">{coinNumList[0].coinName}</div>
+                    </div>
+                    <div className="num">
+                      {parseFloat(`${coinNumList[0].coinNum}`).toFixed(8)}
+                    </div>
                   </div>
-                  <div className="num">
-                    {parseFloat(`${coinNumList[0].coinNum}`).toFixed(8)}
+                  <div className="numInfo">
+                    <div className="coinName">
+                      {/* <span>{item.coinIcon}</span> */}
+                      <img src={coinNumList[1].icon} alt="" />
+                      <div className="name">{coinNumList[1].coinName}</div>
+                    </div>
+                    <div className="num">
+                      {parseFloat(`${coinNumList[1].coinNum}`).toFixed(4)}
+                    </div>
                   </div>
-                </div>
-                <div className="numInfo">
-                <div className="coinName">
-                  {/* <span>{item.coinIcon}</span> */}
-                  <img src={coinNumList[1].icon} alt="" />
-                  <div className="name">{coinNumList[1].coinName}</div>
-                </div>
-                <div className="num">
-                  {parseFloat(`${coinNumList[1].coinNum}`).toFixed(4)}
-                </div>
-              </div>
-              </>
+                </>
               }
             </div>
             <img className="arrowDown" src={ArrowBlack} alt="" />
