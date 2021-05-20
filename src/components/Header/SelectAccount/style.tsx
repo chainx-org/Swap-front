@@ -34,7 +34,8 @@ export const SelectAccountStyle = styled.div`
   }
   .account-info {
     display: flex;
-    width: 222px;
+    // width: 222px;
+    width: auto;
     height: 32px;
     cursor: pointer;
     margin-right: 16px;
@@ -72,7 +73,7 @@ export const SelectAccountStyle = styled.div`
       white-space: nowrap;
     }
     .current-address {
-      width: 82px;
+      // width: 82px;
       height: 20px;
       line-height: 20px;
       margin-right: 16px;
@@ -80,7 +81,7 @@ export const SelectAccountStyle = styled.div`
       font-size: 12px;
       color: #282828;
       font-weight: 400;
-      // overflow: hidden;
+      overflow: hidden;
       // text-overflow: ellipsis;
       // white-space: nowrap;
     }
@@ -100,7 +101,7 @@ export const SelectAccountStyle = styled.div`
     white-space: nowrap;
   }
   .current-address {
-    width: 82px;
+    // width: 82px;
     height: 20px;
     line-height: 20px;
     margin-right: 16px;
@@ -108,7 +109,7 @@ export const SelectAccountStyle = styled.div`
     font-size: 12px;
     color: #282828;
     font-weight: 400;
-    // overflow: hidden;
+    overflow: hidden;
     // text-overflow: ellipsis;
     // white-space: nowrap;
   }
