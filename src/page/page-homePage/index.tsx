@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import Header from "../../components/Header";
 import ContainerCard from "../../components/Card/ContainerCard";
 import styled from "styled-components";
@@ -112,23 +118,29 @@ const HomePage = (): React.ReactElement => {
   const { isExtensionInjected } = useContext(AccountsContext);
 
   useEffect(() => {
+    console.log("outPrice", outPrice);
     let inPriceAccount = new BigNumber(inPrice);
     let inPriceDecimal = new BigNumber(Math.pow(10, coinInfo[0].decimals));
     if (isApiReady && api && coinInfo[0]) {
       let result = 0;
-      //@ts-ignore
-      api.rpc.swap
-        .getAmountOutPrice(
-          Number(inPriceAccount.multipliedBy(inPriceDecimal)),
-          [coinInfo[0].id, coinInfo[1].id]
-        )
-        .then((list: any) => {
-          let outPriceAccount = new BigNumber(parseInt(list));
-          result =
-            //@ts-ignore
-            Number(outPriceAccount.dividedBy(inPriceDecimal));
-          setOutPrice(result);
-        });
+      
+        //@ts-ignore
+        api.rpc.swap
+          .getAmountOutPrice(
+            Number(inPriceAccount.multipliedBy(inPriceDecimal)),
+            [coinInfo[0].id, coinInfo[1].id]
+          )
+          .then((list: any) => {
+            let outPriceAccount = new BigNumber(parseInt(list));
+            result =
+              //@ts-ignore
+              Number(outPriceAccount.dividedBy(inPriceDecimal));
+            setOutPrice(result);
+          })
+          .catch(
+            setOutPrice(null)
+          )
+      
     }
   }, [number]);
 
@@ -149,7 +161,10 @@ const HomePage = (): React.ReactElement => {
             //@ts-ignore
             Number(inPriceAccount.dividedBy(outPriceDecimal));
           setInPrice(result);
-        });
+        })
+        .catch(
+          setInPrice(null)
+        )
     }
   }, [number2]);
 
@@ -250,6 +265,7 @@ const HomePage = (): React.ReactElement => {
               showSwapInfo={setIsShowSwapInfo}
               inputCoinValue={{ coinInput, setCoinInput }}
               currencyName={coinInfo[0].unit}
+              id="Icon"
             >
               <img src={coinInfo[0].icon} alt="" />
             </CardItem>

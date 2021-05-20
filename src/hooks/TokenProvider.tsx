@@ -95,10 +95,10 @@ export const TokenProvider: FC = ({ children }) => {
         list.length &&
           setTokenList(
             list.map((i: any) => ({
-              id: Number(i.assertId),
-              unit: i.assertInfo.token.toString(),
-              name: i.assertInfo.chain.toString(),
-              decimals: Number(i.assertInfo.decimals),
+              id: Number(i.assetId),
+              unit: i.assetInfo.token.toString(),
+              name: i.assetInfo.chain.toString(),
+              decimals: Number(i.assetInfo.decimals),
             }))
           );
         console.log(JSON.stringify(list), "list");
