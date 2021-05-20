@@ -61,7 +61,6 @@ const ConfirmModal = ({
   const { api, isApiReady } = useContext(ApiContext);
   const [statusIcon, setStatusIcon] = useState(confirmType);
   const coinNumList: CoinNumItem[] = swapCoinInfo;
-  // console.log(swapCoinInfo, "swapCoinInfo");
   const PriceFieldList: PriceFieldItem[] = [
     {
       fieldName: "Price",
@@ -156,8 +155,6 @@ const ConfirmModal = ({
   // const Price:any = useRef()
   const { errorMessage, setErrorMessage } = useContext(TransferContext);
   const confirmTransfer = (swapCoinInfo: any) => {
-    // console.log("swapCoinInfo[0]", swapCoinInfo[0]);
-    // console.log("swapCoinInfo[1]", swapCoinInfo[1]);
     let amount = new BigNumber(swapCoinInfo[0].coinNum)
     let decimal = new BigNumber(Math.pow(10, swapCoinInfo[0].decimals))
     async function transfer() {
@@ -195,12 +192,12 @@ const ConfirmModal = ({
                   ? errorMessage.substring(index + 4, errorMessage.length)
                   : errorMessage;
               setErrorMessage(errorMessage);
-              console.log("error", error);
+              // console.log("error", error);
             });
         } catch (err) {
           setTransferStatus("transactionStatus");
           setStatusValue("fail");
-          console.log(err);
+          // console.log(err);
         }
       }
     }

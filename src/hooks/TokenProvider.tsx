@@ -85,25 +85,20 @@ export const TokenProvider: FC = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (isApiReady && api) {
-      //@ts-ignore
-      api.rpc.swap.getTokenList().then((list) => {
-        // if (!list.length) {
-        //   console.log("tokenlist获取为空");
-        //   return;
-        // }
-        list.length &&
-          setTokenList(
-            list.map((i: any) => ({
-              id: Number(i.assetId),
-              unit: i.assetInfo.token.toString(),
-              name: i.assetInfo.chain.toString(),
-              decimals: Number(i.assetInfo.decimals),
-            }))
-          );
-        console.log(JSON.stringify(list), "list");
-      });
-    }
+      if (isApiReady && api) {
+        //@ts-ignore
+        api.rpc.swap.getTokenList().then((list) => {
+          list.length &&
+            setTokenList(
+              list.map((i: any) => ({
+                id: Number(i.assetId),
+                unit: i.assetInfo.token.toString(),
+                name: i.assetInfo.chain.toString(),
+                decimals: Number(i.assetInfo.decimals),
+              }))
+            );
+        });
+      }
   }, [isApiReady, currentAccount.address]);
 
   function addCoinIcon(accountList: any) {
@@ -155,7 +150,6 @@ export const TokenProvider: FC = ({ children }) => {
                     assetNumber: Number(balance),
                   },
                 });
-                console.log(result, "result");
                 setAccountBalance(result);
                 resolve();
               })
@@ -168,17 +162,15 @@ export const TokenProvider: FC = ({ children }) => {
         Promise.all(promiseList).then(() => {
           let coinBalance: any = addCoinBalance(tokenList, result);
           setCoinList([...coinBalance]);
-          console.log(coinBalance, "coinBalance");
           //input into localStorage
           localStorage.setItem("coinList", JSON.stringify([...coinBalance]));
-          console.log("success updata coin Balance");
-          console.log(JSON.stringify(result), "list");
           result = [];
           setAccountBalance({});
         });
-      } else {
-        console.log("tokenList为空");
-      }
+      } 
+      // else {
+      //   console.log("tokenList为空");
+      // }
     }, 1000);
     return () => {
       clearInterval(timer);
@@ -196,7 +188,6 @@ export const TokenProvider: FC = ({ children }) => {
   function addCoinBalance(accountList: any, Balance: any) {
     Balance.map((item: any) => {
       const keys = Object.keys(item);
-      console.log(keys, "keys");
       accountList.map(
         (child: { unit: string; coinBalance: any; decimals: any }) => {
           // debugger;

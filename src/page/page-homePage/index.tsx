@@ -83,7 +83,6 @@ const HomePage = (): React.ReactElement => {
 
   const { tokenList, setTokenList, accountBalance } = useContext(TokenContext);
   const { coinList } = useContext(TokenContext);
-  console.log(coinList, "coinList");
   const [coinInfo, setCoinInfo] = useState([
     coinList[firstItemId],
     coinList[secondItemId],
@@ -118,7 +117,6 @@ const HomePage = (): React.ReactElement => {
   const { isExtensionInjected } = useContext(AccountsContext);
 
   useEffect(() => {
-    console.log("outPrice", outPrice);
     let inPriceAccount = new BigNumber(inPrice);
     let inPriceDecimal = new BigNumber(Math.pow(10, coinInfo[0].decimals));
     if (isApiReady && api && coinInfo[0]) {
@@ -168,6 +166,7 @@ const HomePage = (): React.ReactElement => {
     }
   }, [number2]);
 
+  
   useEffect(() => {
     // debugger;
     let a = canFirstSwap(inPrice, coinInfo[0].coinBalance);
@@ -228,7 +227,6 @@ const HomePage = (): React.ReactElement => {
     await web3Enable("connecting");
     if (isWeb3Injected) {
       const accounts = await web3Accounts();
-      console.log(isWeb3Injected, accounts, "isWeb3Injected");
     } else {
       window.location.href =
         "https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd";
