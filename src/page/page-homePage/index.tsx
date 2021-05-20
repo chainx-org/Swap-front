@@ -263,7 +263,7 @@ const HomePage = (): React.ReactElement => {
             )}
             {!isExtensionInjected && (
               <div>
-                {(!coinInput[0].canSwap || !coinInput[1].canSwap) && (
+                {!coinInput[0].canSwap && (
                   <BottomItem
                     name="Slippage Tolerance"
                     value="1%"
@@ -276,7 +276,7 @@ const HomePage = (): React.ReactElement => {
             )}
             {isExtensionInjected && (
               <div>
-                {coinInput[0].canSwap && coinInput[1].canSwap && (
+                {coinInput[0].canSwap && (
                   <BottomItem
                     name="Slippage Tolerance"
                     value="1%"
@@ -286,7 +286,7 @@ const HomePage = (): React.ReactElement => {
                     setIsShowSwapInfo={setIsShowSwapInfo}
                   />
                 )}
-                {(!coinInput[0].canSwap || !coinInput[1].canSwap) && (
+                {!coinInput[0].canSwap && (
                   <BottomItem
                     name="Slippage Tolerance"
                     value="1%"
