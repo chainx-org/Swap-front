@@ -27,7 +27,7 @@ const DropListStyle = styled.div`
     flex-direction: column;
     justify-content: space-between;
     & > li:last-child {
-      height: 87px;
+      height: 97px;
     }
   }
   li {
@@ -37,6 +37,7 @@ const DropListStyle = styled.div`
     flex-direction: column;
     justify-content: space-between;
   }
+
   .assets-item {
     padding: 13px 16px;
     height: 70px;
