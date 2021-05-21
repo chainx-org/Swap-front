@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { animated, useSpring } from "react-spring";
+import { animated, useSpring, config } from "react-spring";
 import styled from "styled-components";
 import { ReactComponent as Question } from "../../../assets/icon_question.svg";
 const Item = styled.div`
@@ -101,8 +101,7 @@ function SwapInfo({
     const showStyles = useSpring({
       to: { opacity: 1, y: 0 },
       from: { opacity: 0, y: -47 },
-      delay: 10,
-      config: { mass: 1, tension: 380, friction: 60 },
+      config: config.wobbly
     });
     return showStyles;
   }
@@ -111,8 +110,7 @@ function SwapInfo({
     const hideStyles = useSpring({
       to: { opacity: 0, y: -100 },
       from: { opacity: 1, y: 0 },
-      delay: 10,
-      config: { mass: 1, tension: 380, friction: 60 },
+      config: config.gentle
     });
     return hideStyles;
   }
