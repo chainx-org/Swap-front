@@ -6,6 +6,7 @@ import ChainStatus from "./ChainStatus";
 import ChangeLanguage from "./ChangeLanguage";
 import Wallet from "./Wallet";
 import TabList from "./TabList";
+import Bridege from "./BridgeButton";
 import styled from "styled-components";
 
 const WalletBox = styled.div`
@@ -18,6 +19,7 @@ function Header() {
       <ChainStatus />
       <div className={"header-right"}>
         <TabList />
+        <Bridege />
         {isExtensionInjected && <Wallet />}
         <SelectAccount />
       </div>
