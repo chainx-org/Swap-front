@@ -9,7 +9,8 @@ import TabList from "./TabList";
 import styled from "styled-components";
 
 const WalletBox = styled.div`
-  margin-left: 30px;
+  // margin-left: 30px;
+  margin: 0;
 `;
 function Header() {
   const { isExtensionInjected } = useContext(AccountsContext);
@@ -18,7 +19,7 @@ function Header() {
       <ChainStatus />
       <div className={"header-right"}>
         <TabList />
-        {/* <WalletBox>{isExtensionInjected && <Wallet />}</WalletBox> */}
+        <WalletBox>{isExtensionInjected && <Wallet />}</WalletBox>
         <SelectAccount />
       </div>
     </HeaderStyle>

@@ -10,5 +10,7 @@ export const HeaderStyle = styled.div`
   align-items: center;
   .header-right {
     display: flex;
+    position: relative;
+    z-index: 999;
   }
 `;
