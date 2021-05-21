@@ -1,10 +1,14 @@
 import React, { useState } from "react";
+import { animated, useSpring } from "react-spring";
 import styled from "styled-components";
 import { ReactComponent as Question } from "../../../assets/icon_question.svg";
 const Item = styled.div`
+  // position:fixed;
+  left:50%;
+  z-index:-10;
   .Box {
     width: 424px;
-    height: 168px;
+    height: 138px;
     margin: -47px auto;
     background: #f4f4f5;
     border: 1px solid #efefef;
@@ -84,25 +88,46 @@ const accounts = [
   { title: "Price Impact", info: "< 0.01%" },
   { title: "Liquidity Provider Fee", info: "0" },
 ];
+function AsyncExample() {
+  const styles = useSpring({
+    to: { opacity: 1, y: 0 },
+    from: { opacity: 0, y: -47 },
+    reset: false,
+    reverse: false,
+    delay: 10,
+    config: { mass: 1, tension: 80, friction: 60 },
+  });
+  return styles;
+}
 function SwapInfo() {
   return (
-    <Item>
-      <div className="Box">
-        <div className="info">
-          {accounts.map((item, index) => {
-            return (
-              <div className="item" key={index}>
-                <div className="item-left">
-                  <span>{item.title}</span>
-                  <Question />
+    <animated.div
+      style={{
+        position: "fixed",
+        left: "50%",
+        transform: "translateX(-50%)",
+        zIndex: -1,
+        ...AsyncExample(),
+      }}
+    >
+      <Item>
+        <div className="Box">
+          <div className="info">
+            {accounts.map((item, index) => {
+              return (
+                <div className="item" key={index}>
+                  <div className="item-left">
+                    <span>{item.title}</span>
+                    <Question />
+                  </div>
+                  <span>{item.info}</span>
                 </div>
-                <span>{item.info}</span>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
-      </div>
-    </Item>
+      </Item>
+    </animated.div>
   );
 }
 

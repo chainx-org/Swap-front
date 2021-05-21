@@ -5,6 +5,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { useSpring, animated, Spring } from "react-spring";
 import Header from "../../components/Header";
 import ContainerCard from "../../components/Card/ContainerCard";
 import styled from "styled-components";
@@ -132,7 +133,7 @@ const HomePage = (): React.ReactElement => {
     }
     let inPriceAccount = new BigNumber(inPrice);
     let inPriceDecimal = new BigNumber(Math.pow(10, coinInfo[0].decimals));
-    !inPrice && setOutPrice(null)
+    !inPrice && setOutPrice(null);
     if (isApiReady && api && coinInfo[0]) {
       let result = 0;
       inPrice &&
@@ -149,11 +150,11 @@ const HomePage = (): React.ReactElement => {
               //@ts-ignore
               Number(outPriceAccount.dividedBy(inPriceDecimal));
             setOutPrice(result);
-          })
-          // .catch(
-          //   setOutPrice(null),
-          //   setInPrice(null)
-          // );
+          });
+      // .catch(
+      //   setOutPrice(null),
+      //   setInPrice(null)
+      // );
     }
   }, [number]);
 
@@ -173,7 +174,7 @@ const HomePage = (): React.ReactElement => {
     }
     let outPriceAccount = new BigNumber(outPrice);
     let outPriceDecimal = new BigNumber(Math.pow(10, coinInfo[1].decimals));
-    !outPrice && setInPrice(null)
+    !outPrice && setInPrice(null);
     if (isApiReady && api && coinInfo[1]) {
       let result = 0;
       outPrice &&
@@ -190,11 +191,11 @@ const HomePage = (): React.ReactElement => {
               //@ts-ignore
               Number(inPriceAccount.dividedBy(outPriceDecimal));
             setInPrice(result);
-          })
-          // .catch(
-          //   setOutPrice(null),
-          //   setInPrice(null)
-          // );
+          });
+      // .catch(
+      //   setOutPrice(null),
+      //   setInPrice(null)
+      // );
     }
   }, [number2]);
 
@@ -254,6 +255,7 @@ const HomePage = (): React.ReactElement => {
     setCoinInfo([coinList[firstItemId], coinList[secondItemId]]);
     setTokenList([...tokenList]);
   };
+
   const ConnectWallet = async () => {
     await web3Enable("connecting");
     if (isWeb3Injected) {
@@ -267,6 +269,7 @@ const HomePage = (): React.ReactElement => {
   useEffect(() => {
     setCoinInfo([coinList[firstItemId], coinList[secondItemId]]);
   }, [coinList, firstItemId, secondItemId]);
+
   return (
     <PriceContext.Provider
       value={{
