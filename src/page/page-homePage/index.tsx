@@ -29,14 +29,17 @@ import BigNumber from "bignumber.js";
 
 const Container = styled.div`
   background-image: linear-gradient(180deg, #faf5e8 7%, #f7f8fa 100%);
+  
 `;
 const Content = styled.main`
   display: flex;
   justify-content: center;
   margin-top: 90px;
+  
 `;
 
 const ExchangeIconStyle = styled.div`
+
   .box {
     width: 100%;
     height: 24px;
