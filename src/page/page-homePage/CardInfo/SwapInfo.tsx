@@ -7,8 +7,6 @@ const Item = styled.div`
   left:50%;
   z-index:-10;
   .Box {
-    position:relative;
-    bottom:10px;
     width: 424px;
     height: 139px;
     margin: -47px auto;
