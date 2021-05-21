@@ -117,16 +117,31 @@ const HomePage = (): React.ReactElement => {
   const { isExtensionInjected } = useContext(AccountsContext);
 
   useEffect(() => {
+    let hasPCX = false;
+    for (let i = 0; i < coinInfo.length; i++) {
+      if (coinInfo[i].id === 0) {
+        hasPCX = true;
+        break;
+      }
+    }
+    let arr = [];
+    if (hasPCX) {
+      arr = [coinInfo[0].id, coinInfo[1].id];
+    } else {
+      arr = [coinInfo[0].id, 0, coinInfo[1].id];
+    }
     let inPriceAccount = new BigNumber(inPrice);
     let inPriceDecimal = new BigNumber(Math.pow(10, coinInfo[0].decimals));
+    !inPrice && setOutPrice(null)
     if (isApiReady && api && coinInfo[0]) {
       let result = 0;
-      inPrice&&
+      inPrice &&
         //@ts-ignore
         api.rpc.swap
           .getAmountOutPrice(
             Number(inPriceAccount.multipliedBy(inPriceDecimal)),
-            [coinInfo[0].id, coinInfo[1].id]
+            // [coinInfo[0].id, coinInfo[1].id]
+            arr
           )
           .then((list: any) => {
             let outPriceAccount = new BigNumber(parseInt(list));
@@ -135,39 +150,54 @@ const HomePage = (): React.ReactElement => {
               Number(outPriceAccount.dividedBy(inPriceDecimal));
             setOutPrice(result);
           })
-          .catch(
-            setOutPrice(null)
-          )
-      
+          // .catch(
+          //   setOutPrice(null),
+          //   setInPrice(null)
+          // );
     }
   }, [number]);
 
   useEffect(() => {
+    let hasPCX = false;
+    for (let i = 0; i < coinInfo.length; i++) {
+      if (coinInfo[i].id === 0) {
+        hasPCX = true;
+        break;
+      }
+    }
+    let arr = [];
+    if (hasPCX) {
+      arr = [coinInfo[0].id, coinInfo[1].id];
+    } else {
+      arr = [coinInfo[0].id, 0, coinInfo[1].id];
+    }
     let outPriceAccount = new BigNumber(outPrice);
     let outPriceDecimal = new BigNumber(Math.pow(10, coinInfo[1].decimals));
+    !outPrice && setInPrice(null)
     if (isApiReady && api && coinInfo[1]) {
       let result = 0;
-      outPrice&&
-      //@ts-ignore
-      api.rpc.swap
-        .getAmountInPrice(
-          Number(outPriceAccount.multipliedBy(outPriceDecimal)),
-          [coinInfo[0].id, coinInfo[1].id]
-        )
-        .then((list: any) => {
-          let inPriceAccount = new BigNumber(parseInt(list));
-          result =
-            //@ts-ignore
-            Number(inPriceAccount.dividedBy(outPriceDecimal));
-          setInPrice(result);
-        })
-        .catch(
-          setInPrice(null)
-        )
+      outPrice &&
+        //@ts-ignore
+        api.rpc.swap
+          .getAmountInPrice(
+            Number(outPriceAccount.multipliedBy(outPriceDecimal)),
+            // [coinInfo[0].id, coinInfo[1].id]
+            arr
+          )
+          .then((list: any) => {
+            let inPriceAccount = new BigNumber(parseInt(list));
+            result =
+              //@ts-ignore
+              Number(inPriceAccount.dividedBy(outPriceDecimal));
+            setInPrice(result);
+          })
+          // .catch(
+          //   setOutPrice(null),
+          //   setInPrice(null)
+          // );
     }
   }, [number2]);
 
-  
   useEffect(() => {
     // debugger;
     let a = canFirstSwap(inPrice, coinInfo[0].coinBalance);

@@ -60,7 +60,7 @@ const Item = styled.div`
             }
         }
 
-        & >div:nth-child(2){
+        & >div:nth-child(1){
             & > span:nth-child(2) {
                 display: inline-block;
                   height: 17px;
@@ -77,12 +77,12 @@ const Item = styled.div`
   }
 `;
 const accounts = [
-  {
-    title: "Maximum Sold",
-    info: "15.83 DOT",
-  },
+  // {
+  //   title: "Maximum Sold",
+  //   info: "15.83 DOT",
+  // },
   { title: "Price Impact", info: "< 0.01%" },
-  { title: "Liquidity Provider Fee", info: "0.03926 DOT" },
+  { title: "Liquidity Provider Fee", info: "0" },
 ];
 function SwapInfo() {
   return (

@@ -83,11 +83,11 @@ const ConfirmModal = ({
   // const { api, isApiReady } = useContext(ApiContext);
   const { currentAccount } = useContext(AccountsContext);
   const [blockNumber, setBlockNumber] = useState<any>(null);
-  useEffect(()=>{
+  useEffect(() => {
     api?.derive.chain.bestNumber().then((blockNumber) => {
       setBlockNumber(Number(blockNumber));
     });
-  },[])
+  }, []);
   const backPriceContent: React.ReactNode = (
     <PriceWrapper>
       {PriceFieldList.map((item, index) => (
@@ -155,21 +155,40 @@ const ConfirmModal = ({
   // const Price:any = useRef()
   const { errorMessage, setErrorMessage } = useContext(TransferContext);
   const confirmTransfer = (swapCoinInfo: any) => {
-    let amount = new BigNumber(swapCoinInfo[0].coinNum)
-    let decimal = new BigNumber(Math.pow(10, swapCoinInfo[0].decimals))
+    let hasPCX = false;
+    for (let i = 0; i < swapCoinInfo.length; i++) {
+      if (swapCoinInfo[i].id === 0) {
+        hasPCX = true;
+        break;
+      }
+    }
+    console.log("hasPCX", hasPCX);
+    let arr = [];
+    if (hasPCX) {
+      arr = [swapCoinInfo[0].id, swapCoinInfo[1].id];
+    } else {
+      arr = [swapCoinInfo[0].id, 0, swapCoinInfo[1].id];
+    }
+
+    let amount = new BigNumber(swapCoinInfo[0].coinNum);
+    let amount2 = new BigNumber(swapCoinInfo[1].coinNum);
+    let decimal = new BigNumber(Math.pow(10, swapCoinInfo[0].decimals));
+    let allowDecimal = decimal.multipliedBy(0.99);
+    // console.log("allownum", Number(amount2.multipliedBy(allowDecimal)));
+    console.log("falseallownum", Number(amount.multipliedBy(allowDecimal)));
     async function transfer() {
       if (api) {
         try {
-          const injector = await web3FromAddress(
-            currentAccount.address
-          );
+          const injector = await web3FromAddress(currentAccount.address);
           api.setSigner(injector.signer);
           setTransferStatus("waiting");
           api.tx.swap
             .swapExactTokensForTokens(
               // swapCoinInfo[0].coinNum * Math.pow(10, swapCoinInfo[0].decimals),
               Number(amount.multipliedBy(decimal)),
-              0.0001, // 最小交易量
+              // 0.0001, // 最小交易量
+              Number(amount2.multipliedBy(allowDecimal)),
+              // Number(amount.multipliedBy(allowDecimal)),
               [swapCoinInfo[0].id, swapCoinInfo[1].id],
               currentAccount.address,
               blockNumber + 100
@@ -178,8 +197,20 @@ const ConfirmModal = ({
               currentAccount.address,
               { signer: injector.signer },
               (statusData) => {
+                const formatStatusData = JSON.parse(JSON.stringify(statusData));
+                console.log("formatStatusData", formatStatusData);
+                // setTransferStatus("waiting");
+                if (formatStatusData.dispatchInfo&&!formatStatusData.dispatchError){
                 setTransferStatus("transactionStatus");
                 setStatusValue("success");
+                } else if (formatStatusData.dispatchError){
+                  setTransferStatus("transactionStatus");
+                  setStatusValue("fail");
+                  setErrorMessage(
+                    `error: ${formatStatusData.dispatchError.module.error}
+                    index: ${formatStatusData.dispatchError.module.index}`
+                  );
+                }
               }
             )
             .catch((error) => {
