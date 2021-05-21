@@ -4,7 +4,7 @@ import { ReactComponent as Question } from "../../../assets/icon_question.svg";
 const Item = styled.div`
   .Box {
     width: 424px;
-    height: 168px;
+    height: 139px;
     margin: -47px auto;
     background: #f4f4f5;
     border: 1px solid #efefef;
