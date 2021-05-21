@@ -339,7 +339,7 @@ const HomePage = (): React.ReactElement => {
             {isExtensionInjected && (
               <div>
                 {
-                  !inPrice && !outPrice ? (
+                  !inPrice || !outPrice ? (
                     <BottomItem
                       name="Slippage Tolerance"
                       value="1%"

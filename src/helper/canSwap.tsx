@@ -10,7 +10,7 @@ export const canFirstSwap = (strAll: string, balanceNum: string) => {
     //   ? (swap = false)
     //   : (swap = true);
 
-      Number(strAll) > Number(balanceNum) ||
+    Number(strAll) > Number(balanceNum) ||
     Number(strAll) === 0 ||
     Object.is(Number(strAll), NaN)
       ? (swap = false)
