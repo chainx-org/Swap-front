@@ -6,11 +6,12 @@ import ChainStatus from "./ChainStatus";
 import ChangeLanguage from "./ChangeLanguage";
 import Wallet from "./Wallet";
 import TabList from "./TabList";
+import Bridege from "./BridgeButton";
 import styled from "styled-components";
 
 const WalletBox = styled.div`
-  // margin-left: 30px;
-  margin: 0;
+  margin-left: 30px;
+  // margin: 0;
 `;
 function Header() {
   const { isExtensionInjected } = useContext(AccountsContext);
@@ -19,7 +20,9 @@ function Header() {
       <ChainStatus />
       <div className={"header-right"}>
         <TabList />
+        <Bridege />
         <WalletBox>{isExtensionInjected && <Wallet />}</WalletBox>
+        {/* {isExtensionInjected && <Wallet />} */}
         <SelectAccount />
       </div>
     </HeaderStyle>

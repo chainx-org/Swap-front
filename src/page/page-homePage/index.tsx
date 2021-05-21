@@ -29,17 +29,14 @@ import BigNumber from "bignumber.js";
 
 const Container = styled.div`
   background-image: linear-gradient(180deg, #faf5e8 7%, #f7f8fa 100%);
-  
 `;
 const Content = styled.main`
   display: flex;
   justify-content: center;
   margin-top: 90px;
-  
 `;
 
 const ExchangeIconStyle = styled.div`
-
   .box {
     width: 100%;
     height: 24px;
@@ -338,41 +335,39 @@ const HomePage = (): React.ReactElement => {
             )}
             {isExtensionInjected && (
               <div>
-                {
-                  !inPrice || !outPrice ? (
-                    <BottomItem
-                      name="Slippage Tolerance"
-                      value="1%"
-                      btnLabel={`Enter an amount`}
-                      className="cannot-swap"
-                      setIsShowSwapInfo={setIsShowSwapInfo}
-                    />
-                  ) : coinInput[0].canSwap ? (
-                    <BottomItem
-                      name="Slippage Tolerance"
-                      value="1%"
-                      swapCoinInfo={swapCoin}
-                      btnLabel="Swap"
-                      className="buttonDiv"
-                      setIsShowSwapInfo={setIsShowSwapInfo}
-                    />
-                  ) : inPrice && outPrice && !coinInput[0].canSwap ? (
-                    <BottomItem
-                      name="Slippage Tolerance"
-                      value="1%"
-                      btnLabel={`Insufficient ${coinInfo[0].unit} Balance`}
-                      className="cannot-swap"
-                      setIsShowSwapInfo={setIsShowSwapInfo}
-                    />
-                  ) : null
-                }
+                {!inPrice || !outPrice ? (
+                  <BottomItem
+                    name="Slippage Tolerance"
+                    value="1%"
+                    btnLabel={`Enter an amount`}
+                    className="cannot-swap"
+                    setIsShowSwapInfo={setIsShowSwapInfo}
+                  />
+                ) : coinInput[0].canSwap ? (
+                  <BottomItem
+                    name="Slippage Tolerance"
+                    value="1%"
+                    swapCoinInfo={swapCoin}
+                    btnLabel="Swap"
+                    className="buttonDiv"
+                    setIsShowSwapInfo={setIsShowSwapInfo}
+                  />
+                ) : inPrice && outPrice && !coinInput[0].canSwap ? (
+                  <BottomItem
+                    name="Slippage Tolerance"
+                    value="1%"
+                    btnLabel={`Insufficient ${coinInfo[0].unit} Balance`}
+                    className="cannot-swap"
+                    setIsShowSwapInfo={setIsShowSwapInfo}
+                  />
+                ) : null}
               </div>
             )}
 
             {/* Swap info */}
           </ContainerCard>
         </Content>
-        {isShowSwapInfo && <SwapInfo />}
+        <SwapInfo isShowSwapInfo={isShowSwapInfo} />
       </Container>
     </PriceContext.Provider>
   );

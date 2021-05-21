@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { animated, useSpring } from "react-spring";
 import styled from "styled-components";
 import { ReactComponent as Question } from "../../../assets/icon_question.svg";
@@ -90,18 +90,40 @@ const accounts = [
   { title: "Price Impact", info: "< 0.01%" },
   { title: "Liquidity Provider Fee", info: "0" },
 ];
-function AsyncExample() {
-  const styles = useSpring({
-    to: { opacity: 1, y: 0 },
-    from: { opacity: 0, y: -47 },
-    reset: false,
-    reverse: false,
-    delay: 10,
-    config: { mass: 1, tension: 80, friction: 60 },
-  });
-  return styles;
+
+interface SwapInfoProps {
+  isShowSwapInfo: Boolean;
 }
-function SwapInfo() {
+function SwapInfo({
+  isShowSwapInfo,
+}: SwapInfoProps): React.ReactElement<SwapInfoProps> {
+  function Show() {
+    const showStyles = useSpring({
+      to: { opacity: 1, y: 0 },
+      from: { opacity: 0, y: -47 },
+      delay: 10,
+      config: { mass: 1, tension: 380, friction: 60 },
+    });
+    return showStyles;
+  }
+
+  function Hide() {
+    const hideStyles = useSpring({
+      to: { opacity: 0, y: -100 },
+      from: { opacity: 1, y: 0 },
+      delay: 10,
+      config: { mass: 1, tension: 380, friction: 60 },
+    });
+    return hideStyles;
+  }
+
+  function styles(isShowSwapInfo: Boolean) {
+    if (isShowSwapInfo) {
+      return Show();
+    } else {
+      return Hide();
+    }
+  }
   return (
     <animated.div
       style={{
@@ -109,7 +131,7 @@ function SwapInfo() {
         left: "50%",
         transform: "translateX(-50%)",
         zIndex: -1,
-        ...AsyncExample(),
+        ...styles(isShowSwapInfo),
       }}
     >
       <Item>
