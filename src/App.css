@@ -17,7 +17,7 @@ time, mark, audio, video {
     font-size: 100%;
     font: inherit;
     vertical-align: baseline;
-    z-index:0;
+    z-index: 0;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
@@ -50,6 +50,10 @@ table {
 }
 #LayoutWrapper{
     flex: 1;
+    
+}
+.containerBox div{
+    z-index: auto;
 }
 .ant-input-handler-wrap{
     display: none
