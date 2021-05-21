@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import Header from "../../components/Header";
 import ContainerCard from "../../components/Card/ContainerCard";
 import styled from "styled-components";
@@ -77,7 +83,6 @@ const HomePage = (): React.ReactElement => {
 
   const { tokenList, setTokenList, accountBalance } = useContext(TokenContext);
   const { coinList } = useContext(TokenContext);
-  console.log(coinList, "coinList");
   const [coinInfo, setCoinInfo] = useState([
     coinList[firstItemId],
     coinList[secondItemId],
@@ -112,44 +117,84 @@ const HomePage = (): React.ReactElement => {
   const { isExtensionInjected } = useContext(AccountsContext);
 
   useEffect(() => {
+    let hasPCX = false;
+    for (let i = 0; i < coinInfo.length; i++) {
+      if (coinInfo[i].id === 0) {
+        hasPCX = true;
+        break;
+      }
+    }
+    let arr = [];
+    if (hasPCX) {
+      arr = [coinInfo[0].id, coinInfo[1].id];
+    } else {
+      arr = [coinInfo[0].id, 0, coinInfo[1].id];
+    }
     let inPriceAccount = new BigNumber(inPrice);
     let inPriceDecimal = new BigNumber(Math.pow(10, coinInfo[0].decimals));
+    !inPrice && setOutPrice(null)
     if (isApiReady && api && coinInfo[0]) {
       let result = 0;
-      //@ts-ignore
-      api.rpc.swap
-        .getAmountOutPrice(
-          Number(inPriceAccount.multipliedBy(inPriceDecimal)),
-          [coinInfo[0].id, coinInfo[1].id]
-        )
-        .then((list: any) => {
-          let outPriceAccount = new BigNumber(parseInt(list));
-          result =
-            //@ts-ignore
-            Number(outPriceAccount.dividedBy(inPriceDecimal));
-          setOutPrice(result);
-        });
+      inPrice &&
+        //@ts-ignore
+        api.rpc.swap
+          .getAmountOutPrice(
+            Number(inPriceAccount.multipliedBy(inPriceDecimal)),
+            // [coinInfo[0].id, coinInfo[1].id]
+            arr
+          )
+          .then((list: any) => {
+            let outPriceAccount = new BigNumber(parseInt(list));
+            result =
+              //@ts-ignore
+              Number(outPriceAccount.dividedBy(inPriceDecimal));
+            setOutPrice(result);
+          })
+          // .catch(
+          //   setOutPrice(null),
+          //   setInPrice(null)
+          // );
     }
   }, [number]);
 
   useEffect(() => {
+    let hasPCX = false;
+    for (let i = 0; i < coinInfo.length; i++) {
+      if (coinInfo[i].id === 0) {
+        hasPCX = true;
+        break;
+      }
+    }
+    let arr = [];
+    if (hasPCX) {
+      arr = [coinInfo[0].id, coinInfo[1].id];
+    } else {
+      arr = [coinInfo[0].id, 0, coinInfo[1].id];
+    }
     let outPriceAccount = new BigNumber(outPrice);
     let outPriceDecimal = new BigNumber(Math.pow(10, coinInfo[1].decimals));
+    !outPrice && setInPrice(null)
     if (isApiReady && api && coinInfo[1]) {
       let result = 0;
-      //@ts-ignore
-      api.rpc.swap
-        .getAmountInPrice(
-          Number(outPriceAccount.multipliedBy(outPriceDecimal)),
-          [coinInfo[0].id, coinInfo[1].id]
-        )
-        .then((list: any) => {
-          let inPriceAccount = new BigNumber(parseInt(list));
-          result =
-            //@ts-ignore
-            Number(inPriceAccount.dividedBy(outPriceDecimal));
-          setInPrice(result);
-        });
+      outPrice &&
+        //@ts-ignore
+        api.rpc.swap
+          .getAmountInPrice(
+            Number(outPriceAccount.multipliedBy(outPriceDecimal)),
+            // [coinInfo[0].id, coinInfo[1].id]
+            arr
+          )
+          .then((list: any) => {
+            let inPriceAccount = new BigNumber(parseInt(list));
+            result =
+              //@ts-ignore
+              Number(inPriceAccount.dividedBy(outPriceDecimal));
+            setInPrice(result);
+          })
+          // .catch(
+          //   setOutPrice(null),
+          //   setInPrice(null)
+          // );
     }
   }, [number2]);
 
@@ -213,7 +258,6 @@ const HomePage = (): React.ReactElement => {
     await web3Enable("connecting");
     if (isWeb3Injected) {
       const accounts = await web3Accounts();
-      console.log(isWeb3Injected, accounts, "isWeb3Injected");
     } else {
       window.location.href =
         "https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd";
@@ -250,6 +294,7 @@ const HomePage = (): React.ReactElement => {
               showSwapInfo={setIsShowSwapInfo}
               inputCoinValue={{ coinInput, setCoinInput }}
               currencyName={coinInfo[0].unit}
+              id="Icon"
             >
               <img src={coinInfo[0].icon} alt="" />
             </CardItem>

@@ -84,46 +84,6 @@ export const AccountsProvider: FC = ({ children }) => {
           theme: "polkadot",
         });
   }, [accountList]);
-
-  // useEffect(() => {
-  //   if(isApiReady&& api){
-  //     //@ts-ignore
-  //     api.rpc.swap.getTokenList().then(list => setTokenList(list.map((i: any) => ({
-  //       id: Number(i.assertId),
-  //       unit: i.assertInfo.token.toString(),
-  //       name: i.assertInfo.chain.toString(),
-  //       decimals: Number(i.assertInfo.decimals)
-  //     }))))
-  //   }
-  // }, [isApiReady, currentAccount.address])
-  //
-  // let cc: any[] = []
-  // useEffect(() => {
-  //   if(tokenList.length> 0){
-  //     tokenList.map((t: TokenItem) => (
-  //     //@ts-ignore
-  //       api.rpc.swap.getBalance(t.id, '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY').then(balance => {
-  //         setAccountBalance({
-  //           ...accountBalance,
-  //           [balanceType[t.id]]: {
-  //             id: t.id,
-  //             unit: t.unit,
-  //             name: t.name,
-  //             decimals: t.decimals,
-  //             assetNumber: Number(balance)
-  //           }
-  //         })
-  //       })
-  //     ))
-  //   }
-  // }, [tokenList, currentAccount.address])
-  // console.log(
-  //   "aaa",
-  //   isExtensionInjected,
-  //   accountList,
-  //   currentAccount,
-  //   setCurrentAccount
-  // );
   return (
     <AccountsContext.Provider
       value={{

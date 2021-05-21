@@ -78,7 +78,6 @@ const Wrapper = styled.div`
 
 function SelectAccount() {
   const { accountList, setCurrentAccount } = useContext(AccountsContext);
-  // console.log(accountList, "accountList");
   const changeAccount = (account: AccountItem) => {
     setCurrentAccount({
       address: account.address,
