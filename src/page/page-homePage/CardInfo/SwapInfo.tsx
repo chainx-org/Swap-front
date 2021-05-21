@@ -8,7 +8,7 @@ const Item = styled.div`
   z-index:-10;
   .Box {
     width: 424px;
-    height: 138px;
+    height: 139px;
     margin: -47px auto;
     background: #f4f4f5;
     border: 1px solid #efefef;

@@ -231,7 +231,7 @@ const HomePage = (): React.ReactElement => {
         return n.unit === item.unit;
       })
     ) {
-      alert("error");
+      alert("This account has been selected");
       return;
     }
     coinInfo[index.index] = item;
@@ -335,25 +335,34 @@ const HomePage = (): React.ReactElement => {
             )}
             {isExtensionInjected && (
               <div>
-                {coinInput[0].canSwap && (
-                  <BottomItem
-                    name="Slippage Tolerance"
-                    value="1%"
-                    swapCoinInfo={swapCoin}
-                    btnLabel="Swap"
-                    className="buttonDiv"
-                    setIsShowSwapInfo={setIsShowSwapInfo}
-                  />
-                )}
-                {!coinInput[0].canSwap && (
-                  <BottomItem
-                    name="Slippage Tolerance"
-                    value="1%"
-                    btnLabel={"Insufficient DOT Balance"}
-                    className="cannot-swap"
-                    setIsShowSwapInfo={setIsShowSwapInfo}
-                  />
-                )}
+                {
+                  !inPrice && !outPrice ? (
+                    <BottomItem
+                      name="Slippage Tolerance"
+                      value="1%"
+                      btnLabel={`Enter an amount`}
+                      className="cannot-swap"
+                      setIsShowSwapInfo={setIsShowSwapInfo}
+                    />
+                  ) : coinInput[0].canSwap ? (
+                    <BottomItem
+                      name="Slippage Tolerance"
+                      value="1%"
+                      swapCoinInfo={swapCoin}
+                      btnLabel="Swap"
+                      className="buttonDiv"
+                      setIsShowSwapInfo={setIsShowSwapInfo}
+                    />
+                  ) : inPrice && outPrice && !coinInput[0].canSwap ? (
+                    <BottomItem
+                      name="Slippage Tolerance"
+                      value="1%"
+                      btnLabel={`Insufficient ${coinInfo[0].unit} Balance`}
+                      className="cannot-swap"
+                      setIsShowSwapInfo={setIsShowSwapInfo}
+                    />
+                  ) : null
+                }
               </div>
             )}
 
