@@ -7,6 +7,8 @@ const Item = styled.div`
   left:50%;
   z-index:-10;
   .Box {
+    position:relative;
+    bottom:10px;
     width: 424px;
     height: 139px;
     margin: -47px auto;
@@ -15,6 +17,7 @@ const Item = styled.div`
     box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
     border-radius: 24px 24px 24px 24px;
     .info {
+
         display: flex;
         flex-direction:column;
         padding-left: 16px;
