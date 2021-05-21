@@ -9,7 +9,6 @@ import { TokenContext } from "../../../hooks/TokenProvider";
 import { PriceContext } from "..";
 import { canFirstSwap, canSecondSwap } from "../../../helper/canSwap";
 const Item = styled(Tooltip)`
-  
   .title-info {
     display: flex;
     justify-content: space-between;
@@ -173,7 +172,7 @@ interface currencyItemProps {
     coinInput: any;
     setCoinInput: any;
   };
-  id?:any;
+  id?: any;
 }
 function CurrencyItem({
   index,
@@ -185,7 +184,7 @@ function CurrencyItem({
   addCoin,
   showSwapInfo,
   inputCoinValue,
-  id
+  id,
 }: currencyItemProps): React.ReactElement<currencyItemProps> {
   const {
     inPrice,
@@ -234,8 +233,7 @@ function CurrencyItem({
         <span>{currencyTitle}</span>
         <span>Balance:{currencyBalence}</span>
       </div>
-      <div className="selectBtn"
-      >
+      <div className="selectBtn">
         <div
           className="divBtn "
           onClick={() => {
@@ -277,16 +275,16 @@ function CurrencyItem({
             />
           )}
         </div>
+        {isOpenDialog && (
+          <div>
+            <DialogCard
+              onCancel={setisOpenDialog}
+              index={index}
+              addCoinItem={addCoin}
+            />
+          </div>
+        )}
       </div>
-      {isOpenDialog && (
-        <div>
-          <DialogCard
-            onCancel={setisOpenDialog}
-            index={index}
-            addCoinItem={addCoin}
-          />
-        </div>
-      )}
     </Item>
   );
 }
