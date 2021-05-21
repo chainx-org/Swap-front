@@ -162,7 +162,6 @@ const ConfirmModal = ({
         break;
       }
     }
-    console.log("hasPCX", hasPCX);
     let arr = [];
     if (hasPCX) {
       arr = [swapCoinInfo[0].id, swapCoinInfo[1].id];
@@ -175,7 +174,7 @@ const ConfirmModal = ({
     let decimal = new BigNumber(Math.pow(10, swapCoinInfo[0].decimals));
     let allowDecimal = decimal.multipliedBy(0.99);
     // console.log("allownum", Number(amount2.multipliedBy(allowDecimal)));
-    console.log("falseallownum", Number(amount.multipliedBy(allowDecimal)));
+    // console.log("falseallownum", Number(amount.multipliedBy(allowDecimal)));
     async function transfer() {
       if (api) {
         try {
@@ -198,7 +197,6 @@ const ConfirmModal = ({
               { signer: injector.signer },
               (statusData) => {
                 const formatStatusData = JSON.parse(JSON.stringify(statusData));
-                console.log("formatStatusData", formatStatusData);
                 // setTransferStatus("waiting");
                 if (formatStatusData.dispatchInfo&&!formatStatusData.dispatchError){
                 setTransferStatus("transactionStatus");
