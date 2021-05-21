@@ -231,7 +231,7 @@ const HomePage = (): React.ReactElement => {
         return n.unit === item.unit;
       })
     ) {
-      alert("This account has been selected");
+      exChangeIcon();
       return;
     }
     coinInfo[index.index] = item;
