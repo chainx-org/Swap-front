@@ -45,6 +45,7 @@ function DialogCard({
             title="Select a token"
             className={"card-list-content"}
           >
+            
             {account.map((item: any, i: any) => {
               return (
                 <DialogItem key={i}>

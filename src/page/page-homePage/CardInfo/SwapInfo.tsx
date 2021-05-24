@@ -90,7 +90,7 @@ const accounts = [
   { title: "Price Impact", info: "< 0.01%" },
   { title: "Liquidity Provider Fee", info: "0" },
 ];
-
+let isFirst = false;
 interface SwapInfoProps {
   isShowSwapInfo: Boolean;
 }
@@ -117,8 +117,9 @@ function SwapInfo({
 
   function styles(isShowSwapInfo: Boolean) {
     if (isShowSwapInfo) {
+      isFirst = true;
       return Show();
-    } else {
+    } else if (!isShowSwapInfo) {
       return Hide();
     }
   }
@@ -132,23 +133,25 @@ function SwapInfo({
         ...styles(isShowSwapInfo),
       }}
     >
-      <Item>
-        <div className="Box">
-          <div className="info">
-            {accounts.map((item, index) => {
-              return (
-                <div className="item" key={index}>
-                  <div className="item-left">
-                    <span>{item.title}</span>
-                    <Question />
+      {isFirst && (
+        <Item>
+          <div className="Box">
+            <div className="info">
+              {accounts.map((item, index) => {
+                return (
+                  <div className="item" key={index}>
+                    <div className="item-left">
+                      <span>{item.title}</span>
+                      <Question />
+                    </div>
+                    <span>{item.info}</span>
                   </div>
-                  <span>{item.info}</span>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
-        </div>
-      </Item>
+        </Item>
+      )}
     </animated.div>
   );
 }

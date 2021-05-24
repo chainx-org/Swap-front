@@ -3,9 +3,9 @@ const BridgeDiv = styled.div`
   .BridegeBox {
     display: flex;
     justify-content: space-between;
-    width: 120px;
+    width: 47px;
     height: 32px;
-    margin: 0 37px 0 7px;
+    margin: 0 0px 0 7px;
     .Bridege {
       display: inline-block;
       width: 40px;

@@ -11,6 +11,7 @@ import styled from "styled-components";
 
 const WalletBox = styled.div`
   margin-left: 30px;
+  // margin: 0;
 `;
 function Header() {
   const { isExtensionInjected } = useContext(AccountsContext);
@@ -20,7 +21,8 @@ function Header() {
       <div className={"header-right"}>
         <TabList />
         <Bridege />
-        {isExtensionInjected && <Wallet />}
+        <WalletBox>{isExtensionInjected && <Wallet />}</WalletBox>
+        {/* {isExtensionInjected && <Wallet />} */}
         <SelectAccount />
       </div>
     </HeaderStyle>
