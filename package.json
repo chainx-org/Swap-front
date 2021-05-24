@@ -84,7 +84,8 @@
     "workbox-webpack-plugin": "5.1.4"
   },
   "devDependencies": {
-    "@commitlint/config-conventional": "^12.1.1",
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
     "@polkadot/extension-dapp": "^0.37.2",
     "@polkadot/typegen": "^4.2.1",
     "@testing-library/jest-dom": "^5.11.4",
