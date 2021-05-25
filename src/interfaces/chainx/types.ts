@@ -1,33 +1,12 @@
 // Auto-generated via `yarn polkadot-types-from-defs`, do not edit
 /* eslint-disable */
 
-import type {
-  BTreeMap,
-  Bytes,
-  Enum,
-  Option,
-  Struct,
-  Text,
-  Vec,
-  bool,
-  i128,
-  u128,
-  u16,
-  u32,
-  u64,
-  u8,
-} from "@polkadot/types";
-import type { ITuple } from "@polkadot/types/types";
-import type { Order } from "@polkadot/types/interfaces/parachains";
-import type {
-  AccountId,
-  AssetId,
-  Balance,
-  BlockNumber,
-  H256,
-} from "@polkadot/types/interfaces/runtime";
-import type { VoteWeight } from "@polkadot/types/interfaces/staking";
-import type { BtcAddress } from "../xGatewayBitcoinV2";
+import type { BTreeMap, Bytes, Enum, Option, Struct, Text, Vec, bool, i128, u128, u16, u32, u64, u8 } from '@polkadot/types';
+import type { ITuple } from '@polkadot/types/types';
+import type { Order } from '@polkadot/types/interfaces/parachains';
+import type { AccountId, Balance, BlockNumber, H256 } from '@polkadot/types/interfaces/runtime';
+import type { VoteWeight } from '@polkadot/types/interfaces/staking';
+import type { BtcAddress } from '../xGatewayBitcoinV2';
 
 /** @name AddrStr */
 export interface AddrStr extends Text {}
@@ -37,6 +16,9 @@ export interface Amount extends i128 {}
 
 /** @name AmountOf */
 export interface AmountOf extends Amount {}
+
+/** @name AssetId */
+export interface AssetId extends u32 {}
 
 /** @name AssetInfo */
 export interface AssetInfo extends Struct {
@@ -483,6 +465,12 @@ export interface String extends Text {}
 /** @name Token */
 export interface Token extends Text {}
 
+/** @name TokenInfo */
+export interface TokenInfo extends Struct {
+  readonly assert_id: AssetId;
+  readonly assert_info: AssetInfo;
+}
+
 /** @name TotalAssetInfo */
 export interface TotalAssetInfo extends Struct {
   readonly info: AssetInfo;
@@ -590,4 +578,4 @@ export interface WithdrawalState extends Enum {
   readonly isRootCancel: boolean;
 }
 
-export type PHANTOM_CHAINX = "chainx";
+export type PHANTOM_CHAINX = 'chainx';
