@@ -17,7 +17,8 @@ export const App: React.FC = () => {
   return (
     <>
       <LayoutWrapper id={"LayoutWrapper"}>
-        <ApiProvider url="ws://127.0.0.1:9977">
+        {/* <ApiProvider url="ws://127.0.0.1:9977"> */}
+        <ApiProvider url="wss://xbridge.spiderx.pro/ws">
           <AccountsProvider>
             <TokenProvider>
               <TransferProvider>

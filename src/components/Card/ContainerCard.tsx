@@ -5,7 +5,6 @@ import styled from "styled-components";
 const CardContainer = styled.div`
   height: fit-content;
   position: relative;
-  z-index:0;
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid #efefef;
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
@@ -36,7 +35,7 @@ const CardContainer = styled.div`
     }
   }
   .cardContent {
-    // z-index: 2;
+    z-index: 2;
     padding-top: 16px;
   }
   .card-list-content {

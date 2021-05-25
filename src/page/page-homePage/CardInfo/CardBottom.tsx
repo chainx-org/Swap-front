@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import styled from "styled-components";
-import { Button, Tooltip } from "antd";
 import NormalButton from "../../../components/Button/index";
 import ConfirmModal from "../../../components/Modal/ConfirmModal/ConfirmModal";
 import Item from "./styles/Item";
@@ -11,13 +9,15 @@ interface BottomItemProps {
   name: string;
   btnLabel: string;
   value: string;
-  swapCoinInfo?: any;
-  setIsShowSwapInfo?: any;
+  swapCoinInfo?: () => void;
+  setIsShowSwapInfo?: React.Dispatch<boolean>;
   onClick?: () => void;
-  isConfirmOpen?: any;
-  setIsConfirmOpen?: any;
-  transferStatus?: any;
-  setTransferStatus?: any;
+  isConfirmOpen?: boolean;
+  setIsConfirmOpen?: React.Dispatch<boolean>;
+  transferStatus?: "priceInfo" | "waiting" | "transactionStatus";
+  setTransferStatus?: React.Dispatch<
+    "priceInfo" | "waiting" | "transactionStatus"
+  >;
 }
 function BottomItem({
   name,
