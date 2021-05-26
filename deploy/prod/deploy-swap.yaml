@@ -17,7 +17,7 @@ spec:
         app: swap-front
     spec:
       imagePullSecrets:
-        - name: registry-key
+        - name: regcred
       containers:
         - name: container-api-prod
           image: $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:$BUILD_NUMBER
