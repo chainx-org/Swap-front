@@ -1,20 +1,20 @@
 kind: Deployment
 apiVersion: v1
 metadata:
-  name: swap-front
+  name: swap-front-svc
   namespace: pre
   labels:
-    app: swap-front
+    app: swap-front-svc
 spec:
   replicas: 4
   selector:
     matchLabels:
-      app: swap-front
+      app: swap-front-svc
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: swap-front
+        app: swap-front-svc
     spec:
       imagePullSecrets:
         - name: regcred
