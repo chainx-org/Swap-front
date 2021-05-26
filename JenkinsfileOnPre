@@ -49,8 +49,8 @@ pipeline {
                 variable: 'KUBECONFIG')
               ])
               {
-                sh 'envsubst <  deploy/pre/deploy-dex.yaml | kubectl apply -f -'
-                sh 'envsubst <  deploy/pre/deploy-dex-svc.yaml | kubectl apply -f -'
+                sh 'envsubst <  deploy/pre/deploy-swap.yaml | kubectl apply -f -'
+                sh 'envsubst <  deploy/pre/deploy-swap-svc.yaml | kubectl apply -f -'
               }
             }
 
