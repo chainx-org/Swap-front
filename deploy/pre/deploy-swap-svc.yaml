@@ -1,4 +1,4 @@
-kind: Deployment
+kind: Service
 apiVersion: v1
 metadata:
   name: swap-front-svc
