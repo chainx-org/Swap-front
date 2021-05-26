@@ -24,7 +24,6 @@ function Wallet() {
     document.addEventListener("click", hideAllMenu);
   }, []);
   const { coinList } = useContext(TokenContext);
-  console.log("coinList", coinList);
   return (
     <WalletWrapperStyle>
       {/* <WalletStyle onClick={showMenu}> */}

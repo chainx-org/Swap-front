@@ -8,7 +8,7 @@ import DogIcon from "../../../assets/symbols_DOGE.svg";
 import ETHSymbol from "../../../assets/symbols_ETH.svg";
 import DOGESymbol from "../../../assets/symbols_DOGE.svg";
 import { Result } from "antd";
-import { PriceContext } from "..";
+import { PriceContext } from "../../../hooks/PriceProvider";
 
 interface DialogCardProps {
   index?: Number;

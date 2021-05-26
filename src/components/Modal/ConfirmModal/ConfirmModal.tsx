@@ -24,118 +24,54 @@ import Mask from "../../Mask";
 import { AccountsContext } from "../../../hooks/AccountsProvider";
 import { TransferContext } from "../../../hooks/TransferProvider";
 import BigNumber from "bignumber.js";
+import BackWaitingContent from "./backWaitingContent";
+import BackPriceContent from "./backPriceContent";
 
 interface CoinNumItem {
   icon: string | undefined;
   coinIcon: string;
   coinName: string;
   coinNum: number;
+  showDecimal: number;
 }
 
 interface ConfirmCardProps {
   statusValue?: "success" | "fail";
-  confirmType: "priceInfo" | "waiting" | "transactionStatus";
-  onCancel: React.Dispatch<boolean>;
+  confirmType?: "priceInfo" | "waiting" | "transactionStatus";
+  onCancel?: React.Dispatch<boolean>;
   swapCoinInfo: any;
-  setTransferStatus: React.Dispatch<any>;
+  setTransferStatus?: React.Dispatch<any>;
   setStatusValue: React.Dispatch<any>;
-  setIsShowSwapInfo?: any;
+  setIsShowSwapInfo?: React.Dispatch<any>;
   transferStatus?: any;
 }
 
-interface PriceFieldItem {
-  fieldName: string;
-  fieldContent: string;
-}
-
 const ConfirmModal = ({
-  confirmType,
   statusValue,
   onCancel,
   swapCoinInfo,
   setTransferStatus,
   setStatusValue,
-  setIsShowSwapInfo,
   transferStatus,
 }: ConfirmCardProps): React.ReactElement<ConfirmCardProps> => {
-  const { api, isApiReady } = useContext(ApiContext);
-  const [statusIcon, setStatusIcon] = useState(confirmType);
-  const coinNumList: CoinNumItem[] = swapCoinInfo;
-  const PriceFieldList: PriceFieldItem[] = [
-    {
-      fieldName: "Price",
-      fieldContent: "15.83 XDOGE/XETH",
-    },
-    {
-      fieldName: "Minimum Received",
-      fieldContent: "15.83 XDOGE",
-    },
-    {
-      fieldName: "Price Impact",
-      fieldContent: "< 0.01%",
-    },
-    {
-      fieldName: "Liquidity Provider Fee",
-      fieldContent: "0.03926 XETH",
-    },
+  const { api } = useContext(ApiContext);
+  const coinNumList: CoinNumItem[] = [
+    { ...swapCoinInfo[0], showDecimal: 8 },
+    { ...swapCoinInfo[1], showDecimal: 4 },
   ];
-  const Price = document && document.getElementsByClassName("num");
-  // const { api, isApiReady } = useContext(ApiContext);
   const { currentAccount } = useContext(AccountsContext);
   const [blockNumber, setBlockNumber] = useState<any>(null);
   useEffect(() => {
-    api?.derive.chain.bestNumber().then((blockNumber) => {
-      setBlockNumber(Number(blockNumber));
-    });
+    api &&
+      api.derive.chain.bestNumber().then((blockNumber) => {
+        setBlockNumber(Number(blockNumber));
+      });
   }, []);
   const backPriceContent: React.ReactNode = (
-    <PriceWrapper>
-      {PriceFieldList.map((item, index) => (
-        <PriceField
-          key={index}
-          name={item.fieldName}
-          content={item.fieldContent}
-        />
-      ))}
-      <NormalButton
-        className="confirmButton"
-        label="Confirm Swap"
-        // onClick={() => confirmSwap()}
-        onClick={() => confirmSwap()}
-      />
-    </PriceWrapper>
+    <BackPriceContent confirmSwap={confirmSwap} />
   );
-
-  const backWaitingContent: React.ReactNode = (
-    <WaitingWrapper>
-      <img src={Loading} className="loading" alt="loading" />
-      <div className="waiting">waiting for confimation</div>
-      <div className="confirm">
-        Confirm this transaction in polkadot-js/extension
-      </div>
-    </WaitingWrapper>
-  );
-
+  const backWaitingContent: React.ReactNode = <BackWaitingContent />;
   const backStatusContent: React.ReactNode = (
-    // <StatusWrapper>
-    //   {statusValue === "fail" ? (
-    //     <>
-    //       <img src={Error} className="status" alt="status" />
-    //       <div className="statusValue">cause</div>
-    //     </>
-    //   ) : (
-    //     <>
-    //       <img src={Success} className="status" alt="status" />
-    //       <div className="statusValue">transaction submitted</div>
-    //     </>
-    //   )}
-    //   <NormalButton
-    //     label="Close"
-    //     onClick={() => {
-    //       setIsShowSwapInfo(false);
-    //     }}
-    //   />
-    // </StatusWrapper>
     <BackStatusContent statusValue={statusValue} onCancel={onCancel} />
   );
 
@@ -152,8 +88,7 @@ const ConfirmModal = ({
         break;
     }
   };
-  // const Price:any = useRef()
-  const { errorMessage, setErrorMessage } = useContext(TransferContext);
+  const { setErrorMessage } = useContext(TransferContext);
   const confirmTransfer = (swapCoinInfo: any) => {
     let hasPCX = false;
     for (let i = 0; i < swapCoinInfo.length; i++) {
@@ -173,19 +108,15 @@ const ConfirmModal = ({
     let amount2 = new BigNumber(swapCoinInfo[1].coinNum);
     let decimal = new BigNumber(Math.pow(10, swapCoinInfo[0].decimals));
     let allowDecimal = decimal.multipliedBy(0.99);
-    // console.log("allownum", Number(amount2.multipliedBy(allowDecimal)));
-    // console.log("falseallownum", Number(amount.multipliedBy(allowDecimal)));
     async function transfer() {
       if (api) {
         try {
           const injector = await web3FromAddress(currentAccount.address);
           api.setSigner(injector.signer);
-          setTransferStatus("waiting");
+          setTransferStatus && setTransferStatus("waiting");
           api.tx.swap
             .swapExactTokensForTokens(
-              // swapCoinInfo[0].coinNum * Math.pow(10, swapCoinInfo[0].decimals),
               Number(amount.multipliedBy(decimal)),
-              // 0.0001, // 最小交易量
               Number(amount2.multipliedBy(allowDecimal)),
               // Number(amount.multipliedBy(allowDecimal)),
               [swapCoinInfo[0].id, swapCoinInfo[1].id],
@@ -197,12 +128,14 @@ const ConfirmModal = ({
               { signer: injector.signer },
               (statusData) => {
                 const formatStatusData = JSON.parse(JSON.stringify(statusData));
-                // setTransferStatus("waiting");
-                if (formatStatusData.dispatchInfo&&!formatStatusData.dispatchError){
-                setTransferStatus("transactionStatus");
-                setStatusValue("success");
-                } else if (formatStatusData.dispatchError){
-                  setTransferStatus("transactionStatus");
+                if (
+                  formatStatusData.dispatchInfo &&
+                  !formatStatusData.dispatchError
+                ) {
+                  setTransferStatus && setTransferStatus("transactionStatus");
+                  setStatusValue("success");
+                } else if (formatStatusData.dispatchError) {
+                  setTransferStatus && setTransferStatus("transactionStatus");
                   setStatusValue("fail");
                   setErrorMessage(
                     `error: ${formatStatusData.dispatchError.module.error}
@@ -212,7 +145,7 @@ const ConfirmModal = ({
               }
             )
             .catch((error) => {
-              setTransferStatus("transactionStatus");
+              setTransferStatus && setTransferStatus("transactionStatus");
               setStatusValue("fail");
               let errorMessage = error.toString();
               var index = errorMessage.lastIndexOf("e.g.");
@@ -221,12 +154,10 @@ const ConfirmModal = ({
                   ? errorMessage.substring(index + 4, errorMessage.length)
                   : errorMessage;
               setErrorMessage(errorMessage);
-              // console.log("error", error);
             });
         } catch (err) {
-          setTransferStatus("transactionStatus");
+          setTransferStatus && setTransferStatus("transactionStatus");
           setStatusValue("fail");
-          // console.log(err);
         }
       }
     }
@@ -248,42 +179,19 @@ const ConfirmModal = ({
         >
           <CoinInfoWrapper>
             <div className="numWrapper">
-              {
-                // coinNumList.map((item: CoinNumItem, index) => (
-                //   <div className="numInfo" key={index}>
-                //     <div className="coinName">
-                //       {/* <span>{item.coinIcon}</span> */}
-                //       <img src={item.icon} alt="" />
-                //       <div className="name">{item.coinName}</div>
-                //     </div>
-                //     <div className="num">
-                //       {parseFloat(`${item.coinNum}`).toFixed(8)}
-                //     </div>
-                //   </div>
-                // ))
-                <>
-                  <div className="numInfo">
-                    <div className="coinName">
-                      {/* <span>{item.coinIcon}</span> */}
-                      <img src={coinNumList[0].icon} alt="" />
-                      <div className="name">{coinNumList[0].coinName}</div>
-                    </div>
-                    <div className="num">
-                      {Number(coinNumList[0].coinNum).toFixed(8)}
-                    </div>
+              {coinNumList.map((item: CoinNumItem, index) => (
+                <div className="numInfo" key={index}>
+                  <div className="coinName">
+                    {/* <span>{item.coinIcon}</span> */}
+                    <img src={item.icon} alt="" />
+                    <div className="name">{item.coinName}</div>
                   </div>
-                  <div className="numInfo">
-                    <div className="coinName">
-                      {/* <span>{item.coinIcon}</span> */}
-                      <img src={coinNumList[1].icon} alt="" />
-                      <div className="name">{coinNumList[1].coinName}</div>
-                    </div>
-                    <div className="num">
-                      {Number(coinNumList[1].coinNum).toFixed(4)}
-                    </div>
+                  <div className="num">
+                    {/* {parseFloat(`${item.coinNum}`).toFixed(8)} */}
+                    {Number(item.coinNum).toFixed(item.showDecimal)}
                   </div>
-                </>
-              }
+                </div>
+              ))}
             </div>
             <img className="arrowDown" src={ArrowBlack} alt="" />
           </CoinInfoWrapper>

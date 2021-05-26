@@ -6,8 +6,8 @@ import { Tooltip, Card } from "antd";
 import styled from "styled-components";
 import { ApiContext } from "../../../hooks/ApiProvider";
 import { TokenContext } from "../../../hooks/TokenProvider";
-import { PriceContext } from "..";
 import { canFirstSwap, canSecondSwap } from "../../../helper/canSwap";
+import { PriceContext } from "../../../hooks/PriceProvider";
 const Item = styled(Tooltip)`
   .title-info {
     display: flex;
