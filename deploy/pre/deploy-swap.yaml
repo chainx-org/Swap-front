@@ -2,7 +2,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: swap-front
-  namespace: pre
+  namespace: chainx-pre
   labels:
     app: swap-front
 spec:

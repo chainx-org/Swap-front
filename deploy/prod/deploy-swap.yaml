@@ -2,7 +2,7 @@ kind: Deployment
 apiVersion: appsv1
 metadata:
   name: swap-front
-  namespace: prod
+  namespace: chainx-prod
   labels:
     app: swap-front
 spec:
