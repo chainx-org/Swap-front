@@ -19,7 +19,6 @@ export const SelectAccountStyle = styled.div`
       margin-left: 8px;
       margin-right: 8px;
       margin-top: -4px;
-      // & > svg {
       svg {
         width: 16px;
         height: 16px;
@@ -35,7 +34,6 @@ export const SelectAccountStyle = styled.div`
   }
   .account-info {
     display: flex;
-    // width: 222px;
     width: auto;
     height: 32px;
     cursor: pointer;
@@ -59,7 +57,6 @@ export const SelectAccountStyle = styled.div`
       justify-content: space-between;
       .current-icon {
         margin-right: 8px;
-        // margin-top: -4px;
         svg {
           width: 16px;
           height: 16px;
@@ -70,7 +67,6 @@ export const SelectAccountStyle = styled.div`
         width: 82px;
         height: 17px;
         line-height: 17px;
-        // box-sizing: content-box;
         font-family: PingFangSC-Medium;
         font-size: 12px;
         color: #282828;
@@ -82,7 +78,6 @@ export const SelectAccountStyle = styled.div`
       }
     }
     .current-address {
-      // width: 82px;
       height: 20px;
       line-height: 20px;
       margin-right: 16px;
@@ -91,8 +86,6 @@ export const SelectAccountStyle = styled.div`
       color: #282828;
       font-weight: 400;
       overflow: hidden;
-      // text-overflow: ellipsis;
-      // white-space: nowrap;
     }
   }
   .current-name {
@@ -110,7 +103,6 @@ export const SelectAccountStyle = styled.div`
     white-space: nowrap;
   }
   .current-address {
-    // width: 82px;
     height: 20px;
     line-height: 20px;
     margin-right: 16px;
@@ -119,7 +111,5 @@ export const SelectAccountStyle = styled.div`
     color: #282828;
     font-weight: 400;
     overflow: hidden;
-    // text-overflow: ellipsis;
-    // white-space: nowrap;
   }
 `;

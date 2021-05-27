@@ -3,7 +3,6 @@ import { animated, useSpring, config } from "react-spring";
 import styled from "styled-components";
 import { ReactComponent as Question } from "../../../assets/icon_question.svg";
 const Item = styled.div`
-  // position:fixed;
   left:50%;
   z-index:-10;
   .Box {
@@ -28,7 +27,6 @@ const Item = styled.div`
             margin-top:12px;
             & > span:nth-child(1) {
                 display: inline-block;
-                //   height: 17px;
                 text-align: right;
                 letter-spacing: 0.1px;
                 font-size: 12px;
@@ -52,7 +50,6 @@ const Item = styled.div`
                 flex-direction:row;
                 & > span:nth-child(1) {
                     display: inline-block;
-                    //   height: 17px;
                     text-align: right;
                     letter-spacing: 0.1px;
                     line-height: 17px;
@@ -83,10 +80,6 @@ const Item = styled.div`
   
 `;
 const accounts = [
-  // {
-  //   title: "Maximum Sold",
-  //   info: "15.83 DOT",
-  // },
   { title: "Price Impact", info: "< 0.01%" },
   { title: "Liquidity Provider Fee", info: "0" },
 ];

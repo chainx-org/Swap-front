@@ -52,7 +52,6 @@ export const DialogItem = styled.div`
       width: 100px;
       height: 64px;
       margin-left:16px;
-      // margin-right:100px;
       align-items: center;
       .left-icon{
         width:20px;
@@ -98,7 +97,6 @@ export const DialogItem = styled.div`
       }
     }
     .right-item {
-      // width: 111px;
       height: 20px;
       margin:22px; 24px;
       line-height: 20px;
