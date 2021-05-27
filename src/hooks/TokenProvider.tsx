@@ -16,6 +16,7 @@ import pcx from "../assets/chainx-pcx.svg";
 import XDOT from "../assets/symbols_DOT.svg";
 import White from "../assets/white.png";
 import { BigNumber } from "bignumber.js";
+import { Json } from "@polkadot/types";
 export interface TokenData {
   tokenList: TokenItem[] | [];
   setTokenList: React.Dispatch<any>;
@@ -51,12 +52,11 @@ export interface CoinItem {
 
 export const TokenContext = createContext<TokenData>({} as TokenData);
 
-const balanceType: string[] = ["PCX", "XBTC", "XETH", "XDOGE", "XBCH", "XDOT"];
-
 export const TokenProvider: FC = ({ children }) => {
   const { api, isApiReady } = useContext(ApiContext);
   const { currentAccount } = useContext(AccountsContext);
   const [accountBalance, setAccountBalance] = useState<AccountBalance | {}>({});
+  const [balanceType, setBalanceType] = useState([""]);
   const [tokenList, setTokenList] = useState<TokenItem[] | []>([]);
   const [coinList, setCoinList] = useState([
     {
@@ -82,24 +82,33 @@ export const TokenProvider: FC = ({ children }) => {
     } else {
       setCoinList([...localCoinList]);
     }
-  }, []);
+  }, [isApiReady, tokenList, currentAccount.address]);
 
   useEffect(() => {
-      if (isApiReady && api) {
-        //@ts-ignore
-        api.rpc.swap.getTokenList().then((list) => {
-          list.length &&
-            setTokenList(
-              list.map((i: any) => ({
-                id: Number(i.assetId),
-                unit: i.assetInfo.token.toString(),
-                name: i.assetInfo.chain.toString(),
-                decimals: Number(i.assetInfo.decimals),
-              }))
-            );
+    if (isApiReady && api) {
+      //@ts-ignore
+
+      api.rpc.swap.getTokenList().then((list) => {
+        list.length &&
+          setTokenList(
+            list.map((i: any) => ({
+              id: Number(i.assetId),
+              unit: i.assetInfo.token.toString(),
+              name: i.assetInfo.chain.toString(),
+              decimals: Number(i.assetInfo.decimals),
+            }))
+          );
+        setBalanceType([]);
+        let coinNameResult = JSON.stringify(list);
+        let result = JSON.parse(coinNameResult);
+        let resultCoin: string[] = [];
+        result.map((item: any) => {
+          resultCoin.push(item.assetInfo.token);
         });
-      }
-  }, [isApiReady, currentAccount.address]);
+        setBalanceType(resultCoin);
+      });
+    }
+  }, [isApiReady, currentAccount.address, api]);
 
   function addCoinIcon(accountList: any) {
     accountList.map((item: any) => {
@@ -122,7 +131,11 @@ export const TokenProvider: FC = ({ children }) => {
         case "XDOT":
           item.icon = XDOT;
           break;
+        case "CBTC":
+          item.icon = BtcIcon;
+          break;
         default:
+          item.icon = XDOT;
           break;
       }
     });
@@ -134,16 +147,15 @@ export const TokenProvider: FC = ({ children }) => {
         addCoinIcon(tokenList);
         let result: any[] = [];
         const promiseList: Promise<void>[] = [];
-        tokenList.map((t: TokenItem) => {
+        tokenList.map((t: TokenItem, i: any) => {
           const promise = new Promise<void>((resolve, reject) => {
             //@ts-ignore
             api.rpc.swap
               .getBalance(t.id, currentAccount.address)
               .then((balance: any) => {
                 result.push({
-                  ...accountBalance,
-                  [balanceType[t.id]]: {
-                    id: t.id,
+                  [balanceType[i]]: {
+                    id: i,
                     unit: t.unit,
                     name: t.name,
                     decimals: t.decimals,
@@ -162,20 +174,16 @@ export const TokenProvider: FC = ({ children }) => {
         Promise.all(promiseList).then(() => {
           let coinBalance: any = addCoinBalance(tokenList, result);
           setCoinList([...coinBalance]);
-          //input into localStorage
           localStorage.setItem("coinList", JSON.stringify([...coinBalance]));
           result = [];
           setAccountBalance({});
         });
-      } 
-      // else {
-      //   console.log("tokenList为空");
-      // }
+      }
     }, 1000);
     return () => {
       clearInterval(timer);
     };
-  }, [isApiReady, currentAccount.address, tokenList]);
+  }, [isApiReady, currentAccount.address, tokenList, []]);
 
   function accuracy(decimalsInput: number, balance: number) {
     let accuracyResult = new BigNumber(balance);
@@ -190,7 +198,6 @@ export const TokenProvider: FC = ({ children }) => {
       const keys = Object.keys(item);
       accountList.map(
         (child: { unit: string; coinBalance: any; decimals: any }) => {
-          // debugger;
           if (child.unit === keys[0]) {
             child.decimals = item[keys[0]]["decimals"];
             child.coinBalance = accuracy(

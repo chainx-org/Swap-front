@@ -118,7 +118,6 @@ const ConfirmModal = ({
             .swapExactTokensForTokens(
               Number(amount.multipliedBy(decimal)),
               Number(amount2.multipliedBy(allowDecimal)),
-              // Number(amount.multipliedBy(allowDecimal)),
               [swapCoinInfo[0].id, swapCoinInfo[1].id],
               currentAccount.address,
               blockNumber + 100
@@ -182,12 +181,10 @@ const ConfirmModal = ({
               {coinNumList.map((item: CoinNumItem, index) => (
                 <div className="numInfo" key={index}>
                   <div className="coinName">
-                    {/* <span>{item.coinIcon}</span> */}
                     <img src={item.icon} alt="" />
                     <div className="name">{item.coinName}</div>
                   </div>
                   <div className="num">
-                    {/* {parseFloat(`${item.coinNum}`).toFixed(8)} */}
                     {Number(item.coinNum).toFixed(item.showDecimal)}
                   </div>
                 </div>

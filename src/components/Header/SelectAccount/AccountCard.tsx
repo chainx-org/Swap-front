@@ -22,7 +22,6 @@ function AccountCard() {
   const { currentAccount, isExtensionInjected } = useContext(AccountsContext);
   const [name, setName] = useState(currentAccount.name);
   const [address, setAddress] = useState(currentAccount.address);
-  // const [theme, setTheme] = useState(currentAccount.theme);
   const [hasAccount, setHasAccount] = useState(isExtensionInjected);
   const selectAccountList = (e: any) => {
     e.nativeEvent.stopImmediatePropagation();
