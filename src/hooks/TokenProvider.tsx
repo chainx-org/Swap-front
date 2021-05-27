@@ -102,16 +102,14 @@ export const TokenProvider: FC = ({ children }) => {
             }))
           );
         setBalanceType([]);
-        console.log(JSON.stringify(list), "list");
         let coinNameResult = JSON.stringify(list);
         let result = JSON.parse(coinNameResult);
         let resultCoin: string[] = [];
         result.map((item: any) => {
-          console.log(item.assetInfo, item.assetId);
           resultCoin.push(item.assetInfo.token);
         });
         setBalanceType(resultCoin);
-        // console.log(resultCoin, "resultCoin");
+        console.log(resultCoin, "resultCoin");
       });
     }
   }, [isApiReady, currentAccount.address, api]);
@@ -161,8 +159,10 @@ export const TokenProvider: FC = ({ children }) => {
               .then((balance: any) => {
                 result.push({
                   // ...accountBalance,
+                  // [balanceType[t.id]]: {
                   [balanceType[i]]: {
-                    id: t.id,
+                    // id: t.id,
+                    id: i,
                     unit: t.unit,
                     name: t.name,
                     decimals: t.decimals,
@@ -182,7 +182,6 @@ export const TokenProvider: FC = ({ children }) => {
           let coinBalance: any = addCoinBalance(tokenList, result);
           setCoinList([...coinBalance]);
           //input into localStorage
-          console.log("localCoinList", coinBalance);
           localStorage.setItem("coinList", JSON.stringify([...coinBalance]));
           result = [];
           setAccountBalance({});
