@@ -11,6 +11,6 @@ export const HeaderStyle = styled.div`
   .header-right {
     display: flex;
     position: relative;
-    z-index: 999;
+    // z-index: 999;
   }
 `;
