@@ -22,15 +22,12 @@ function DialogCard({
 }: DialogCardProps): React.ReactElement<DialogCardProps> {
   const { tokenList, coinList } = useContext(TokenContext);
   const [account, setAccount] = useState(coinList);
-  const {
-    setInPrice,
-    setOutPrice,
-  } = useContext(PriceContext)
-  const clickItem = (item: any, index: any) => {
-    addCoinItem(item, index);
+  const { setInPrice, setOutPrice } = useContext(PriceContext);
+  const clickItem = (item: any, index: any, i: any) => {
+    addCoinItem(item, index, i);
     onCancel(false);
-    setInPrice(null)
-    setOutPrice(null)
+    setInPrice(null);
+    setOutPrice(null);
   };
   useEffect(() => {
     setAccount(coinList);
@@ -45,13 +42,12 @@ function DialogCard({
             title="Select a token"
             className={"card-list-content"}
           >
-            
             {account.map((item: any, i: any) => {
               return (
                 <DialogItem key={i}>
                   <div
                     className="item"
-                    onClick={() => clickItem(item, { index })}
+                    onClick={() => clickItem(item, { index }, i)}
                   >
                     <div className="left-item">
                       <div className="left-coinIcon">
