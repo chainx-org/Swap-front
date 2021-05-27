@@ -167,7 +167,6 @@ export const PriceProvider: FC = ({ children }) => {
     ]);
   };
   const addCoin = (item: any, index: any, i: any) => {
-    debugger;
     if (
       coinInfo.some((n: { unit: any }) => {
         return n.unit === item.unit;
@@ -189,7 +188,6 @@ export const PriceProvider: FC = ({ children }) => {
     clearCoinInput();
   };
   const exChangeIcon = () => {
-    debugger;
     let a = firstItemId;
     let b = secondItemId;
     setFirstItemId(b);

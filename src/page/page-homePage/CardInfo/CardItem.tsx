@@ -141,6 +141,7 @@ const Item = styled(Tooltip)`
         font-family: PingFangSC-Medium, PingFang SC;
         font-weight: 500;
         line-height: 20px;
+        cursor: pointer;
       }
     }
   }

@@ -6,6 +6,7 @@ const BridgeDiv = styled.div`
     width: 47px;
     height: 32px;
     margin: 0 0px 0 7px;
+    cursor: pointer;
     .Bridege {
       display: inline-block;
       width: 40px;
