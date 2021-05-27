@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const CoinInfoWrapper = styled.div`
   position: relative;
-  .arrowDown{
+  .arrowDown {
     position: absolute;
     width: 16px;
     height: 16px;
@@ -10,41 +10,41 @@ export const CoinInfoWrapper = styled.div`
     left: 50%;
     transform: translateX(-50%);
   }
-  .numWrapper{
+  .numWrapper {
     width: 100%;
     padding: 29.5px 72px 14.5px 72px;
-    .numInfo{
-      background: rgba(255,255,255,0.90);
-      border: 1px solid #EFEFEF;
+    .numInfo {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid #efefef;
       border-radius: 20px;
       white-space: nowrap;
       display: flex;
       align-items: center;
       justify-content: space-between;
       width: 256px;
-  
-      .coinName{
+
+      .coinName {
         display: flex;
         align-items: center;
         padding: 10px 89px 10px 10px;
-        > span,img{
-          // width: 20px;
+        > span,
+        img {
           height: 20px;
           padding-right: 6px;
         }
-        .name{
+        .name {
           font-size: 14px;
           color: #282828;
           font-weight: 500;
         }
       }
-      .num{
+      .num {
         font-size: 14px;
         color: #282828;
         font-weight: 500;
         padding: 10px 16px 10px 0;
       }
-      &:first-child{
+      &:first-child {
         margin-bottom: 48px;
       }
     }
@@ -53,30 +53,30 @@ export const CoinInfoWrapper = styled.div`
 
 export const PriceWrapper = styled.div`
   padding: 16px;
-  
-  .field{
+
+  .field {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding-bottom: 12px;
-    .fieldName{
+    .fieldName {
       font-size: 12px;
-      color: #908E8E;
+      color: #908e8e;
       line-height: 17px;
     }
-    .fieldContent{
+    .fieldContent {
       font-family: PingFangSC-Medium;
       font-size: 12px;
-      color: #3F3F3F;
+      color: #3f3f3f;
       font-weight: 500;
       line-height: 17px;
     }
   }
-  
-  .confirmButton{
+
+  .confirmButton {
     margin-top: 12px;
     width: 368px;
-  } 
+  }
 `;
 
 export const WaitingWrapper = styled.div`
@@ -84,11 +84,11 @@ export const WaitingWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 40px 28px;
-  .loading{
+  .loading {
     height: 100px;
     width: 100px;
   }
-  .waiting{
+  .waiting {
     font-size: 20px;
     color: #000000;
     text-align: center;
@@ -96,10 +96,10 @@ export const WaitingWrapper = styled.div`
     font-weight: 500;
     font-family: PingFangSC-Medium;
   }
-  .confirm{
+  .confirm {
     font-family: PingFangSC-Regular;
     font-size: 14px;
-    color: #908E8E;
+    color: #908e8e;
     text-align: center;
     line-height: 28px;
     font-weight: 400;
@@ -111,12 +111,12 @@ export const StatusWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  .status{
+  .status {
     width: 64px;
     height: 64px;
     margin-bottom: 12px;
   }
-  .statusValue{
+  .statusValue {
     font-family: PingFangSC-Medium;
     font-size: 20px;
     color: #000000;
@@ -133,4 +133,4 @@ export const ConfirmModalWrapper = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -85%);
-`
+`;

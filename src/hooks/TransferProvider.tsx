@@ -9,13 +9,11 @@ interface TransferProps {
   setErrorMessage?: any;
 }
 
-export const TransferContext: React.Context<TransferProps> = React.createContext(
-  {} as unknown as TransferProps
-);
+export const TransferContext: React.Context<TransferProps> =
+  React.createContext({} as unknown as TransferProps);
 
 interface Props {
   children: React.ReactNode;
-  //   url?: string;
 }
 
 function TransferProvider({ children }: Props): React.ReactElement<Props> {

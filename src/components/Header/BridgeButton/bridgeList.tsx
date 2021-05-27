@@ -21,7 +21,6 @@ const DropListStyle = styled.div`
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
   border-radius: 10px;
   ul {
-    // padding: 13px 16px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -49,7 +48,6 @@ const DropListStyle = styled.div`
       width: 36px;
       height: 36px;
       margin-right: 8px;
-      // border: 1px solid red;
     }
     .item-right {
       display: flex;

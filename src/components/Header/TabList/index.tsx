@@ -66,8 +66,6 @@ class TabList extends React.Component<MyState, any> {
               className={`linkName ${
                 this.state.currentActive === "Pool" ? "active" : ""
               }`}
-              // onClick={this.changeFlag.bind(this, "Pool")}
-              // dis
             >
               Pool
             </Link>

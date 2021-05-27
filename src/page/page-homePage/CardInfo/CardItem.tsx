@@ -65,7 +65,6 @@ const Item = styled(Tooltip)`
             width: 20px;
             height: 20px;
           }
-          // border: 1px solid black;
         }
         & > span:nth-child(1) {
           display: inline-block;
@@ -107,7 +106,6 @@ const Item = styled(Tooltip)`
         background: #f7f8fa;
         position: static;
         z-index: 0;
-        // border: 1px solid #d9d9d9;
         border-radius: 12px;
       }
       .ant-input-affix-wrapper {
@@ -275,7 +273,6 @@ function CurrencyItem({
           {currencyTitle === "From" ? (
             <div>
               <Input
-                // suffix="MAX"
                 placeholder="0.0"
                 onChange={(e) => {
                   e.target.value = inputNumberOnly(e.target.value);
@@ -283,9 +280,7 @@ function CurrencyItem({
                   setNumber(number + 1);
                 }}
                 value={inPrice}
-              >
-                {/* <div onClick={inputMax}>MAX</div> */}
-              </Input>
+              ></Input>
               <div className="max-button" onClick={inputMax}>
                 MAX
               </div>

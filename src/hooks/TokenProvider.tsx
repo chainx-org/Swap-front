@@ -52,9 +52,6 @@ export interface CoinItem {
 
 export const TokenContext = createContext<TokenData>({} as TokenData);
 
-// let balanceType: string[] = ["PCX", "XBTC", "XETH", "XDOGE", "XBCH", "XDOT"];
-// let balanceType: string[] = [];
-
 export const TokenProvider: FC = ({ children }) => {
   const { api, isApiReady } = useContext(ApiContext);
   const { currentAccount } = useContext(AccountsContext);
@@ -109,7 +106,6 @@ export const TokenProvider: FC = ({ children }) => {
           resultCoin.push(item.assetInfo.token);
         });
         setBalanceType(resultCoin);
-        console.log(resultCoin, "resultCoin");
       });
     }
   }, [isApiReady, currentAccount.address, api]);
@@ -158,10 +154,7 @@ export const TokenProvider: FC = ({ children }) => {
               .getBalance(t.id, currentAccount.address)
               .then((balance: any) => {
                 result.push({
-                  // ...accountBalance,
-                  // [balanceType[t.id]]: {
                   [balanceType[i]]: {
-                    // id: t.id,
                     id: i,
                     unit: t.unit,
                     name: t.name,
@@ -181,15 +174,11 @@ export const TokenProvider: FC = ({ children }) => {
         Promise.all(promiseList).then(() => {
           let coinBalance: any = addCoinBalance(tokenList, result);
           setCoinList([...coinBalance]);
-          //input into localStorage
           localStorage.setItem("coinList", JSON.stringify([...coinBalance]));
           result = [];
           setAccountBalance({});
         });
       }
-      // else {
-      //   console.log("tokenList为空");
-      // }
     }, 1000);
     return () => {
       clearInterval(timer);

@@ -33,8 +33,6 @@ interface PriceData {
 
 export const PriceContext = createContext<PriceData>({} as PriceData);
 
-// const balanceType: string[] = ["PCX", "XBTC", "XETH", "XDOGE", "XBCH", "XDOT"];
-
 export const PriceProvider: FC = ({ children }) => {
   let [number, setNumber] = useState(0);
   let [number2, setNumber2] = useState(0);
@@ -178,10 +176,8 @@ export const PriceProvider: FC = ({ children }) => {
     coinInfo[index.index] = item;
     let list = coinInfo;
     if (index.index === 0) {
-      // setFirstItemId(item.id);
       setFirstItemId(i);
     } else {
-      // setSecondItemId(item.id);
       setSecondItemId(i);
     }
     setCoinInfo([...list]);
