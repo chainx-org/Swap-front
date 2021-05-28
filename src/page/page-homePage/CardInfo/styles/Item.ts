@@ -38,7 +38,6 @@ const Item = styled(Tooltip)`
     position: static;
     background: #FDC9C9;
     border-radius: 12px;
-    // filter: blur(10px);
   }
   .insufficient-swap:hover {
     color: white;
