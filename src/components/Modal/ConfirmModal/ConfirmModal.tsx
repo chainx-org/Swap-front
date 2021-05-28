@@ -117,7 +117,6 @@ const ConfirmModal = ({
             .swapExactTokensForTokens(
               Number(amount.multipliedBy(decimal)),
               Number(amount2.multipliedBy(allowDecimal)),
-              // [swapCoinInfo[0].id, swapCoinInfo[1].id],
               arr,
               currentAccount.address,
               blockNumber + 100
@@ -127,7 +126,6 @@ const ConfirmModal = ({
               { signer: injector.signer },
               (statusData) => {
                 const formatStatusData = JSON.parse(JSON.stringify(statusData));
-                console.log(formatStatusData, "formatStatusData");
                 if (
                   formatStatusData.dispatchInfo &&
                   !formatStatusData.dispatchError
