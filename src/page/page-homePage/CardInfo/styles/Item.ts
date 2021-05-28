@@ -29,6 +29,20 @@ const Item = styled(Tooltip)`
     .ant-btn {
     }
   }
+  .insufficient-swap{
+    width: 392px;
+    height: 44px;
+    padding-left: 16px;
+    padding-right: 16px;
+    margin: 8px 0px 15px 16px;
+    position: static;
+    background: #FDC9C9;
+    border-radius: 12px;
+    // filter: blur(10px);
+  }
+  .insufficient-swap:hover {
+    color: white;
+  }
   .cannot-swap {
     width: 392px;
     height: 44px;
@@ -39,6 +53,10 @@ const Item = styled(Tooltip)`
     background: #b8b8b9;
     border-radius: 12px;
   }
+  .cannot-swap:hover {
+    color: white;
+  }
+  
   .title-info {
     display: flex;
     justify-content: space-between;

@@ -140,7 +140,14 @@ const HomePage = (): React.ReactElement => {
                       ? `Insufficient ${coinInfo[0].unit} Balance`
                       : ``
                   }
-                  className="cannot-swap"
+                  // className="cannot-swap"
+                  className={
+                    !inPrice || !outPrice
+                      ? `cannot-swap`
+                      : inPrice && outPrice && !coinInput[0].canSwap
+                      ? `insufficient-swap`
+                      : ``
+                  }
                   setIsShowSwapInfo={setIsShowSwapInfo}
                 />
               ) : coinInput[0].canSwap ? (
