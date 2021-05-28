@@ -10,6 +10,7 @@ export const WalletStyle = styled.div`
   justify-content: center;
   font-weight: bold;
   font-size: 14px;
+  cursor: pointer;
   img {
     margin-right: 8.56px;
   }

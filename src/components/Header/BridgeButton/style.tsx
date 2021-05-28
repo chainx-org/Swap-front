@@ -30,6 +30,12 @@ const BridgeDiv = styled.div`
       text-align: center;
       color: black;
     }
+    .BridgeList {
+      display: none;
+    }
+    &:hover .BridgeList {
+      display: block;
+    }
   }
 `;
 

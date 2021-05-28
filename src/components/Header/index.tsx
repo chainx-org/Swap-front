@@ -18,7 +18,7 @@ function Header() {
     <HeaderStyle>
       <ChainStatus />
       <div className={"header-right"}>
-        <TabList />
+        {/* <TabList /> */}
         <Bridege />
         <WalletBox>{isExtensionInjected && <Wallet />}</WalletBox>
         {/* {isExtensionInjected && <Wallet />} */}
