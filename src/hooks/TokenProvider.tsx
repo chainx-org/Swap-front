@@ -12,7 +12,7 @@ import ETHSymbol from "../assets/symbols_ETH.svg";
 import DOGESymbol from "../assets/symbols_DOGE.svg";
 import BtcIcon from "../assets/symbols_BTC.svg";
 import BhcIcon from "../assets/symbols_BHC.svg";
-import pcx from "../assets/chainx-pcx.svg";
+import pcx from "../assets/PCX.svg";
 import XDOT from "../assets/symbols_DOT.svg";
 import White from "../assets/white.png";
 import { BigNumber } from "bignumber.js";

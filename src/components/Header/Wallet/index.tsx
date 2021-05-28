@@ -45,9 +45,6 @@ function Wallet() {
           </ul>
         </div>
       </WalletStyle>
-      {/* {dropToggle && ( */}
-      {/* <DropListStyle></DropListStyle> */}
-      {/* )} */}
     </WalletWrapperStyle>
   );
 }

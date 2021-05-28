@@ -74,7 +74,6 @@ const ConfirmModal = ({
   const backStatusContent: React.ReactNode = (
     <BackStatusContent statusValue={statusValue} onCancel={onCancel} />
   );
-
   const judgeConfirmType = (type: string): React.ReactNode => {
     switch (type) {
       case "priceInfo":
@@ -168,9 +167,9 @@ const ConfirmModal = ({
   }
 
   return (
-    <>
+    <div>
       <Mask />
-      <ConfirmModalWrapper>
+      <ConfirmModalWrapper className="confirmBox">
         <ContainerCard
           onCancel={onCancel}
           title="Confirm Swap"
@@ -194,7 +193,7 @@ const ConfirmModal = ({
           </CoinInfoWrapper>
         </ContainerCard>
       </ConfirmModalWrapper>
-    </>
+    </div>
   );
 };
 

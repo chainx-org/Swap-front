@@ -1,33 +1,5 @@
 import styled from "styled-components";
 
-export const DivDialog = styled.div`
-  .mask {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0px;
-    background-color: #000;
-    opacity: 0.4;
-    color: #f00;
-    z-index: 400;
-  }
-  .content {
-    position: fixed;
-    width: 356px;
-    left: 38%;
-    top: 35%;
-    opacity: 1;
-    background-color: #fff;
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid #efefef;
-    border-radius: 24px 24px 16px 16px;
-    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
-    z-index: 7;
-  }
-`;
-
 export const DialogItemList = styled.div`
   .itemBox {
     width: 356px;
@@ -107,4 +79,6 @@ export const DialogItem = styled.div`
       font-weight: 500;
     }
   }
+
+
 `;
