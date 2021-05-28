@@ -188,10 +188,10 @@ export const PriceProvider: FC = ({ children }) => {
     let b = secondItemId;
     setFirstItemId(b);
     setSecondItemId(a);
-    // clearCoinInput();
+    clearCoinInput();
     // setInPrice(outPrice);
     setOutPrice(inPrice);
-    setInPrice(null);
+    // setInPrice(null);
     setNumber2(inPrice);
     setCoinInfo([coinList[firstItemId], coinList[secondItemId]]);
     setTokenList([...tokenList]);
