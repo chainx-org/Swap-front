@@ -107,4 +107,6 @@ export const DialogItem = styled.div`
       font-weight: 500;
     }
   }
+
+
 `;

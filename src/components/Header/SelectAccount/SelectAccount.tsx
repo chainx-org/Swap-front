@@ -29,7 +29,19 @@ const DropListStyle = styled.div`
     & > li:last-child {
       height: 87px;
     }
+    & > div:hover {
+      background: #fef8e8;
+    }
+    & > div:first-child:hover {
+      background: #fef8e8;
+      border-radius: 8px 8px 0px 0px;
+    }
+    & > div:last-child:hover {
+      background: #fef8e8;
+      border-radius: 0px 0px 8px 8px;
+    }
   }
+
   li {
     height: 70px;
     width: 100%;
@@ -37,6 +49,7 @@ const DropListStyle = styled.div`
     flex-direction: column;
     justify-content: space-between;
   }
+
   .assets-item {
     padding: 13px 16px;
     height: 70px;
@@ -72,6 +85,17 @@ const DropListStyle = styled.div`
 
 const Wrapper = styled.div`
   cursor: pointer;
+  // li:hover {
+  //   background: #fef8e8;
+  // }
+  // li:first-child:hover {
+  //   background: #fef8e8;
+  //   border-radius: 18px 18px 0px 0px;
+  // }
+  // li:last-child:hover {
+  //   background: #fef8e8;
+  //   border-radius: 0px 0px 8px 8px;
+  // }
 `;
 
 function SelectAccount() {

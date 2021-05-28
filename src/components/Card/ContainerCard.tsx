@@ -40,6 +40,19 @@ const CardContainer = styled.div`
   }
   .card-list-content {
     z-index: 2;
+    & > div:hover {
+      background: #fef8e8;
+      width: 100%;
+      height: 100%;
+      box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.15);
+    }
+    & > div:last-child:hover {
+      background: #fef8e8;
+      width: 100%;
+      height: 100%;
+      box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.15);
+      border-radius: 0px 0px 8px 8px;
+    }
   }
   .backContent {
     position: absolute;
