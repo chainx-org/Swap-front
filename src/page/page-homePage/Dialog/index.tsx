@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { DialogItem, DivDialog } from "./style";
+import { DialogItem } from "./style";
 import ContainerCard from "../../../components/Card/ContainerCard";
 import Mask from "../../../components/Mask";
 import BigNumber from "bignumber.js";
