@@ -13,7 +13,7 @@ import {
   web3Accounts,
 } from "@polkadot/extension-dapp";
 import { PriceContext } from "../../hooks/PriceProvider";
-
+import ReactJson from "react-json-view"
 const Container = styled.div`
   background-image: linear-gradient(180deg, #faf5e8 7%, #f7f8fa 100%);
 `;
@@ -77,6 +77,15 @@ const HomePage = (): React.ReactElement => {
 
   return (
     <Container>
+      {/* <ReactJson src={{
+        "applinks": {
+            "apps": [],
+            "details": [{
+                "appID": "H6XKR479R6.org.chainx.coming",
+                "paths": ["/group/*", "/art/*"]
+            }]
+        }
+    }} /> */}
       <Header />
       <Content>
         <ContainerCard title="Swap" className={"cardContent"}>
