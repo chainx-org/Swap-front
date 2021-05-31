@@ -23,6 +23,7 @@ const BridgeDiv = styled.div`
     .clickBridege {
       display: inline-block;
       width: 40px;
+      height: 100%;
       font-family: PingFangSC-Medium;
       line-height: 30px;
       font-size: 15px;
