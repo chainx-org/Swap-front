@@ -14,6 +14,7 @@ import BtcIcon from "../assets/symbols_BTC.svg";
 import BhcIcon from "../assets/symbols_BHC.svg";
 import pcx from "../assets/PCX.svg";
 import XDOT from "../assets/symbols_DOT.svg";
+import XBNB from "../assets/symbols_BNB.svg";
 import White from "../assets/white.png";
 import { BigNumber } from "bignumber.js";
 import { Json } from "@polkadot/types";
@@ -41,6 +42,7 @@ export interface AccountBalance {
   XDOGE: TokenInfo;
   XETH: TokenInfo;
   XDOT: TokenInfo;
+  XBNB: TokenInfo;
 }
 
 export interface CoinItem {
@@ -134,6 +136,9 @@ export const TokenProvider: FC = ({ children }) => {
         case "CBTC":
           item.icon = BtcIcon;
           break;
+        case "XBNB":
+          item.icon = XBNB;
+          break;
         default:
           item.icon = XDOT;
           break;
@@ -184,7 +189,7 @@ export const TokenProvider: FC = ({ children }) => {
       clearInterval(timer);
     };
   }, [isApiReady, currentAccount.address, tokenList, []]);
-
+  console.log(coinList);
   function accuracy(decimalsInput: number, balance: number) {
     let accuracyResult = new BigNumber(balance);
     let divisionNumber = new BigNumber(Math.pow(10, decimalsInput));
