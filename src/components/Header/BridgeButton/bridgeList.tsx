@@ -81,13 +81,13 @@ function BridgeList() {
       icon: sherpax,
       name: "ChainX Bridge",
       type: "BTC、DOGE",
-      url: "https://sherpaxbridge-pre.chainx.org/#/",
+      url: "https://sherpaxbridge-pre.chainx.cc/#/",
     },
     {
       icon: chainxbridge,
       name: "SherpaX",
       type: "BSC、ETH",
-      url: "https://chainxbridge-pre.chainx.org/bridge",
+      url: "https://chainxbridge-pre.chainx.cc/bridge",
     },
   ];
 
