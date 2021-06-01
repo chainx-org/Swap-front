@@ -38,22 +38,26 @@ const CardContainer = styled.div`
     .cardContent {
       z-index: 2;
       padding-top: 16px;
+      overflow: hidden;
     }
     .card-list-content {
       z-index: 2;
+      height: 224px;
+      overflow-x: hidden;
+      margin-bottom: 6px;
       & > div:hover {
         background: #fef8e8;
         width: 100%;
-        height: 100%;
+        // height: 100%;
         box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.15);
       }
-      & > div:last-child:hover {
-        background: #fef8e8;
-        width: 100%;
-        height: 100%;
-        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.15);
-        border-radius: 0px 0px 8px 8px;
-      }
+      // & > div:last-child:hover {
+      //   background: #fef8e8;
+      //   width: 100%;
+      //   // height: 100%;
+      //   box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.15);
+      //   border-radius: 0px 0px 8px 8px;
+      // }
     }
     .backContent {
       position: absolute;
