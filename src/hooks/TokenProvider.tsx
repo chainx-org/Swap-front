@@ -76,6 +76,17 @@ export const TokenProvider: FC = ({ children }) => {
       decimals: null,
     },
   ]);
+  //@ts-ignore
+  // api?.rpc.swap.getTokenList().then((list) => {
+  //   list.length &&
+  //     list.map((i: any) => {
+  //       // id: Number(i.assetId),
+  //       // unit: i.assetInfo.token.toString(),
+  //       // name: i.assetInfo.chain.toString(),
+  //       // decimals: Number(i.assetInfo.decimals),
+  //       console.log(i.assetInfo.chain.toString())
+  //     });
+  // });
 
   useEffect(() => {
     let a: any = localStorage.getItem("coinList");
@@ -189,7 +200,6 @@ export const TokenProvider: FC = ({ children }) => {
       clearInterval(timer);
     };
   }, [isApiReady, currentAccount.address, tokenList, []]);
-  console.log(coinList);
   function accuracy(decimalsInput: number, balance: number) {
     let accuracyResult = new BigNumber(balance);
     let divisionNumber = new BigNumber(Math.pow(10, decimalsInput));
