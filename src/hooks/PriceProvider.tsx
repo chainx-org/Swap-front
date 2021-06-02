@@ -71,7 +71,7 @@ export const PriceProvider: FC = ({ children }) => {
       decimals: coinInfo[1].decimals,
     },
   ];
-
+  
   useEffect(() => {
     let a = canFirstSwap(inPrice, coinInfo[0].coinBalance);
     let b = canSecondSwap(outPrice, coinInfo[1].coinBalance);

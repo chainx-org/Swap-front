@@ -13,7 +13,7 @@ import {
   web3Accounts,
 } from "@polkadot/extension-dapp";
 import { PriceContext } from "../../hooks/PriceProvider";
-import ReactJson from "react-json-view"
+import ReactJson from "react-json-view";
 const Container = styled.div`
   background-image: linear-gradient(180deg, #faf5e8 7%, #f7f8fa 100%);
 `;
@@ -21,6 +21,8 @@ const Content = styled.main`
   display: flex;
   justify-content: center;
   margin-top: 90px;
+  position: relative;
+  z-index: -1;
 `;
 
 const ExchangeIconStyle = styled.div`
