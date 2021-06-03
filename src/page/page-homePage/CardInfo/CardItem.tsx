@@ -8,13 +8,18 @@ import { ApiContext } from "../../../hooks/ApiProvider";
 import { TokenContext } from "../../../hooks/TokenProvider";
 import { canFirstSwap, canSecondSwap } from "../../../helper/canSwap";
 import { PriceContext } from "../../../hooks/PriceProvider";
+import { DialogContext } from "../../../hooks/DialogProvider";
+import Mask from "../../../components/Mask";
 const Item = styled(Tooltip)`
+  z-index: 99;
   .title-info {
     display: flex;
+    position: relative;
     justify-content: space-between;
     padding-left: 16px;
     padding-right: 16px;
     margin: 0px 0px 7px 0px;
+    z-index: 2px;
     & > span:nth-child(1) {
       font-size: 12px;
       color: #282828;
@@ -210,6 +215,8 @@ function CurrencyItem({
     setNumber,
     setNumber2,
   } = useContext(PriceContext);
+
+  const { isMaskShow, setIsMaskShow } = useContext(DialogContext);
   const [isOpenDialog, setisOpenDialog] = useState(false);
   const { api, isApiReady } = useContext(ApiContext);
   const { tokenList, accountBalance } = useContext(TokenContext);
@@ -246,70 +253,77 @@ function CurrencyItem({
     setInPrice(currencyBalence);
     setNumber(number + 1);
   };
+  const openDialogList = () => {
+    setisOpenDialog(!isOpenDialog);
+    setIsMaskShow(!isOpenDialog);
+  };
   return (
-    <Item>
-      <div className="title-info">
-        <span>{currencyTitle}</span>
-        <span>Balance:{currencyBalence}</span>
-      </div>
-      <div className="selectBtn">
-        <div
-          className="divBtn "
-          onClick={() => {
-            setisOpenDialog(!isOpenDialog);
-          }}
-          id={id}
-        >
-          <div className="divBtnIcon">
-            <div className="icon">{children}</div>
-          </div>
-
-          <span>{currencyName}</span>
-          <div className="divBtnIcon">
-            <ArrowIcon />
-          </div>
+    <div>
+      <Item>
+        <div className="title-info">
+          <span>{currencyTitle}</span>
+          <span>Balance:{currencyBalence}</span>
         </div>
-        <div className="input-div">
-          {currencyTitle === "From" ? (
-            <div>
+        <div className="selectBtn">
+          <div
+            className="divBtn "
+            onClick={() => {
+              openDialogList();
+            }}
+            id={id}
+          >
+            <div className="divBtnIcon">
+              <div className="icon">{children}</div>
+            </div>
+
+            <span>{currencyName}</span>
+            <div className="divBtnIcon">
+              <ArrowIcon />
+            </div>
+          </div>
+          <div className="input-div">
+            {currencyTitle === "From" ? (
+              <div>
+                <Input
+                  placeholder="0.0"
+                  onChange={(e) => {
+                    e.target.value = inputNumberOnly(e.target.value);
+                    setInPrice(e.target.value);
+                    setNumber(number + 1);
+                  }}
+                  value={inPrice}
+                ></Input>
+                <div className="max-button" onClick={inputMax}>
+                  MAX
+                </div>
+              </div>
+            ) : (
               <Input
+                suffix=""
                 placeholder="0.0"
                 onChange={(e) => {
                   e.target.value = inputNumberOnly(e.target.value);
-                  setInPrice(e.target.value);
-                  setNumber(number + 1);
+                  setOutPrice(e.target.value);
+                  setNumber2(number2 + 1);
                 }}
-                value={inPrice}
-              ></Input>
-              <div className="max-button" onClick={inputMax}>
-                MAX
-              </div>
+                value={outPrice}
+              />
+            )}
+          </div>
+
+          {isOpenDialog && (
+            <div>
+              {isOpenDialog && <Mask />}
+              <DialogCard
+                onCancel={setisOpenDialog}
+                index={index}
+                addCoinItem={addCoin}
+              />
             </div>
-          ) : (
-            <Input
-              suffix=""
-              placeholder="0.0"
-              onChange={(e) => {
-                e.target.value = inputNumberOnly(e.target.value);
-                setOutPrice(e.target.value);
-                setNumber2(number2 + 1);
-              }}
-              value={outPrice}
-            />
           )}
         </div>
-
-        {isOpenDialog && (
-          <div>
-            <DialogCard
-              onCancel={setisOpenDialog}
-              index={index}
-              addCoinItem={addCoin}
-            />
-          </div>
-        )}
-      </div>
-    </Item>
+      </Item>
+    </div>
   );
 }
 
