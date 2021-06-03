@@ -6,7 +6,7 @@ const CardContainer = styled.div`
   &.CardDiv {
     height: fit-content;
     position: relative;
-    // z-index: -1;
+    z-index: 0;
     background: rgba(255, 255, 255, 0.9);
     border: 1px solid #efefef;
     box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
@@ -37,12 +37,12 @@ const CardContainer = styled.div`
       }
     }
     .cardContent {
-      z-index: 2;
+      z-index: -1;
       padding-top: 16px;
       overflow: hidden;
     }
     .card-list-content {
-      z-index: 2;
+      // z-index: 999;
       height: 224px;
       overflow-x: hidden;
       margin-bottom: 6px;
