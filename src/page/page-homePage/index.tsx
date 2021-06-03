@@ -35,7 +35,7 @@ const ExchangeIconStyle = styled.div`
     display: inline-block;
     .iconBox {
       position: absolute;
-      z-index: 0;
+      z-index: 1;
       bottom: 165px;
       width: 26px;
       height: 26px;

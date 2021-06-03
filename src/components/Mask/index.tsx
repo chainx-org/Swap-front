@@ -12,7 +12,7 @@ const MaskWrapper = styled.div`
     background-color: #000;
     opacity: 0.4;
     color: #f00;
-    z-index: 1;
+    z-index: 2;
   }
 `;
 

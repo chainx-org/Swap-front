@@ -19,7 +19,7 @@ const Item = styled(Tooltip)`
     padding-left: 16px;
     padding-right: 16px;
     margin: 0px 0px 7px 0px;
-    z-index: 2px;
+    z-index: 0;
     & > span:nth-child(1) {
       font-size: 12px;
       color: #282828;
