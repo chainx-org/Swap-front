@@ -128,7 +128,7 @@ const Item = styled(Tooltip)`
       }
       .max-button {
         position: relative;
-        z-index: 1;
+        z-index: 0;
         width: 32px;
         height: 20px;
         float: right;

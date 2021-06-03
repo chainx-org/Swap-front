@@ -12,8 +12,9 @@ import ETHSymbol from "../assets/symbols_ETH.svg";
 import DOGESymbol from "../assets/symbols_DOGE.svg";
 import BtcIcon from "../assets/symbols_BTC.svg";
 import BhcIcon from "../assets/symbols_BHC.svg";
-import pcx from "../assets/chainx-pcx.svg";
+import pcx from "../assets/PCX.svg";
 import XDOT from "../assets/symbols_DOT.svg";
+import XBNB from "../assets/symbols_BNB.svg";
 import White from "../assets/white.png";
 import { BigNumber } from "bignumber.js";
 import { Json } from "@polkadot/types";
@@ -41,6 +42,7 @@ export interface AccountBalance {
   XDOGE: TokenInfo;
   XETH: TokenInfo;
   XDOT: TokenInfo;
+  XBNB: TokenInfo;
 }
 
 export interface CoinItem {
@@ -74,6 +76,17 @@ export const TokenProvider: FC = ({ children }) => {
       decimals: null,
     },
   ]);
+  //@ts-ignore
+  // api?.rpc.swap.getTokenList().then((list) => {
+  //   list.length &&
+  //     list.map((i: any) => {
+  //       // id: Number(i.assetId),
+  //       // unit: i.assetInfo.token.toString(),
+  //       // name: i.assetInfo.chain.toString(),
+  //       // decimals: Number(i.assetInfo.decimals),
+  //       console.log(i.assetInfo.chain.toString())
+  //     });
+  // });
 
   useEffect(() => {
     let a: any = localStorage.getItem("coinList");
@@ -134,6 +147,9 @@ export const TokenProvider: FC = ({ children }) => {
         case "CBTC":
           item.icon = BtcIcon;
           break;
+        case "XBNB":
+          item.icon = XBNB;
+          break;
         default:
           item.icon = XDOT;
           break;
@@ -184,7 +200,6 @@ export const TokenProvider: FC = ({ children }) => {
       clearInterval(timer);
     };
   }, [isApiReady, currentAccount.address, tokenList, []]);
-
   function accuracy(decimalsInput: number, balance: number) {
     let accuracyResult = new BigNumber(balance);
     let divisionNumber = new BigNumber(Math.pow(10, decimalsInput));

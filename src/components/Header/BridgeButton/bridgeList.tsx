@@ -15,6 +15,7 @@ const IconBox = {
 const DropListStyle = styled.div`
   position: absolute;
   width: 189px;
+  margin-left: -100px;
   margin-top: 37px;
   background: #ffffff;
   border: 1px solid #efefef;
@@ -80,11 +81,13 @@ function BridgeList() {
       icon: sherpax,
       name: "ChainX Bridge",
       type: "BTC、DOGE",
+      url: "https://sherpaxbridge-pre.chainx.cc/#/",
     },
     {
       icon: chainxbridge,
       name: "SherpaX",
       type: "BSC、ETH",
+      url: "https://chainxbridge-pre.chainx.cc/bridge",
     },
   ];
 
@@ -95,17 +98,19 @@ function BridgeList() {
           {accountList.map((item, index) => {
             return (
               <Wrapper key={index}>
-                <li>
-                  <div className={"assets-item"}>
-                    <div className={"item-left"}>
-                      <img src={item.icon} alt="" />
+                <a href={item.url} target="block">
+                  <li>
+                    <div className={"assets-item"}>
+                      <div className={"item-left"}>
+                        <img src={item.icon} alt="" />
+                      </div>
+                      <div className={"item-right"}>
+                        <div className={"item-name"}>{item.name}</div>
+                        <div className={"item-address"}>{item.type}</div>
+                      </div>
                     </div>
-                    <div className={"item-right"}>
-                      <div className={"item-name"}>{item.name}</div>
-                      <div className={"item-address"}>{item.type}</div>
-                    </div>
-                  </div>
-                </li>
+                  </li>
+                </a>
               </Wrapper>
             );
           })}

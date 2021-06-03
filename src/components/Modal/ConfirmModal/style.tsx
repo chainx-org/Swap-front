@@ -1,12 +1,15 @@
 import styled from "styled-components";
 
 export const CoinInfoWrapper = styled.div`
-  position: relative;
+  &.contentDiv {
+    position: relative;
+    z-index: 1;
+  }
   .arrowDown {
     position: absolute;
     width: 16px;
     height: 16px;
-    top: 50%;
+    top: 60%;
     left: 50%;
     transform: translateX(-50%);
   }
@@ -128,9 +131,11 @@ export const StatusWrapper = styled.div`
 `;
 
 export const ConfirmModalWrapper = styled.div`
-  position: fixed;
-  z-index: 3;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -85%);
+  &.confirmBox {
+    position: absolute;
+    z-index: 3;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -85%);
+  }
 `;

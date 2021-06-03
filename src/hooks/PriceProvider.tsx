@@ -53,8 +53,8 @@ export const PriceProvider: FC = ({ children }) => {
   const { tokenList, setTokenList } = useContext(TokenContext);
   const swapCoin = [
     {
-      coinName: coinInfo[0].coinName,
-      coinIcon: coinInfo[0].coinIcon,
+      coinName: coinInfo[0].name,
+      coinIcon: coinInfo[0].icon,
       coinNum: inPrice,
       id: coinInfo[0].id,
       unit: coinInfo[0].unit,
@@ -62,8 +62,8 @@ export const PriceProvider: FC = ({ children }) => {
       decimals: coinInfo[0].decimals,
     },
     {
-      coinName: coinInfo[1].coinName,
-      coinIcon: coinInfo[1].coinIcon,
+      coinName: coinInfo[1].name,
+      coinIcon: coinInfo[1].icon,
       coinNum: outPrice,
       id: coinInfo[1].id,
       unit: coinInfo[1].unit,
@@ -71,7 +71,7 @@ export const PriceProvider: FC = ({ children }) => {
       decimals: coinInfo[1].decimals,
     },
   ];
-
+  
   useEffect(() => {
     let a = canFirstSwap(inPrice, coinInfo[0].coinBalance);
     let b = canSecondSwap(outPrice, coinInfo[1].coinBalance);
@@ -189,8 +189,10 @@ export const PriceProvider: FC = ({ children }) => {
     setFirstItemId(b);
     setSecondItemId(a);
     clearCoinInput();
-    setInPrice(null);
-    setOutPrice(null);
+    // setInPrice(outPrice);
+    setOutPrice(inPrice);
+    // setInPrice(null);
+    setNumber2(inPrice);
     setCoinInfo([coinList[firstItemId], coinList[secondItemId]]);
     setTokenList([...tokenList]);
   };

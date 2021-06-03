@@ -74,7 +74,6 @@ const ConfirmModal = ({
   const backStatusContent: React.ReactNode = (
     <BackStatusContent statusValue={statusValue} onCancel={onCancel} />
   );
-
   const judgeConfirmType = (type: string): React.ReactNode => {
     switch (type) {
       case "priceInfo":
@@ -97,7 +96,7 @@ const ConfirmModal = ({
         break;
       }
     }
-    let arr = [];
+    let arr: any[] = [];
     if (hasPCX) {
       arr = [swapCoinInfo[0].id, swapCoinInfo[1].id];
     } else {
@@ -118,7 +117,7 @@ const ConfirmModal = ({
             .swapExactTokensForTokens(
               Number(amount.multipliedBy(decimal)),
               Number(amount2.multipliedBy(allowDecimal)),
-              [swapCoinInfo[0].id, swapCoinInfo[1].id],
+              arr,
               currentAccount.address,
               blockNumber + 100
             )
@@ -168,9 +167,9 @@ const ConfirmModal = ({
   }
 
   return (
-    <>
+    <div>
       <Mask />
-      <ConfirmModalWrapper>
+      <ConfirmModalWrapper className="confirmBox">
         <ContainerCard
           onCancel={onCancel}
           title="Confirm Swap"
@@ -194,7 +193,7 @@ const ConfirmModal = ({
           </CoinInfoWrapper>
         </ContainerCard>
       </ConfirmModalWrapper>
-    </>
+    </div>
   );
 };
 
