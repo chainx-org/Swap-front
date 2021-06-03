@@ -15,6 +15,7 @@ const IconBox = {
 
 const DropListStyle = styled.div`
   position: absolute;
+  z-index: -10;
   width: 189px;
   margin-top: 10.5px;
   background: #ffffff;

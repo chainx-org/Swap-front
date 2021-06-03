@@ -1,8 +1,13 @@
 import styled from "styled-components";
 
 export const SelectAccountStyle = styled.div`
+  &.selectBox {
+    // border: 1px solid black;
+    position: relative;
+    z-index: 0;
+  }
   .watting-connect {
-    display: flex;
+    // display: flex;
     justify-content: space-between;
     width: 160px;
     height: 32px;
@@ -12,6 +17,8 @@ export const SelectAccountStyle = styled.div`
     background: #fff8e3;
     border: 1px solid #fdca77;
     border-radius: 18px;
+    position: relative;
+    right: 0px;
     .icon {
       margin-left: 4px;
     }

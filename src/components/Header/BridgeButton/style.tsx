@@ -1,5 +1,10 @@
 import styled from "styled-components";
 const BridgeDiv = styled.div`
+  &.Box {
+    // border: 1px solid black;
+    position: relative;
+    z-index: 1;
+  }
   .BridegeBox {
     display: flex;
     justify-content: space-between;
@@ -7,6 +12,8 @@ const BridgeDiv = styled.div`
     height: 32px;
     margin: 0 0px 0 7px;
     cursor: pointer;
+    // border: 1px solid black;
+
     .Bridege {
       display: inline-block;
       width: 40px;
@@ -36,6 +43,7 @@ const BridgeDiv = styled.div`
     }
     &:hover .BridgeList {
       display: block;
+      position: relative;
     }
   }
 `;
