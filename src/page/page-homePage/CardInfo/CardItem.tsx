@@ -65,7 +65,6 @@ const Item = styled(Tooltip)`
             width: 20px;
             height: 20px;
           }
-          // border: 1px solid black;
         }
         & > span:nth-child(1) {
           display: inline-block;
@@ -103,14 +102,14 @@ const Item = styled(Tooltip)`
       height: 40px;
       width: 256px;
       .ant-input {
-        height: 100%;
+        height: 40px;
         background: #f7f8fa;
         position: static;
-        // border: 1px solid #d9d9d9;
+        z-index: 0;
         border-radius: 12px;
       }
       .ant-input-affix-wrapper {
-        height: 100%;
+        height: 40px;
         background: #f7f8fa;
         border: 1px solid #d9d9d9;
         border-radius: 12px;
@@ -126,6 +125,21 @@ const Item = styled(Tooltip)`
         border: 1px solid #d9d9d9;
         outline: 0;
         box-shadow: none;
+      }
+      .max-button {
+        position: relative;
+        z-index: 0;
+        width: 32px;
+        height: 20px;
+        float: right;
+        margin-top: -11%;
+        margin-right: 3%;
+        color: #e9a840;
+        font-size: 14px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        line-height: 20px;
+        cursor: pointer;
       }
     }
   }
@@ -227,6 +241,11 @@ function CurrencyItem({
     inputCoinValue.coinInput[index].canSwap = canSwap;
     inputCoinValue.setCoinInput([...inputCoinValue.coinInput]);
   };
+
+  const inputMax = () => {
+    setInPrice(currencyBalence);
+    setNumber(number + 1);
+  };
   return (
     <Item>
       <div className="title-info">
@@ -252,16 +271,20 @@ function CurrencyItem({
         </div>
         <div className="input-div">
           {currencyTitle === "From" ? (
-            <Input
-              suffix="MAX"
-              placeholder="0.0"
-              onChange={(e) => {
-                e.target.value = inputNumberOnly(e.target.value);
-                setInPrice(e.target.value);
-                setNumber(number + 1);
-              }}
-              value={inPrice}
-            />
+            <div>
+              <Input
+                placeholder="0.0"
+                onChange={(e) => {
+                  e.target.value = inputNumberOnly(e.target.value);
+                  setInPrice(e.target.value);
+                  setNumber(number + 1);
+                }}
+                value={inPrice}
+              ></Input>
+              <div className="max-button" onClick={inputMax}>
+                MAX
+              </div>
+            </div>
           ) : (
             <Input
               suffix=""
@@ -275,6 +298,7 @@ function CurrencyItem({
             />
           )}
         </div>
+
         {isOpenDialog && (
           <div>
             <DialogCard

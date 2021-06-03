@@ -18,6 +18,7 @@ const LinkDiv = styled.div`
       color: #adadad;
       font-weight: 500;
       text-align: center;
+      cursor: pointer;
       &.active {
         color: black;
         border-bottom: 2px solid black;
@@ -65,8 +66,6 @@ class TabList extends React.Component<MyState, any> {
               className={`linkName ${
                 this.state.currentActive === "Pool" ? "active" : ""
               }`}
-              // onClick={this.changeFlag.bind(this, "Pool")}
-              // dis
             >
               Pool
             </Link>

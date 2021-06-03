@@ -10,6 +10,7 @@ export const WalletStyle = styled.div`
   justify-content: center;
   font-weight: bold;
   font-size: 14px;
+  cursor: pointer;
   img {
     margin-right: 8.56px;
   }
@@ -24,7 +25,6 @@ export const WalletStyle = styled.div`
     z-index: 999;
     margin-top: 7px;
     width: 257px;
-    // height: 200px;
     background: #ffffff;
     box-shadow: 6px 6px 8px 0 rgba(0, 0, 0, 0.06);
     border-radius: 8px;
@@ -37,7 +37,6 @@ export const WalletStyle = styled.div`
       li {
         .assets-item {
           margin: 12px 16px;
-          // overflow: auto;
           display: flex;
           justify-content: space-between;
           align-items: center;

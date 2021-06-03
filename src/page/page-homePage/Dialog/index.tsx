@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { DialogItem, DivDialog } from "./style";
+import { DialogItem } from "./style";
 import ContainerCard from "../../../components/Card/ContainerCard";
 import Mask from "../../../components/Mask";
 import BigNumber from "bignumber.js";
@@ -22,54 +22,48 @@ function DialogCard({
 }: DialogCardProps): React.ReactElement<DialogCardProps> {
   const { tokenList, coinList } = useContext(TokenContext);
   const [account, setAccount] = useState(coinList);
-  const {
-    setInPrice,
-    setOutPrice,
-  } = useContext(PriceContext)
-  const clickItem = (item: any, index: any) => {
-    addCoinItem(item, index);
+  const { setInPrice, setOutPrice } = useContext(PriceContext);
+  const clickItem = (item: any, index: any, i: any) => {
+    addCoinItem(item, index, i);
     onCancel(false);
-    setInPrice(null)
-    setOutPrice(null)
+    setInPrice(null);
+    setOutPrice(null);
   };
   useEffect(() => {
     setAccount(coinList);
   }, [coinList]);
   return (
     <div>
-      <DivDialog>
-        <Mask />
-        <div className="content">
-          <ContainerCard
-            onCancel={onCancel}
-            title="Select a token"
-            className={"card-list-content"}
-          >
-            
-            {account.map((item: any, i: any) => {
-              return (
-                <DialogItem key={i}>
-                  <div
-                    className="item"
-                    onClick={() => clickItem(item, { index })}
-                  >
-                    <div className="left-item">
-                      <div className="left-coinIcon">
-                        <img src={item.icon} className="status" alt="status" />
-                      </div>
-                      <div className="right-info">
-                        <span>{item.unit}</span>
-                        <span>{item.name}</span>
-                      </div>
+      <Mask />
+      <div className="content">
+        <ContainerCard
+          onCancel={onCancel}
+          title="Select a token"
+          className={"card-list-content"}
+        >
+          {account.map((item: any, i: any) => {
+            return (
+              <DialogItem key={i}>
+                <div
+                  className="item"
+                  onClick={() => clickItem(item, { index }, i)}
+                >
+                  <div className="left-item">
+                    <div className="left-coinIcon">
+                      <img src={item.icon} className="status" alt="status" />
                     </div>
-                    <div className="right-item">{item.coinBalance}</div>
+                    <div className="right-info">
+                      <span>{item.unit}</span>
+                      <span>{item.name}</span>
+                    </div>
                   </div>
-                </DialogItem>
-              );
-            })}
-          </ContainerCard>
-        </div>
-      </DivDialog>
+                  <div className="right-item">{item.coinBalance}</div>
+                </div>
+              </DialogItem>
+            );
+          })}
+        </ContainerCard>
+      </div>
     </div>
   );
 }

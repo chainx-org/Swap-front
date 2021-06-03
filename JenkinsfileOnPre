@@ -50,7 +50,6 @@ pipeline {
               ])
               {
                 sh 'envsubst <  deploy/pre/deploy-swap.yaml | kubectl apply -f -'
-                sh 'envsubst <  deploy/pre/deploy-swap-svc.yaml | kubectl apply -f -'
               }
             }
 

@@ -31,13 +31,13 @@ const BackPriceContent = ({confirmSwap}: Props): React.ReactElement<Props> => {
   ];
   return (
     <PriceWrapper>
-      {PriceFieldList.map((item, index) => (
+      {/* {PriceFieldList.map((item, index) => (
         <PriceField
           key={index}
           name={item.fieldName}
           content={item.fieldContent}
         />
-      ))}
+      ))} */}
       <NormalButton
         className="confirmButton"
         label="Confirm Swap"

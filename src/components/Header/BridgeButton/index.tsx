@@ -12,7 +12,7 @@ function Bridge() {
         >
           Bridge
         </div>
-        {isBridge && <BridgeList />}
+        <div className="BridgeList">{<BridgeList />}</div>
       </div>
     </BridgeDiv>
   );

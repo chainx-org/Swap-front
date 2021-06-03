@@ -74,7 +74,6 @@ const ConfirmModal = ({
   const backStatusContent: React.ReactNode = (
     <BackStatusContent statusValue={statusValue} onCancel={onCancel} />
   );
-
   const judgeConfirmType = (type: string): React.ReactNode => {
     switch (type) {
       case "priceInfo":
@@ -97,7 +96,7 @@ const ConfirmModal = ({
         break;
       }
     }
-    let arr = [];
+    let arr: any[] = [];
     if (hasPCX) {
       arr = [swapCoinInfo[0].id, swapCoinInfo[1].id];
     } else {
@@ -118,8 +117,7 @@ const ConfirmModal = ({
             .swapExactTokensForTokens(
               Number(amount.multipliedBy(decimal)),
               Number(amount2.multipliedBy(allowDecimal)),
-              // Number(amount.multipliedBy(allowDecimal)),
-              [swapCoinInfo[0].id, swapCoinInfo[1].id],
+              arr,
               currentAccount.address,
               blockNumber + 100
             )
@@ -169,9 +167,9 @@ const ConfirmModal = ({
   }
 
   return (
-    <>
+    <div>
       <Mask />
-      <ConfirmModalWrapper>
+      <ConfirmModalWrapper className="confirmBox">
         <ContainerCard
           onCancel={onCancel}
           title="Confirm Swap"
@@ -182,12 +180,10 @@ const ConfirmModal = ({
               {coinNumList.map((item: CoinNumItem, index) => (
                 <div className="numInfo" key={index}>
                   <div className="coinName">
-                    {/* <span>{item.coinIcon}</span> */}
                     <img src={item.icon} alt="" />
                     <div className="name">{item.coinName}</div>
                   </div>
                   <div className="num">
-                    {/* {parseFloat(`${item.coinNum}`).toFixed(8)} */}
                     {Number(item.coinNum).toFixed(item.showDecimal)}
                   </div>
                 </div>
@@ -197,7 +193,7 @@ const ConfirmModal = ({
           </CoinInfoWrapper>
         </ContainerCard>
       </ConfirmModalWrapper>
-    </>
+    </div>
   );
 };
 

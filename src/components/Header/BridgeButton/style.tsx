@@ -6,6 +6,7 @@ const BridgeDiv = styled.div`
     width: 47px;
     height: 32px;
     margin: 0 0px 0 7px;
+    cursor: pointer;
     .Bridege {
       display: inline-block;
       width: 40px;
@@ -22,12 +23,19 @@ const BridgeDiv = styled.div`
     .clickBridege {
       display: inline-block;
       width: 40px;
+      height: 100%;
       font-family: PingFangSC-Medium;
       line-height: 30px;
       font-size: 15px;
       font-weight: 500;
       text-align: center;
       color: black;
+    }
+    .BridgeList {
+      display: none;
+    }
+    &:hover .BridgeList {
+      display: block;
     }
   }
 `;

@@ -33,8 +33,6 @@ interface PriceData {
 
 export const PriceContext = createContext<PriceData>({} as PriceData);
 
-const balanceType: string[] = ["PCX", "XBTC", "XETH", "XDOGE", "XBCH", "XDOT"];
-
 export const PriceProvider: FC = ({ children }) => {
   let [number, setNumber] = useState(0);
   let [number2, setNumber2] = useState(0);
@@ -55,8 +53,8 @@ export const PriceProvider: FC = ({ children }) => {
   const { tokenList, setTokenList } = useContext(TokenContext);
   const swapCoin = [
     {
-      coinName: coinInfo[0].coinName,
-      coinIcon: coinInfo[0].coinIcon,
+      coinName: coinInfo[0].name,
+      coinIcon: coinInfo[0].icon,
       coinNum: inPrice,
       id: coinInfo[0].id,
       unit: coinInfo[0].unit,
@@ -64,8 +62,8 @@ export const PriceProvider: FC = ({ children }) => {
       decimals: coinInfo[0].decimals,
     },
     {
-      coinName: coinInfo[1].coinName,
-      coinIcon: coinInfo[1].coinIcon,
+      coinName: coinInfo[1].name,
+      coinIcon: coinInfo[1].icon,
       coinNum: outPrice,
       id: coinInfo[1].id,
       unit: coinInfo[1].unit,
@@ -73,7 +71,7 @@ export const PriceProvider: FC = ({ children }) => {
       decimals: coinInfo[1].decimals,
     },
   ];
-
+  
   useEffect(() => {
     let a = canFirstSwap(inPrice, coinInfo[0].coinBalance);
     let b = canSecondSwap(outPrice, coinInfo[1].coinBalance);
@@ -166,7 +164,7 @@ export const PriceProvider: FC = ({ children }) => {
       ],
     ]);
   };
-  const addCoin = (item: any, index: any) => {
+  const addCoin = (item: any, index: any, i: any) => {
     if (
       coinInfo.some((n: { unit: any }) => {
         return n.unit === item.unit;
@@ -178,9 +176,9 @@ export const PriceProvider: FC = ({ children }) => {
     coinInfo[index.index] = item;
     let list = coinInfo;
     if (index.index === 0) {
-      setFirstItemId(item.id);
+      setFirstItemId(i);
     } else {
-      setSecondItemId(item.id);
+      setSecondItemId(i);
     }
     setCoinInfo([...list]);
     clearCoinInput();
@@ -191,8 +189,10 @@ export const PriceProvider: FC = ({ children }) => {
     setFirstItemId(b);
     setSecondItemId(a);
     clearCoinInput();
-    setInPrice(null);
-    setOutPrice(null);
+    // setInPrice(outPrice);
+    setOutPrice(inPrice);
+    // setInPrice(null);
+    setNumber2(inPrice);
     setCoinInfo([coinList[firstItemId], coinList[secondItemId]]);
     setTokenList([...tokenList]);
   };
