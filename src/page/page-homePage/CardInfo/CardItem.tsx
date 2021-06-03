@@ -11,7 +11,7 @@ import { PriceContext } from "../../../hooks/PriceProvider";
 import { DialogContext } from "../../../hooks/DialogProvider";
 import Mask from "../../../components/Mask";
 const Item = styled(Tooltip)`
-  z-index: 99;
+  // z-index: 99;
   .title-info {
     display: flex;
     position: relative;
