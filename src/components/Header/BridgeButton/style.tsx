@@ -18,7 +18,8 @@ const BridgeDiv = styled.div`
       display: inline-block;
       width: 40px;
       font-family: PingFangSC-Medium;
-      line-height: 30px;
+      line-height: 40px;
+      height: 40px;
       font-size: 15px;
       color: #adadad;
       font-weight: 500;
