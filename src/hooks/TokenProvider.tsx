@@ -97,7 +97,7 @@ export const TokenProvider: FC = ({ children }) => {
     }
   }, [isApiReady, tokenList, currentAccount.address]);
   //@ts-ignore
-  
+
   useEffect(() => {
     if (isApiReady && api) {
       //@ts-ignore
@@ -135,6 +135,7 @@ export const TokenProvider: FC = ({ children }) => {
           break;
         case "XBCH":
           item.icon = BhcIcon;
+          item.name = "Bitcoin Cash";
           break;
         case "XDOGE":
           item.icon = DOGESymbol;
