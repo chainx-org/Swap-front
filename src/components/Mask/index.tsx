@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
+import ReactDOM from "react-dom";
 
 const MaskWrapper = styled.div`
   &.mqsk {
@@ -12,12 +13,42 @@ const MaskWrapper = styled.div`
     background-color: #000;
     opacity: 0.4;
     color: #f00;
-    z-index: 2;
+    z-index: 0;
   }
 `;
 
-const Mask = (): React.ReactElement => {
-  return <MaskWrapper className="mqsk" />;
-};
+function Mask(props: {
+  children:
+    | string
+    | number
+    | boolean
+    | {}
+    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+    | React.ReactNodeArray
+    | React.ReactPortal
+    | null
+    | undefined;
+}) {
+  const modalRoot = document.getElementById("modal-root");
+  const eleRef = useRef(document.createElement("div"));
+
+  useEffect(() => {
+    if (modalRoot) {
+      modalRoot.appendChild(eleRef.current);
+      return () => {
+        if (modalRoot) {
+          modalRoot.removeChild(eleRef.current);
+        }
+      };
+    }
+  }, [modalRoot]);
+  return ReactDOM.createPortal(
+    <div style={{ width: "530px", height: "500px" }}>
+      <MaskWrapper className="mqsk" />
+      {props.children}
+    </div>,
+    eleRef.current
+  );
+}
 
 export default Mask;

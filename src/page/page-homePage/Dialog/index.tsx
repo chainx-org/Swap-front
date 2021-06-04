@@ -34,7 +34,6 @@ function DialogCard({
   }, [coinList]);
   return (
     <div>
-      <Mask />
       <div className="content">
         <ContainerCard
           onCancel={onCancel}

@@ -6,7 +6,7 @@ export const DialogItemList = styled.div`
     height: 64px;
     opacity: 0;
     background: #f7f7f7;
-    border: 1px solid black;
+    // border: 1px solid black;
   }
 `;
 
