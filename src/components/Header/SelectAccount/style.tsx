@@ -7,7 +7,7 @@ export const SelectAccountStyle = styled.div`
     z-index: 0;
   }
   .watting-connect {
-    // display: flex;
+    display: flex;
     justify-content: space-between;
     width: 160px;
     height: 32px;
