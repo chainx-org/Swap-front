@@ -17,19 +17,18 @@ export const CoinInfoWrapper = styled.div`
     width: 100%;
     padding: 29.5px 72px 14.5px 72px;
     .numInfo {
+      width: 256px;
+      display: flex;
+      justify-content: space-between;
+      padding: 4px 12px;
       background: rgba(255, 255, 255, 0.9);
       border: 1px solid #efefef;
       border-radius: 20px;
       white-space: nowrap;
-      display: flex;
       align-items: center;
-      justify-content: space-between;
-      width: 256px;
-
       .coinName {
         display: flex;
         align-items: center;
-        padding: 10px 89px 10px 10px;
         > span,
         img {
           height: 20px;
