@@ -8,6 +8,7 @@ const BridgeDiv = styled.div`
     margin: 0 0px 0 7px;
     cursor: pointer;
     .Bridege {
+      align-self: center;
       display: inline-block;
       width: 40px;
       font-family: PingFangSC-Medium;
@@ -22,11 +23,13 @@ const BridgeDiv = styled.div`
       color: black;
     }
     .clickBridege {
+      align-self: center;
       display: inline-block;
       width: 40px;
-      height: 100%;
+      // height: 100%;
       font-family: PingFangSC-Medium;
-      line-height: 30px;
+      line-height: 40px;
+      height: 40px;
       font-size: 15px;
       font-weight: 500;
       text-align: center;
