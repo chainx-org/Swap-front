@@ -7,6 +7,7 @@ import { shortenString } from "../../../helper";
 import styled from "styled-components";
 import Wallet from "../../../assets/wallet_yellower.svg";
 import Identicon from "@polkadot/react-identicon";
+import { relative } from "node:path";
 const IconStyle = styled.div`
   width: 16px;
   height: 16px;
@@ -45,7 +46,7 @@ function AccountCard() {
 
   return (
     <div>
-      <SelectAccountStyle onClick={selectAccountList}>
+      <SelectAccountStyle className="selectBox" onClick={selectAccountList}>
         {!hasAccount && (
           <div className={"watting-connect"}>
             <div className={"current-icon"}>

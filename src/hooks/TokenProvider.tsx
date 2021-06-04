@@ -96,12 +96,13 @@ export const TokenProvider: FC = ({ children }) => {
       setCoinList([...localCoinList]);
     }
   }, [isApiReady, tokenList, currentAccount.address]);
-
+  //@ts-ignore
+  
   useEffect(() => {
     if (isApiReady && api) {
       //@ts-ignore
-
       api.rpc.swap.getTokenList().then((list) => {
+        // console.log(list)
         list.length &&
           setTokenList(
             list.map((i: any) => ({

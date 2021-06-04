@@ -7,6 +7,7 @@ import { AccountsProvider } from "./hooks/AccountsProvider";
 import { TokenProvider } from "./hooks/TokenProvider";
 import TransferProvider from "./hooks/TransferProvider";
 import { PriceProvider } from "./hooks/PriceProvider";
+import { DialogProvider } from "./hooks/DialogProvider";
 
 const LayoutWrapper = styled.div`
   display: flex;
@@ -22,8 +23,10 @@ export const App: React.FC = () => {
             <TokenProvider>
               <TransferProvider>
                 <PriceProvider>
-              <HomePage />
-              </PriceProvider>
+                  <DialogProvider>
+                    <HomePage />
+                  </DialogProvider>
+                </PriceProvider>
               </TransferProvider>
             </TokenProvider>
           </AccountsProvider>

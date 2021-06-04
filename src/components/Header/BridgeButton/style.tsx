@@ -1,5 +1,10 @@
 import styled from "styled-components";
 const BridgeDiv = styled.div`
+  &.Box {
+    // border: 1px solid black;
+    position: relative;
+    z-index: 1;
+  }
   .BridegeBox {
     display: flex;
     justify-content: space-between;
@@ -7,25 +12,31 @@ const BridgeDiv = styled.div`
     height: 32px;
     margin: 0 0px 0 7px;
     cursor: pointer;
+    // border: 1px solid black;
+
     .Bridege {
-      display: inline-block;
+      align-self: center;
+      display: inline-flex;
       width: 40px;
       font-family: PingFangSC-Medium;
-      line-height: 30px;
+      line-height: 40px;
+      height: 40px;
       font-size: 15px;
       color: #adadad;
-      font-weight: 500;
+      font-weight: 400;
       text-align: center;
     }
     .Bridege:hover {
       color: black;
     }
     .clickBridege {
-      display: inline-block;
+      align-self: center;
+      display: inline-flex;
       width: 40px;
-      height: 100%;
+      // height: 100%;
       font-family: PingFangSC-Medium;
-      line-height: 30px;
+      line-height: 40px;
+      height: 40px;
       font-size: 15px;
       font-weight: 500;
       text-align: center;
@@ -36,6 +47,7 @@ const BridgeDiv = styled.div`
     }
     &:hover .BridgeList {
       display: block;
+      position: relative;
     }
   }
 `;

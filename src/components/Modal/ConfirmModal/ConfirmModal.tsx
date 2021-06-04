@@ -168,31 +168,34 @@ const ConfirmModal = ({
 
   return (
     <div>
-      <Mask />
-      <ConfirmModalWrapper className="confirmBox">
-        <ContainerCard
-          onCancel={onCancel}
-          title="Confirm Swap"
-          backContent={judgeConfirmType(transferStatus)}
-        >
-          <CoinInfoWrapper>
-            <div className="numWrapper">
-              {coinNumList.map((item: CoinNumItem, index) => (
-                <div className="numInfo" key={index}>
-                  <div className="coinName">
-                    <img src={item.icon} alt="" />
-                    <div className="name">{item.coinName}</div>
-                  </div>
-                  <div className="num">
-                    {Number(item.coinNum).toFixed(item.showDecimal)}
-                  </div>
+      <Mask>
+        <div className="modal">
+          <ConfirmModalWrapper className="confirmBox">
+            <ContainerCard
+              onCancel={onCancel}
+              title="Confirm Swap"
+              backContent={judgeConfirmType(transferStatus)}
+            >
+              <CoinInfoWrapper>
+                <div className="numWrapper">
+                  {coinNumList.map((item: CoinNumItem, index) => (
+                    <div className="numInfo" key={index}>
+                      <div className="coinName">
+                        <img src={item.icon} alt="" />
+                        <div className="name">{item.coinName}</div>
+                      </div>
+                      <div className="num">
+                        {Number(item.coinNum).toFixed(item.showDecimal)}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            <img className="arrowDown" src={ArrowBlack} alt="" />
-          </CoinInfoWrapper>
-        </ContainerCard>
-      </ConfirmModalWrapper>
+                <img className="arrowDown" src={ArrowBlack} alt="" />
+              </CoinInfoWrapper>
+            </ContainerCard>
+          </ConfirmModalWrapper>
+        </div>
+      </Mask>
     </div>
   );
 };
