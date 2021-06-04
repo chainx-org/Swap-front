@@ -1,13 +1,16 @@
 import React, { useContext, useState, useEffect } from "react";
 import { SelectAccountStyle } from "./style";
 import SelectAccount from "./SelectAccount";
-import DogIcon from "../../../assets/symbols_DOGE.svg";
 import { AccountsContext } from "../../../hooks/AccountsProvider";
 import { shortenString } from "../../../helper";
 import styled from "styled-components";
 import Wallet from "../../../assets/wallet_yellower.svg";
 import Identicon from "@polkadot/react-identicon";
-import { relative } from "node:path";
+import {
+  isWeb3Injected,
+  web3Enable,
+  web3Accounts,
+} from "@polkadot/extension-dapp";
 const IconStyle = styled.div`
   width: 16px;
   height: 16px;
@@ -44,6 +47,15 @@ function AccountCard() {
     setName(shortenString(currentAccount.name));
   }, [currentAccount.address]);
 
+  const ConnectWallet = async () => {
+    await web3Enable("connecting");
+    if (isWeb3Injected) {
+      const accounts = await web3Accounts();
+    } else {
+      window.location.href =
+        "https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd";
+    }
+  };
   return (
     <div>
       <SelectAccountStyle className="selectBox" onClick={selectAccountList}>
@@ -56,7 +68,9 @@ function AccountCard() {
               </IconStyle>
             </div>
 
-            <div className={"current-info"}>Connect to a wallet</div>
+            <div className={"current-info"} onClick={ConnectWallet}>
+              Connect to a wallet
+            </div>
           </div>
         )}
         {hasAccount && (
