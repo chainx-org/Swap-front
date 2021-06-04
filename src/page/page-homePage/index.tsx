@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Header from "../../components/Header";
+import Mask from "../../components/Mask";
+import DialogCard from "../page-homePage/Dialog/index";
 import ContainerCard from "../../components/Card/ContainerCard";
 import styled from "styled-components";
 import CardItem from "./CardInfo/CardItem";
@@ -7,13 +9,14 @@ import BottomItem from "./CardInfo/CardBottom";
 import SwapInfo from "./CardInfo/SwapInfo";
 import { ReactComponent as ExchangeIcon } from "../../assets/icon_exchange.svg";
 import { AccountsContext } from "../../hooks/AccountsProvider";
+import { DialogContext } from "../../hooks/DialogProvider";
 import {
   isWeb3Injected,
   web3Enable,
   web3Accounts,
 } from "@polkadot/extension-dapp";
 import { PriceContext } from "../../hooks/PriceProvider";
-import ReactJson from "react-json-view";
+import { FrownFilled } from "@ant-design/icons";
 const Container = styled.div`
   background-image: linear-gradient(180deg, #faf5e8 7%, #f7f8fa 100%);
 `;
@@ -22,7 +25,7 @@ const Content = styled.main`
   justify-content: center;
   margin-top: 90px;
   position: relative;
-  z-index: -1;
+  z-index: 0;
 `;
 
 const ExchangeIconStyle = styled.div`
@@ -32,7 +35,7 @@ const ExchangeIconStyle = styled.div`
     display: inline-block;
     .iconBox {
       position: absolute;
-      z-index: 0;
+      z-index: 1;
       bottom: 165px;
       width: 26px;
       height: 26px;
@@ -55,6 +58,7 @@ const HomePage = (): React.ReactElement => {
   } = useContext(PriceContext);
   const [isShowSwapInfo, setIsShowSwapInfo] = useState(false);
   const { isExtensionInjected } = useContext(AccountsContext);
+  const { isMaskShow } = useContext(DialogContext);
 
   useEffect(() => {
     if (inPrice && outPrice) {
@@ -76,7 +80,6 @@ const HomePage = (): React.ReactElement => {
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
   const [transferStatus, setTransferStatus] =
     useState<"priceInfo" | "waiting" | "transactionStatus">("priceInfo");
-
   return (
     <Container>
       {/* <ReactJson src={{
@@ -89,9 +92,9 @@ const HomePage = (): React.ReactElement => {
         }
     }} /> */}
       <Header />
+      <div id="modal-root"></div>
       <Content>
         <ContainerCard title="Swap" className={"cardContent"}>
-          {/* 货币一 */}
           <CardItem
             index={0}
             currencyTitle="From"
@@ -104,7 +107,6 @@ const HomePage = (): React.ReactElement => {
           >
             <img src={coinInfo[0].icon} alt="" />
           </CardItem>
-          {/* 转换icon */}
           <ExchangeIconStyle>
             <div className="box">
               <div className="iconBox">
@@ -112,7 +114,6 @@ const HomePage = (): React.ReactElement => {
               </div>
             </div>
           </ExchangeIconStyle>
-          {/* 货币二 */}
           <CardItem
             index={1}
             currencyTitle="To"
@@ -124,7 +125,6 @@ const HomePage = (): React.ReactElement => {
           >
             <img src={coinInfo[1].icon} alt="" />
           </CardItem>
-          {/* 底部按钮 */}
           {!isExtensionInjected && (
             <div onClick={ConnectWallet}>
               <BottomItem

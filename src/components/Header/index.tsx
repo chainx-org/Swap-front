@@ -11,6 +11,8 @@ import styled from "styled-components";
 
 const WalletBox = styled.div`
   margin-left: 30px;
+  position: relative;
+  z-index: 1;
 `;
 function Header() {
   const { isExtensionInjected } = useContext(AccountsContext);

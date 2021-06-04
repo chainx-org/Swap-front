@@ -22,7 +22,7 @@ export const WalletStyle = styled.div`
     position: absolute;
     top: 37px;
     left: 0;
-    z-index: 999;
+    // z-index: 999;
     margin-top: 7px;
     width: 257px;
     background: #ffffff;

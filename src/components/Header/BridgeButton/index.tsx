@@ -4,7 +4,7 @@ import BridgeList from "./bridgeList";
 function Bridge() {
   const [isBridge, setIsBridge] = useState(false);
   return (
-    <BridgeDiv>
+    <BridgeDiv className="Box">
       <div className={"BridegeBox"}>
         <div
           className={isBridge ? "clickBridege" : "Bridege"}
