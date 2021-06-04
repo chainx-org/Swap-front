@@ -45,7 +45,7 @@ export const CoinInfoWrapper = styled.div`
         font-size: 14px;
         color: #282828;
         font-weight: 500;
-        padding: 10px 16px 10px 0;
+        padding: 8px 4px 7px 0px;
       }
       &:first-child {
         margin-bottom: 48px;
