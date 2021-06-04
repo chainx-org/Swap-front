@@ -80,7 +80,6 @@ const HomePage = (): React.ReactElement => {
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
   const [transferStatus, setTransferStatus] =
     useState<"priceInfo" | "waiting" | "transactionStatus">("priceInfo");
-  const [isOpenDialog, setisOpenDialog] = useState(false);
   return (
     <Container>
       {/* <ReactJson src={{
@@ -93,17 +92,7 @@ const HomePage = (): React.ReactElement => {
         }
     }} /> */}
       <Header />
-      {/* {isMaskShow && (
-        <div>
-          <Mask />
-          <DialogCard
-            onCancel={setisOpenDialog}
-            // index={index}
-            addCoinItem={addCoin}
-          />
-        </div>
-      )} */}
-
+      <div id="modal-root"></div>
       <Content>
         <ContainerCard title="Swap" className={"cardContent"}>
           <CardItem

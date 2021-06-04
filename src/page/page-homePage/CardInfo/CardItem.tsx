@@ -10,6 +10,7 @@ import { canFirstSwap, canSecondSwap } from "../../../helper/canSwap";
 import { PriceContext } from "../../../hooks/PriceProvider";
 import { DialogContext } from "../../../hooks/DialogProvider";
 import Mask from "../../../components/Mask";
+import { createPortal } from "react-dom";
 const Item = styled(Tooltip)`
   // z-index: 99;
   .title-info {
@@ -257,6 +258,7 @@ function CurrencyItem({
     setisOpenDialog(!isOpenDialog);
     setIsMaskShow(!isOpenDialog);
   };
+  const [show, setShow] = useState(false);
   return (
     <div>
       <Item>
@@ -313,12 +315,15 @@ function CurrencyItem({
 
           {isOpenDialog && (
             <div>
-              {isOpenDialog && <Mask />}
-              <DialogCard
-                onCancel={setisOpenDialog}
-                index={index}
-                addCoinItem={addCoin}
-              />
+              <Mask>
+                <div className="modal">
+                  <DialogCard
+                    onCancel={setisOpenDialog}
+                    index={index}
+                    addCoinItem={addCoin}
+                  />
+                </div>
+              </Mask>
             </div>
           )}
         </div>

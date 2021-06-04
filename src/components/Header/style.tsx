@@ -6,7 +6,7 @@ export const HeaderStyle = styled.div`
   justify-content: space-between;
   align-items: center;
   position: relative;
-  z-index: 0;
+  z-index: 1;
   .header-right {
     display: flex;
     position: relative;
