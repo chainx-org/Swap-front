@@ -476,7 +476,7 @@ export default {
       ],
     },
     Chain: {
-      _enum: ["ChainX", "Bitcoin", "Ethereum", "Polkadot","Dogecoin"],
+      _enum: ["ChainX", "Bitcoin", "Ethereum", "Polkadot","Dogecoin", "Binance"],
     },
     AssetType: {
       _enum: [
